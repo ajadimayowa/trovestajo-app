@@ -8,19 +8,21 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import LoginScreen from './assets/screens/LoginScreen';
 import TabScreens from './assets/screens/tabs/TabScreens';
 import { useFonts } from 'expo-font';
+import FlashMessage from "react-native-flash-message";
 
 const stack = createNativeStackNavigator()
 
 export default function App() {
-
-
   return (
-    <NavigationContainer>
-      <stack.Navigator>
-        <stack.Screen name="Login"  component={LoginScreen} />
-        <stack.Screen name="Main"  component={TabScreens} />
-      </stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <stack.Navigator>
+          <stack.Screen name="Login" component={LoginScreen} />
+          <stack.Screen name="Main" component={TabScreens} />
+        </stack.Navigator>
+      </NavigationContainer>
+      <FlashMessage position="top" />
+    </>
   );
 }
 
