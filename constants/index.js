@@ -1,0 +1,1 @@
+export const host = `https://trovestbackend.onrender.com/api/v1`

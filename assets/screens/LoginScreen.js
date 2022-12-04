@@ -1,12 +1,13 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
 import { Alert, Image, ImageBackground, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView, StyleSheet } from "react-native";
 import bgImage from "../components/assets/images/login-screen-bg.png";
 import loginScreenLogo from "../components/assets/images/login-screen-logo.png";
 import PrimaryInput from "../components/inputs/PrimaryInput";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import DisplayMessage from "../shared/ShowMessage";
+import { host } from "../../constants";
 
 const LoginScreen = (props) => {
   const { navigation } = props
@@ -20,13 +21,14 @@ const LoginScreen = (props) => {
     }
     return valid
   }
-  const checkButton = () => {
+  const loginAgent = async () => {
     try {
       const valid = checkInput()
       console.log('valid', valid)
       if (valid === false) {
         DisplayMessage('Some fields are empty', 'warning', 'Empty fields')
       } else {
+        // const response = await fetch(`${host}/`)
         DisplayMessage('Login Successful', 'success', 'Success')
         navigation.navigate('Main')
       }
@@ -71,7 +73,7 @@ const LoginScreen = (props) => {
                   setagentData({ ...agentData, password: text })
                 }}
               />
-              <PrimaryButton onPress={checkButton}>Login</PrimaryButton>
+              <PrimaryButton onPress={loginAgent}>Login</PrimaryButton>
             </View>
             {/* support section */}
             <View style={[styles.section, { marginTop: "30%", height: '7%', justifyContent: 'space-between' }]}>
