@@ -1,9 +1,11 @@
 import React, { useLayoutEffect } from "react";
+import {Ionicons} from '@expo/vector-icons';
 import { Alert, Image, ImageBackground, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from "react-native";
 
-const Dashboard = ({ navigation }) => {
+
+const AllTransactionScreen = ({ navigation }) => {
 
   const checkButton = ()=>{
     navigation.navigate('Main')
@@ -11,6 +13,8 @@ const Dashboard = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
+      tabBarIcon :({color, size})=> <Ionicons name="wallet-outline" size={size} 
+      color={color} />,
     });
   }, [navigation]);
   return (
@@ -56,4 +60,4 @@ const styles = StyleSheet.create({
 }
 });
 
-export default Dashboard;
+export default AllTransactionScreen;

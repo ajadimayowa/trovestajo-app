@@ -42,6 +42,12 @@ const LoginScreen = (props) => {
       headerShown: false,
     });
   }, [navigation]);
+
+  function catchInputData(userInputData){
+    return(
+      console.log(userInputData)
+    )
+  }
   return (
     <LinearGradient colors={["#ffff", "#EAC0AA"]} style={styles.screen}>
       <ImageBackground
