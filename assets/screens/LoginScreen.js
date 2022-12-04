@@ -17,6 +17,12 @@ const LoginScreen = ({ navigation }) => {
       headerShown: false,
     });
   }, [navigation]);
+
+  function catchInputData(userInputData){
+    return(
+      console.log(userInputData)
+    )
+  }
   return (
     <LinearGradient colors={["#ffff", "#EAC0AA"]} style={styles.screen}>
       <ImageBackground
@@ -35,8 +41,8 @@ const LoginScreen = ({ navigation }) => {
             </View>
             {/* form section */}
             <View style={[styles.section, { marginTop: "30%" }]}>
-              <PrimaryInput placeholder={"Enter ID"} />
-              <PrimaryInput placeholder={"Enter Your Password"} />
+              <PrimaryInput catchInputData={catchInputData} secureTextEntry={true} placeholder={"Enter ID"} />
+              <PrimaryInput catchInputData={catchInputData} secureTextEntry={true} placeholder={"Enter Your Password"} />
               <PrimaryButton onPress={checkButton}>Login</PrimaryButton>
             </View>
             {/* support section */}

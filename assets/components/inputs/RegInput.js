@@ -1,7 +1,7 @@
 import { Pressable, TextInput, View, StyleSheet } from "react-native";
 import {Ionicons} from '@expo/vector-icons'
 
-const PrimaryInput = ({placeholder, externalStyle, catchInputData})=> {
+const RegInput = ({placeholder, externalStyle, catchInputData})=> {
     const passInputData = (userInput)=>{
         catchInputData(userInput)
     }
@@ -9,7 +9,7 @@ const PrimaryInput = ({placeholder, externalStyle, catchInputData})=> {
         <TextInput onChangeText={passInputData} placeholder={placeholder} style={[styles.inputStyle,externalStyle]}></TextInput>
     )
 } 
-export default PrimaryInput;
+export default RegInput;
 
 const styles = StyleSheet.create({
     inputStyle :{
