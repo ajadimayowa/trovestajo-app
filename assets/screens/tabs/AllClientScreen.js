@@ -64,7 +64,7 @@ const AllClientScreen = ({ navigation }) => {
           }}
           data={agentArtisans} keyExtractor={(item) => { item._id }} renderItem={(data) =>
             <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(data.item.thrifts))}`}
-              nameOfClient={data.item.full_name} />}
+              nameOfClient={data.item.full_name} key={data.item._id} />}
         />
         {/* <ClientObjectCard nameOfClient={'Ojo'} totalSaved={'$60'} /> */}
       </View>

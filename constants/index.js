@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// export const host = `https://trovestbackend.onrender.com`
-export const host = `http://localhost:5100`
+export const host = `https://trovestbackend.onrender.com`
+// export const host = `http://localhost:5100`
 export const root = 'root:'
 export const agentKey = `${root}agent_key`
 export const COLORS = {
