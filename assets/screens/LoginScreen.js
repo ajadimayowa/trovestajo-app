@@ -7,13 +7,29 @@ import loginScreenLogo from "../components/assets/images/login-screen-logo.png";
 import PrimaryInput from "../components/inputs/PrimaryInput";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import DisplayMessage from "../shared/ShowMessage";
-import { host } from "../../constants";
+import { getAgentSuccess } from "../../redux/slices/agent.slice";
+import { useDispatch, useSelector, connect } from "react-redux";
+import { loginAgent } from "../../redux/requests/requests";
+import { agentKey, COLORS } from "../../constants";
+import Loader from "../shared/Loader";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginScreen = (props) => {
+  const dispatch = useDispatch()
   const { navigation } = props
-
+  const { agent } = useSelector(state => state.agent)
+  const [loading, setloading] = useState(false)
   const [agentData, setagentData] = useState({ assigned_id: '', password: '' })
 
+
+  useEffect(() => {
+    const getKeys = async () => {
+      const persist = await AsyncStorage.removeItem('persist:root')
+      console.log('getAllKeys', persist)
+    }
+
+    getKeys()
+  }, [])
   const checkInput = () => {
     let valid = true
     if (agentData.assigned_id === '' || agentData.password === '') {
@@ -21,19 +37,36 @@ const LoginScreen = (props) => {
     }
     return valid
   }
-  const loginAgent = async () => {
+
+  const agentLogin = async () => {
     try {
       const valid = checkInput()
-      console.log('valid', valid)
       if (valid === false) {
         DisplayMessage('Some fields are empty', 'warning', 'Empty fields')
       } else {
-        // const response = await fetch(`${host}/`)
-        DisplayMessage('Login Successful', 'success', 'Success')
-        navigation.navigate('Main')
+        setloading(true)
+        const response = await loginAgent(agentData)
+        const { data, success, message, token } = response.data
+        if (success === false) {
+          DisplayMessage(message, 'warning', 'Warning')
+          setloading(false)
+        }
+        else {
+          const info = {
+            data,
+            success: success,
+            token: token
+          }
+          await AsyncStorage.setItem(`${agentKey}`, token)
+          dispatch(getAgentSuccess(info))
+          DisplayMessage(message, 'success', 'Success')
+          navigation.navigate('Main')
+          setloading(false)
+        }
       }
     } catch (error) {
       DisplayMessage(error.message, 'danger', 'Error Occured')
+      setloading(false)
     }
   }
 
@@ -43,13 +76,9 @@ const LoginScreen = (props) => {
     });
   }, [navigation]);
 
-  function catchInputData(userInputData){
-    return(
-      console.log(userInputData)
-    )
-  }
   return (
     <LinearGradient colors={["#ffff", "#EAC0AA"]} style={styles.screen}>
+      {loading && <Loader />}
       <ImageBackground
         source={bgImage}
         resizeMode="stretch"
@@ -79,12 +108,12 @@ const LoginScreen = (props) => {
                   setagentData({ ...agentData, password: text })
                 }}
               />
-              <PrimaryButton onPress={loginAgent}>Login</PrimaryButton>
+              <PrimaryButton onPress={agentLogin}>Login</PrimaryButton>
             </View>
             {/* support section */}
             <View style={[styles.section, { marginTop: "30%", height: '7%', justifyContent: 'space-between' }]}>
-              <Text style={[styles.p, { color: '#01065B' }]}>Forgot Password ?</Text>
-              <Text style={[styles.p, { color: '#7A0D0C' }]}>Contact Support</Text>
+              <Text style={[styles.p, { color: COLORS.troBlue }]}>Forgot Password ?</Text>
+              <Text style={[styles.p, { color: COLORS.troBrown }]}>Contact Support</Text>
             </View>
           </View>
         </SafeAreaView>

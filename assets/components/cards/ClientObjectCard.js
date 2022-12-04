@@ -1,16 +1,23 @@
-import { View, StyleSheet, Pressable, Text } from "react-native";
-const ClientObjectCard = ({nameOfClient, totalSaved, onPress, externalOuterStyle,externalInnerStyle }) => {
+import { View, Pressable, Text, Dimensions } from "react-native";
+import { ScaledSheet } from 'react-native-size-matters';
+
+
+const { width, height } = Dimensions.get('window')
+const ClientObjectCard = (props) => {
+  const { nameOfClient, totalSaved, onPress, externalOuterStyle, externalInnerStyle } = props
   return (
-    <View style={[styles.outerView, externalOuterStyle,{margin:'2%'}]}>
+    <View style={[styles.outerView, externalOuterStyle]}>
       <Pressable
         style={({ pressed }) => (pressed ? styles.pressed : null)}
         onPress={onPress}
       >
-        <View style={[styles.innerView,externalInnerStyle]}>
+        <View style={[styles.innerView, externalInnerStyle]}>
           <Text style={styles.p}>{nameOfClient}</Text>
-          <View style={{backgroundColor:'#7D1312', minHeight:24, minWidth:65, borderRadius:3,
-          alignItems:'center',justifyContent:'center'}}>
-            <Text style={{color:'#fff'}} >{totalSaved}</Text>
+          <View style={{
+            backgroundColor: '#7D1312', minHeight: 24, minWidth: 65, borderRadius: 3,
+            alignItems: 'center', justifyContent: 'center'
+          }}>
+            <Text style={{ color: '#fff' }} >{totalSaved}</Text>
           </View>
         </View>
       </Pressable>
@@ -19,20 +26,17 @@ const ClientObjectCard = ({nameOfClient, totalSaved, onPress, externalOuterStyle
 };
 export default ClientObjectCard;
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   outerView: {
     width: '100%',
-    height: 40,
   },
   pressed: {
     opacity: 0.7,
   },
   innerView: {
-    flexDirection:'row',
-    minWidth: "100%",
-    minHeight: 40,
-    padding:10,
-    paddingHorizontal:'10%',
+    flexDirection: 'row',
+    marginTop: '10@msr',
+    padding: '10@msr',
     backgroundColor: "#F4F4F4",
     alignItems: "center",
     justifyContent: "space-between",
@@ -41,7 +45,7 @@ const styles = StyleSheet.create({
     color: "#01065B",
     fontSize: 11,
     fontWeight: "700",
-    textAlign:'center'
+    textAlign: 'center'
   },
   outerStyle: {},
 });

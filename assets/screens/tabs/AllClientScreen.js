@@ -1,22 +1,34 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useEffect, useState } from "react";
 import {
   Alert,
   FlatList,
   View,
   StyleSheet,
-  SafeAreaView
+  SafeAreaView,
+  ScrollView,
+  Dimensions
 } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
 import Header from "../../components/main/Header";
-import IconButton from "../../components/buttons/IconButton";
 import { Ionicons } from "@expo/vector-icons";
 import ClientObjectCard from "../../components/cards/ClientObjectCard";
 import LabelCard from "../../components/cards/LabelCard";
-import {AllCustormer} from "../../store/data";
+import { AllCustormer } from "../../store/data";
+import { useSelector } from "react-redux";
+import SharedList from "../../shared/SharedList";
+import { ScaledSheet } from 'react-native-size-matters';
+import { calculateRevenueAmount, convertToThousand } from "../../../constants";
 
+
+
+const { width } = Dimensions.get('window')
 const AllClientScreen = ({ navigation }) => {
+  const selector = useSelector(state => state)
+  const [agentArtisans, setagentArtisans] = useState([])
+  const { token } = selector.agent
+  const { artisans } = selector.artisan
+
   const checkButton = () => {
-    navigation.navigate("Main");
+    navigation.navigate("Login");
   };
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -27,43 +39,61 @@ const AllClientScreen = ({ navigation }) => {
       ),
     });
   }, [navigation]);
+
+  useEffect(() => {
+    if (token) {
+      setagentArtisans(artisans)
+    }
+    else {
+      checkButton()
+    }
+  }, [])
   return (
-    <SafeAreaView style={styles.screen}>
+    <ScrollView style={styles.screen}
+      contentContainerStyle={styles.contentContainerStyle}
+    >
       <LabelCard
         title={"Your Registered Artisans"}
-        totalClientRegistered={"68"}
+        totalClientRegistered={agentArtisans.length}
       />
       <View style={styles.container}>
-        <FlatList data={AllCustormer} keyExtractor={(data)=>{data.c_id}} renderItem={(data)=>
-        <ClientObjectCard totalSaved={data.item.c_fname} 
-        nameOfClient={data.item.c_fname} />} />
-        <ClientObjectCard nameOfClient={'Ojo'} totalSaved={'$60'}/>
+        <SharedList
+          style={{
+            width: width * .97,
+            alignSelf: 'center'
+          }}
+          data={agentArtisans} keyExtractor={(item) => { item._id }} renderItem={(data) =>
+            <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(data.item.thrifts))}`}
+              nameOfClient={data.item.full_name} />}
+        />
+        {/* <ClientObjectCard nameOfClient={'Ojo'} totalSaved={'$60'} /> */}
       </View>
-    </SafeAreaView>
+    </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   screen: {
     flex: 1,
-    width: "100%",
-    backgroundColor: "#fff",
-    padding: 20,
-    paddingVertical: "10%",
+    width: width,
+    backgroundColor: '#e3e3e3'
+  },
+  contentContainerStyle: {
+    flex: 1,
+    alignItems: "center",
   },
   container: {
-    width: "100%",
+    width: width * .97,
     alignItems: "center",
-    // backgroundColor:'green'
+    justifyContent: 'center',
   },
   section: {
     width: "100%",
-    // backgroundColor:'yellow',
     alignItems: "center",
   },
   p: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: '14@msr',
   },
 });
 

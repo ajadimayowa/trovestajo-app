@@ -1,27 +1,30 @@
-import React, { useLayoutEffect } from "react";
+import React, { useLayoutEffect, useEffect, useState } from "react";
 import {
-  Alert,
-  FlatList,
-  Image,
-  ImageBackground,
   ScrollView,
   Text,
   View,
 } from "react-native";
 import CircleCard from "../../components/cards/CircleCard";
-import { LinearGradient } from "expo-linear-gradient";
-import { KeyboardAvoidingView, SafeAreaView, StyleSheet } from "react-native";
+import { SafeAreaView } from "react-native";
 import Header from "../../components/main/Header";
-import IconButton from "../../components/buttons/IconButton";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import Card from "../../components/cards/Card";
 import MessageCard from "../../components/cards/MessageCard";
 import CardButton from "../../components/buttons/CardButton";
+import { useSelector, useDispatch } from "react-redux";
+import Loader from "../../shared/Loader";
+import { ScaledSheet } from 'react-native-size-matters';
+import { getArtisanData } from "../../../redux/slices/artisan.slice";
+
 
 const Dashboard = ({ navigation }) => {
-
-  const handleNewClientReg =()=>{
+  const dispatch = useDispatch()
+  const { agentData, token } = useSelector(state => state.agent)
+  const { isLoading, artisans,success }  = useSelector(state => state.artisan)
+  const [agent, setagent] = useState()
+  const [loading, setloading] = useState(false)
+  const handleNewClientReg = () => {
     navigation.navigate('RegNewClient')
   }
   const checkButton = () => {
@@ -36,8 +39,25 @@ const Dashboard = ({ navigation }) => {
       ),
     });
   }, [navigation]);
+
+  useEffect(() => {
+    setloading(true)
+    if (token) {
+      setagent(agentData)
+      dispatch(getArtisanData(token))
+      if (isLoading === false) {
+        setloading(false)
+      }
+    }
+    else {
+      setloading(false)
+      navigation.navigate("Login");
+    }
+  }, [token])
+
   return (
     <ScrollView style={styles.screen}>
+      {loading && <Loader />}
       <SafeAreaView style={styles.container}>
         {/* top section starts here */}
         <View style={[styles.section, styles.topSection]}>
@@ -70,7 +90,7 @@ const Dashboard = ({ navigation }) => {
                 },
               ]}
             >
-              <CircleCard>85</CircleCard>
+              <CircleCard>{agentData?.artisans.length}</CircleCard>
               <Text
                 style={{
                   width: "70%",
@@ -134,10 +154,10 @@ const Dashboard = ({ navigation }) => {
           ]}
         >
           <Text style={{ fontSize: 19, fontWeight: "600", color: "#01065B" }}>
-            Oluwole E
+            {`${agent?.first_name} ${agent?.last_name.charAt(0)}`}
           </Text>
           <Text style={{ fontSize: 12, fontWeight: "600", color: "#01065B" }}>
-            Tr/Ag/001
+            {`${agent?.assigned_id}`}
           </Text>
         </View>
 
@@ -170,8 +190,8 @@ const Dashboard = ({ navigation }) => {
           ]}
         >
           <View style={[{ alignItems: "center" }]}>
-            <Text style={{fontSize:19, fontWeight:'800'}}>Agent Tolani</Text>
-            <Text style={{fontSize:9}}>What would you like to do today?</Text>
+            <Text style={{ fontSize: 19, fontWeight: '800' }}>Agent {`${agent?.first_name}`}</Text>
+            <Text style={{ fontSize: 9 }}>What would you like to do today?</Text>
           </View>
         </View>
         <View
@@ -188,18 +208,17 @@ const Dashboard = ({ navigation }) => {
           <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }}>
             Register New Client
           </CardButton>
-          <CardButton externalInnerStyle={{ backgroundColor:'#7D1312'}}>Deposit Collected Funds.</CardButton>
+          <CardButton externalInnerStyle={{ backgroundColor: '#7D1312' }}>Deposit Collected Funds.</CardButton>
         </View>
       </SafeAreaView>
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   screen: {
     flex: 1,
     width: "100%",
-    backgroundColor: "orange",
   },
   container: {
     flex: 1,
@@ -207,21 +226,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
-    paddingBottom:'10%'
+    paddingBottom: '10%'
   },
   topSection: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    height: 220,
-    marginBottom: 10,
-    paddingBottom: 10,
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
+    height: '220@msr',
+    marginBottom: '10@msr',
+    paddingBottom: '10@msr',
+    borderBottomLeftRadius: '40@msr',
+    borderBottomRightRadius: '40@msr',
   },
   SectionViewRows: {
     flex: 1,
-    margin: 5,
+    margin: '5@msr',
     flexDirection: "row",
     width: "100%",
   },
@@ -244,7 +263,7 @@ const styles = StyleSheet.create({
   },
   p: {
     color: "#fff",
-    fontSize: 14,
+    fontSize: '14@msr',
   },
 });
 

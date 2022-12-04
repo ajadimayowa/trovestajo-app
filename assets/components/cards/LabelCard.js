@@ -1,4 +1,7 @@
-import { View, StyleSheet, Pressable, Text } from "react-native";
+import { View, Text, Dimensions } from "react-native";
+import { ScaledSheet,moderateScale } from 'react-native-size-matters';
+
+const {width } = Dimensions.get('window')
 const LabelCard = ({
   title,
   totalClientRegistered,
@@ -12,9 +15,9 @@ const LabelCard = ({
       <View
         style={{
           backgroundColor: "#7D1312",
-          minHeight: 24,
-          minWidth: 65,
-          borderRadius: 3,
+          minHeight: moderateScale(24),
+          minWidth: moderateScale(65),
+          borderRadius: moderateScale(3),
           alignItems: "center",
           justifyContent: "center",
         }}
@@ -26,14 +29,15 @@ const LabelCard = ({
 };
 export default LabelCard;
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   innerView: {
     flexDirection: "row",
-    width: "100%",
-    height: 50,
-    borderRadius:5,
-    padding: 10,
-    paddingHorizontal: "10%",
+    width: width * .97,
+    height: '50@msr',
+    borderRadius: '5@msr',
+    marginTop: '20@msr',
+    padding: '10@msr',
+    paddingHorizontal: "5%",
     backgroundColor: "#01065B",
     alignItems: "center",
     justifyContent: "space-between",
