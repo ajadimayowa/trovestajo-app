@@ -64,9 +64,11 @@ const ClientRegScreen = (props) => {
         const response = await creatAgentArtisan(formData)
         const { success, message } = response.data
         if (success === true) {
-          setloading(false)
           DisplayMessage(message, 'success', 'Success')
-          handleGoToPrevScreen()
+          setloading(false)
+          setTimeout(() => {
+            handleGoToPrevScreen()
+          }, 900);
         }
         else if (message === ACCESS_DENIED || message === UNAUHTORIZED) {
           setloading(false)

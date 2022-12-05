@@ -18,7 +18,6 @@ export const loginAgent = (data) => {
 }
 
 export const creatAgentArtisan = (data) => {
-    console.log('creatAgentArtisan',data)
     headers.authorization = `Bearer ${data.token}`
     const requestOptions = {
         method: "post",
