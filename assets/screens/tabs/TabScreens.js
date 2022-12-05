@@ -23,6 +23,7 @@ const TabScreens = ({ navigation }) => {
           backgroundColor: "#01065B",
           height: 62,
         },
+        headerShown: false
       }}
     >
       <tabs.Screen name="Dashboard" component={Dashboard} />

@@ -1,10 +1,8 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
 import {
-  Alert,
-  FlatList,
+  Pressable,
   View,
-  StyleSheet,
-  SafeAreaView,
+  Image,
   ScrollView,
   Dimensions
 } from "react-native";
@@ -17,6 +15,7 @@ import { useSelector } from "react-redux";
 import SharedList from "../../shared/SharedList";
 import { ScaledSheet } from 'react-native-size-matters';
 import { calculateRevenueAmount, convertToThousand } from "../../../constants";
+import Loader from "../../shared/Loader";
 
 
 
@@ -26,49 +25,62 @@ const AllClientScreen = ({ navigation }) => {
   const [agentArtisans, setagentArtisans] = useState([])
   const { token } = selector.agent
   const { artisans } = selector.artisan
+  const [loading, setloading] = useState(false)
 
   const checkButton = () => {
     navigation.navigate("Login");
   };
-  useLayoutEffect(() => {
-    navigation.setOptions({
-      headerShown: true,
-      header: () => <Header></Header>,
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="people-outline" size={size} color={color} />
-      ),
-    });
-  }, [navigation]);
 
   useEffect(() => {
+    setloading(true)
+    getUser()
+    const unsubscribe = navigation.addListener('focus', () => {
+      setloading(true)
+      getUser()
+    });
+    return unsubscribe;
+  }, [navigation,artisans])
+
+  const getUser = () => {
     if (token) {
       setagentArtisans(artisans)
+      setTimeout(() => {
+        setloading(false)
+      }, 2000);
     }
     else {
+      setloading(false)
       checkButton()
     }
-  }, [])
+  }
   return (
-    <ScrollView style={styles.screen}
-      contentContainerStyle={styles.contentContainerStyle}
-    >
-      <LabelCard
-        title={"Your Registered Artisans"}
-        totalClientRegistered={agentArtisans.length}
-      />
-      <View style={styles.container}>
-        <SharedList
-          style={{
-            width: width * .97,
-            alignSelf: 'center'
-          }}
-          data={agentArtisans} keyExtractor={(item) => { item._id }} renderItem={(data) =>
-            <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(data.item.thrifts))}`}
-              nameOfClient={data.item.full_name} key={data.item._id} />}
+    <>
+      {loading && <Loader />}
+      <Header>
+        <Pressable onPress={() =>  navigation.goBack()}>
+          <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
+        </Pressable>
+      </Header>
+      <ScrollView style={styles.screen}
+        contentContainerStyle={styles.contentContainerStyle}
+      >
+        <LabelCard
+          title={"Your Registered Artisans"}
+          totalClientRegistered={agentArtisans.length}
         />
-        {/* <ClientObjectCard nameOfClient={'Ojo'} totalSaved={'$60'} /> */}
-      </View>
-    </ScrollView>
+        <View style={styles.container}>
+          <SharedList
+            style={{
+              width: width * .97,
+              alignSelf: 'center'
+            }}
+            data={agentArtisans} keyExtractor={(item) => { item._id }} renderItem={(data) =>
+              <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(data.item.thrifts))}`}
+                nameOfClient={data.item.full_name} key={data.item._id} />}
+          />
+        </View>
+      </ScrollView>
+    </>
   );
 };
 
@@ -94,6 +106,10 @@ const styles = ScaledSheet.create({
   p: {
     color: "#fff",
     fontSize: '14@msr',
+  },
+  left: {
+    width: '22@msr',
+    height: '22@msr',
   },
 });
 

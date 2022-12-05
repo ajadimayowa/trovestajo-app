@@ -8,6 +8,7 @@ const PrimaryInput = (props) => {
             placeholder={placeholder}
             style={styles.inputStyle}
             {...props}
+            
         />
     )
 }

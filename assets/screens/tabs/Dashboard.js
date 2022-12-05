@@ -15,13 +15,16 @@ import CardButton from "../../components/buttons/CardButton";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../shared/Loader";
 import { ScaledSheet } from 'react-native-size-matters';
-import { getArtisanData } from "../../../redux/slices/artisan.slice";
+import { getArtisanData, pageLoading, getAgentArtisanSuccess } from "../../../redux/slices/artisan.slice";
+import { getAgentArtisan } from "../../../redux/requests/requests";
+import DisplayMessage from "../../shared/ShowMessage";
 
 
-const Dashboard = ({ navigation }) => {
+const Dashboard = (props) => {
+  const { navigation } = props
   const dispatch = useDispatch()
   const { agentData, token } = useSelector(state => state.agent)
-  const { isLoading, artisans,success }  = useSelector(state => state.artisan)
+  const { isLoading, artisans, success } = useSelector(state => state.artisan)
   const [agent, setagent] = useState()
   const [loading, setloading] = useState(false)
   const handleNewClientReg = () => {
@@ -42,10 +45,33 @@ const Dashboard = ({ navigation }) => {
 
   useEffect(() => {
     setloading(true)
+    getArtisans()
+    const unsubscribe = navigation.addListener('focus', () => {
+      setloading(true)
+      dispatch(pageLoading(true))
+      getArtisans()
+    });
+    return unsubscribe;
+  }, [token, navigation])
+
+  const getArtisans = async () => {
     if (token) {
       setagent(agentData)
-      dispatch(getArtisanData(token))
-      if (isLoading === false) {
+      // make a normal request and use this to set the artiasna instead of redux saga
+      const response = await getAgentArtisan(token)
+      const { success, message, data } = response.data
+      if (success === true) {
+        const payload = {
+          data,
+          message: message,
+          success: success,
+          isLoading: false
+        }
+        dispatch(getAgentArtisanSuccess(payload))
+        setloading(false)
+      }
+      else {
+        DisplayMessage(message, 'warning', 'Something went wrong')
         setloading(false)
       }
     }
@@ -53,7 +79,7 @@ const Dashboard = ({ navigation }) => {
       setloading(false)
       navigation.navigate("Login");
     }
-  }, [token])
+  }
 
   return (
     <ScrollView style={styles.screen}>
@@ -90,7 +116,7 @@ const Dashboard = ({ navigation }) => {
                 },
               ]}
             >
-              <CircleCard>{agentData?.artisans.length}</CircleCard>
+              <CircleCard>{artisans?.length}</CircleCard>
               <Text
                 style={{
                   width: "70%",

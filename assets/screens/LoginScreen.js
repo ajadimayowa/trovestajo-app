@@ -22,14 +22,6 @@ const LoginScreen = (props) => {
   const [agentData, setagentData] = useState({ assigned_id: '', password: '' })
 
 
-  useEffect(() => {
-    const getKeys = async () => {
-      const persist = await AsyncStorage.removeItem('persist:root')
-      console.log('getAllKeys', persist)
-    }
-
-    getKeys()
-  }, [])
   const checkInput = () => {
     let valid = true
     if (agentData.assigned_id === '' || agentData.password === '') {

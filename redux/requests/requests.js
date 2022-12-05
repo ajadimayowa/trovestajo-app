@@ -17,11 +17,12 @@ export const loginAgent = (data) => {
     return axios(requestOptions);
 }
 
-export const createdminAgent = (data) => {
+export const creatAgentArtisan = (data) => {
+    console.log('creatAgentArtisan',data)
     headers.authorization = `Bearer ${data.token}`
     const requestOptions = {
         method: "post",
-        url: `${baseUrl}/admin/create-agent`,
+        url: `${baseUrl}/create-artisan`,
         headers: headers,
         data: data.data
     }
