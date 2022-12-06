@@ -15,7 +15,8 @@ const style = StyleSheet.create({
     alignItems: "space-around",
     paddingHorizontal: '5%',
     paddingTop: '15%',
-    paddingBottom: '5%'
+    paddingBottom: '5%',
+    justifyContent:'center'
 
   },
 });

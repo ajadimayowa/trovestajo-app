@@ -1,15 +1,23 @@
 import { View, Pressable, Text, Dimensions } from "react-native";
 import { ScaledSheet } from 'react-native-size-matters';
+import { useNavigation } from "@react-navigation/native";
 
 
 const { width, height } = Dimensions.get('window')
 const ClientObjectCard = (props) => {
-  const { nameOfClient, totalSaved, onPress, externalOuterStyle, externalInnerStyle } = props
+  const navigation = useNavigation()
+  const {clientId, nameOfClient, totalSaved,externalOuterStyle, externalInnerStyle } = props;
+  
+  //this part ships the selected client data to the client screen
+  const goToClientDetails = ()=>{
+    navigation.navigate('ClientDetailScreen',{props})
+  }
+
   return (
     <View style={[styles.outerView, externalOuterStyle]}>
       <Pressable
         style={({ pressed }) => (pressed ? styles.pressed : null)}
-        onPress={onPress}
+        onPress={goToClientDetails}
       >
         <View style={[styles.innerView, externalInnerStyle]}>
           <Text style={styles.p}>{nameOfClient}</Text>

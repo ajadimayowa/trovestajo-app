@@ -31,6 +31,18 @@ const AllClientScreen = ({ navigation }) => {
     navigation.navigate("Login");
   };
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      header: () => <Header><Pressable onPress={() =>  navigation.goBack()}>
+      <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
+    </Pressable></Header>,
+      tabBarIcon: ({ color, size }) => (
+        <Ionicons name="ios-people-outline" size={size} color={color} />
+      ),
+    });
+  }, [navigation]);
+
   useEffect(() => {
     setloading(true)
     getUser()
@@ -56,11 +68,6 @@ const AllClientScreen = ({ navigation }) => {
   return (
     <>
       {loading && <Loader />}
-      <Header>
-        <Pressable onPress={() =>  navigation.goBack()}>
-          <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
-        </Pressable>
-      </Header>
       <ScrollView style={styles.screen}
         contentContainerStyle={styles.contentContainerStyle}
       >
