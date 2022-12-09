@@ -6,11 +6,13 @@ import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get('window')
 const ClientObjectCard = (props) => {
   const navigation = useNavigation()
-  const {clientId, nameOfClient, totalSaved,externalOuterStyle, externalInnerStyle } = props;
-  
-  //this part ships the selected client data to the client screen
-  const goToClientDetails = ()=>{
-    navigation.navigate('ClientDetailScreen',{props})
+  const { clientId, nameOfClient, totalSaved, externalOuterStyle, externalInnerStyle, artisan } = props;
+
+  const goToClientDetails = () => {
+    navigation.navigate('ClientDetailScreen', {
+      artisan: artisan,
+      totalSaved: totalSaved
+    })
   }
 
   return (

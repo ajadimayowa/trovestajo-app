@@ -55,29 +55,34 @@ const Dashboard = (props) => {
   }, [token, navigation])
 
   const getArtisans = async () => {
-    if (token) {
-      setagent(agentData)
-      // make a normal request and use this to set the artiasna instead of redux saga
-      const response = await getAgentArtisan(token)
-      const { success, message, data } = response.data
-      if (success === true) {
-        const payload = {
-          data,
-          message: message,
-          success: success,
-          isLoading: false
+    try {
+      if (token) {
+        setagent(agentData)
+        // make a normal request and use this to set the artiasna instead of redux saga
+        const response = await getAgentArtisan(token)
+        const { success, message, data } = response.data
+        if (success === true) {
+          const payload = {
+            data,
+            message: message,
+            success: success,
+            isLoading: false
+          }
+          dispatch(getAgentArtisanSuccess(payload))
+          setloading(false)
         }
-        dispatch(getAgentArtisanSuccess(payload))
-        setloading(false)
+        else {
+          DisplayMessage(message, 'warning', 'Something went wrong')
+          setloading(false)
+        }
       }
       else {
-        DisplayMessage(message, 'warning', 'Something went wrong')
         setloading(false)
+        navigation.navigate("Login");
       }
-    }
-    else {
+    } catch (error) {
+      DisplayMessage(error.message, 'danger', 'Error Occured')
       setloading(false)
-      navigation.navigate("Login");
     }
   }
 

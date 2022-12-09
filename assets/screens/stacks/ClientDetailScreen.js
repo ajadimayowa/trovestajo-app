@@ -1,3 +1,4 @@
+import React, { useState, useMemo, useEffect } from 'react'
 import {
   SafeAreaView,
   View,
@@ -6,22 +7,62 @@ import {
   Pressable,
   ScrollView,
   Alert,
+  Dimensions,
 } from "react-native";
 import { useLayoutEffect } from "react";
 import Header from "../../components/main/Header";
 import { Ionicons } from "@expo/vector-icons";
-import { ScaledSheet } from "react-native-size-matters";
+import { moderateScale, ScaledSheet } from "react-native-size-matters";
 import CircleCard from "../../components/cards/CircleCard";
+import { dateFormat, convertToThousand } from "../../../constants";
+import ThriftsPayment from '../modals/ThriftsPayment';
 
-const ClientDetailScreen = ({ navigation }) => {
+
+const { width, height } = Dimensions.get('window')
+const ClientDetailScreen = (props) => {
+  // const minutes = new Date().getSeconds();
+  const { navigation, route } = props
+  const { artisan, totalSaved } = route.params
+
+  const [setTime, setsetTime] = useState('')
+
+  const timeFormat = () => {
+    const date = new Date();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+
+    const timeOfDay = hours > 11 ? 'PM' : 'AM'
+    if (hours > 12) hours = hours % 12
+    hours = hours < 10 ? `0${hours}` : hours
+    minutes = minutes < 10 ? `0${minutes}` : minutes
+    seconds = seconds < 10 ? `0${seconds}` : seconds
+    setsetTime(`${hours}:${minutes}:${seconds} ${timeOfDay}`)
+  }
+
+  useEffect(() => {
+    timeFormat()
+  }, [])
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
       header: () => (
         <Header>
-          <Text style={[styles.p, { color: "#01065B" }]}>
-            Client Id Goes Here
-          </Text>
+          <View style={{
+            width,
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexDirection: 'row'
+          }}>
+            <Pressable onPress={() => navigation.goBack()}>
+              <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
+            </Pressable>
+            <Text style={[styles.p, { color: "#01065B" }]}>
+              {artisan?.full_name}
+            </Text>
+            <View />
+          </View>
         </Header>
       ),
       tabBarIcon: ({ color, size }) => (
@@ -30,102 +71,123 @@ const ClientDetailScreen = ({ navigation }) => {
     });
   }, [navigation]);
 
-  const handlePayment = ()=>{
+  const handlePayment = () => {
     Alert.alert('Payment Successfule')
   }
   return (
-    <SafeAreaView style={styles.screen}>
-      <ScrollView style={styles.screen}>
-        <View style={[styles.section, {height:250}]}>
+    <>
+      <ScrollView style={styles.screen}
+        contentContainerStyle={styles.contentContainerStyle}
+      >
+        <View style={[styles.section]}>
           <CircleCard
             externalStyle={{
-              width: 140,
-              height: 140,
-              borderRadius: 70,
+              width: moderateScale(140),
+              height: moderateScale(140),
+              borderRadius: moderateScale(70),
               backgroundColor: "#fff",
             }}
           />
-          <Text style={[styles.p]}>Client Name goes here</Text>
-          <Text style={[styles.p, { fontSize: 12 }]}>
+          <Text style={[styles.p]}> {artisan?.full_name}</Text>
+          {/* <Text style={[styles.p, { fontSize: 12 }]}>
             savings type goes here
-          </Text>
-          <Text style={[styles.p, { fontSize: 12 }]}>
+          </Text> */}
+          {/* <Text style={[styles.p, { fontSize: 12 }]}>
             savings amount goes here
-          </Text>
+          </Text> */}
         </View>
 
-        <View style={[styles.section, {height:50,paddingVertical:15 }]}>
-           <Text style={{color:'#7D1312'}}>current date and time goes here</Text>
-        </View>
-
-        <View style={[styles.section, {height:170}]}>
-            <Pressable onPress={handlePayment} style={({pressed})=> pressed? styles.pressed:null}>
-          <CircleCard
-            externalStyle={{
-              width: 140,
-              height: 140,
-              borderRadius: 70,
-              backgroundColor: "#7D1312",
-            }}
-          ><Text style={styles.title}>Pay</Text>
-          </CircleCard>
+        <>
+          <Text style={styles.dateTime}>{`${dateFormat(new Date())} ${setTime}`}</Text>
+        </>
+        <ThriftsPayment />
+        {/* <View style={[styles.section, { height: 170 }]}>
+          <Pressable onPress={handlePayment} style={({ pressed }) => pressed ? styles.pressed : null}>
+            <CircleCard
+              externalStyle={{
+                width: 140,
+                height: 140,
+                borderRadius: 70,
+                backgroundColor: "#7D1312",
+              }}
+            ><Text style={styles.title}>Pay</Text>
+            </CircleCard>
           </Pressable>
+        </View> */}
+        <View style={[styles.section1, { justifyContent: 'flex-start' }]}>
+          <Text style={{ color: '#01065B', fontSize: moderateScale(18) }}>Activity Summary</Text>
         </View>
-        <View style={[styles.section,{height:60,alignItems:'flex-start'}]}>
-            <Text style={{color:'#01065B'}}>Activity Summary</Text>
-        </View>
-        <View style={[styles.section,{height:200,paddingVertical:null, alignItems:'flex-start'}]}>
-            <View style={styles.activityCard}>
-                <Text style={[{color:'#fff', fontSize:12}]}>Total amount saved</Text>
+        <View style={[styles.section, { height: 200, paddingVertical: null, alignItems: 'flex-start' }]}>
+          <View style={styles.activityCard}>
+            <Text style={[{ color: '#fff', fontSize: moderateScale(18) }]}>Total amount saved</Text>
 
-                <View style={{alignItems:'center'}}>
-                <Text style={{color:'#fff', fontSize:37, fontWeight:'700'}}> Total saved </Text>
-                </View>
-<View style={{flexDirection:'row', width:'40%', justifyContent:'space-between'}}>
-                <Text style={[{color:'#fff', fontSize:12}]}>Due for withdrawal?</Text>
-                <Text style={[{color:'#fff', fontSize:12}]}>No</Text>
-                </View>
-
-
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ color: '#fff', fontSize: 37, fontWeight: '700' }}>{(totalSaved)}</Text>
             </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
+              <Text style={[{ color: '#fff', fontSize: moderateScale(15) }]}>Due for withdrawal?</Text>
+              <Text style={[{ color: '#fff', fontSize: moderateScale(15) }]}>No</Text>
+            </View>
+          </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </>
   );
 };
 
 const styles = ScaledSheet.create({
   screen: {
     flex: 1,
-    width: "100%",
+    width: width,
+    paddingTop: '40@msr',
     backgroundColor: "#fff",
   },
-  section: {
-    width: "100%",
-    height: 250,
-    alignItems: "center",
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-    // backgroundColor: "blue",
+  contentContainerStyle: {
+    alignItems: 'center'
   },
-  activityCard:{
-    backgroundColor:'#01065B',
-   width:350,
-   height:170,
-   padding:20,
-   justifyContent:'space-between'
+  section1: {
+    width: width * .97,
+    paddingBottom: '10@msr',
+    alignItems: "flex-start",
+  },
+  section: {
+    height: '250@msr',
+    alignItems: "center",
+  },
+  activityCard: {
+    backgroundColor: '#01065B',
+    width: '350@msr',
+    height: '170@msr',
+    padding: '20@msr',
+    justifyContent: 'space-between'
+  },
+  dateTime: {
+    marginTop: '-50@msr',
+    marginBottom: '20@msr',
+    color: '#7D1312',
+    width,
+    textAlign: 'center',
+    fontSize: '18@msr'
   },
   p: {
-    fontSize: 18,
+    marginTop: '10@msr',
+    fontSize: '18@msr',
     fontWeight: "600",
   },
-  title:{
-    fontSize:37,
-    color:'#fff',
-    fontWeight:'700'
+  title: {
+    fontSize: '37@msr',
+    color: '#fff',
+    fontWeight: '700'
   },
-  pressed:{
-    opacity:0.5
+  header: {
+
+  },
+  left: {
+    width: '20@msr',
+    height: '20@msr',
+  },
+  pressed: {
+    opacity: 0.5
   }
 });
 export default ClientDetailScreen;

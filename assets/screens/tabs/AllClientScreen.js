@@ -4,7 +4,8 @@ import {
   View,
   Image,
   ScrollView,
-  Dimensions
+  Dimensions,
+  Text
 } from "react-native";
 import Header from "../../components/main/Header";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,7 +24,7 @@ const { width } = Dimensions.get('window')
 const AllClientScreen = ({ navigation }) => {
   const selector = useSelector(state => state)
   const [agentArtisans, setagentArtisans] = useState([])
-  const { token } = selector.agent
+  const { token,agentData } = selector.agent
   const { artisans } = selector.artisan
   const [loading, setloading] = useState(false)
 
@@ -34,9 +35,12 @@ const AllClientScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      header: () => <Header><Pressable onPress={() =>  navigation.goBack()}>
-      <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
-    </Pressable></Header>,
+      header: () => <Header>
+        <Pressable onPress={() => navigation.goBack()}>
+        <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
+        </Pressable>
+        <Text>{'Artisans'}</Text>
+      </Header>,
       tabBarIcon: ({ color, size }) => (
         <Ionicons name="ios-people-outline" size={size} color={color} />
       ),
@@ -51,7 +55,7 @@ const AllClientScreen = ({ navigation }) => {
       getUser()
     });
     return unsubscribe;
-  }, [navigation,artisans])
+  }, [navigation, artisans])
 
   const getUser = () => {
     if (token) {
@@ -83,7 +87,7 @@ const AllClientScreen = ({ navigation }) => {
             }}
             data={agentArtisans} keyExtractor={(item) => { item._id }} renderItem={(data) =>
               <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(data.item.thrifts))}`}
-                nameOfClient={data.item.full_name} key={data.item._id} />}
+                nameOfClient={data.item.full_name} key={data.item._id} artisan={data.item} />}
           />
         </View>
       </ScrollView>
