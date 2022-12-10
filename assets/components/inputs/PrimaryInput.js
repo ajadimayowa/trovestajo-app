@@ -1,5 +1,6 @@
 import { Pressable, TextInput, View, StyleSheet } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
+import { ScaledSheet } from "react-native-size-matters";
 
 const PrimaryInput = (props) => {
     const { placeholder } = props
@@ -14,14 +15,14 @@ const PrimaryInput = (props) => {
 }
 export default PrimaryInput;
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     inputStyle: {
         width: '90%',
-        height: 30,
+        height: '30@msr',
         color: '#01065B',
         fontWeight: '700',
-        fontSize: 14,
-        margin: 15,
+        fontSize: '18@msr',
+        margin: '15@msr',
         borderBottomWidth: 1,
         borderBottomColor: '#01065B'
     }
