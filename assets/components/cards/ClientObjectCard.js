@@ -11,7 +11,6 @@ const ClientObjectCard = (props) => {
     navigation.navigate('ClientDetailScreen', {
       artisan: artisan,
       totalSaved: totalSaved,
-      getUser:getUser
     })
   }
 

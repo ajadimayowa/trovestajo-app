@@ -28,12 +28,12 @@ const Dashboard = (props) => {
   const { isLoading, artisans, success } = useSelector(state => state.artisan)
   const [agent, setagent] = useState()
   const [loading, setloading] = useState(false)
+
+  
   const handleNewClientReg = () => {
     navigation.navigate('RegNewClient')
   }
-  const checkButton = () => {
-    navigation.navigate("Main");
-  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,

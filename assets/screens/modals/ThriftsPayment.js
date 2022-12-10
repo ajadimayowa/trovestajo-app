@@ -10,19 +10,10 @@ import Loader from "../../shared/Loader";
 
 const { width } = Dimensions.get('window')
 export default function ThriftsPayment(props) {
-  const { artisan, token,setloading } = props
+  const { artisan, token,setloading ,navigation} = props
   const [modalVisible, setModalVisible] = useState(false);
   const [amount, setamount] = useState(0)
 
-  const datePaid = () => {
-    const newDate = new Date()
-    const year = newDate.getFullYear()
-    let month = newDate.getMonth() + 1
-    let day = newDate.getDate()
-    month = month < 10 ? `0${month}` : month
-    day = day < 10 ? `0${day}` : day
-    return `${year}-${month}-${day}`
-  }
 
   const payThrift = async () => {
     try {
@@ -45,6 +36,7 @@ export default function ThriftsPayment(props) {
         const response = await collectThrift(requestData)
         const { data, success, message } = response.data
         if (response && response.data && success === true) {
+          navigation.navigate("AllClients");
           setloading(false)
           setModalVisible(!modalVisible)
           DisplayMessage(message, 'success')

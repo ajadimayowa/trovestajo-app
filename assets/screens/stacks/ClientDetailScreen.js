@@ -25,7 +25,7 @@ const ClientDetailScreen = (props) => {
   const selector = useSelector(state => state)
   const { token, agentData } = selector.agent
   const { navigation, route } = props
-  const { artisan, totalSaved, getUser } = route.params
+  const { artisan, totalSaved } = route.params
   const [loading, setloading] = useState(false)
   const [setTime, setsetTime] = useState('')
 
@@ -44,13 +44,6 @@ const ClientDetailScreen = (props) => {
     setsetTime(`${hours}:${minutes}:${seconds} ${timeOfDay}`)
   }
 
-  useEffect(() => {
-
-    getUser()
-    // return () => {
-    //   cleanup
-    // }
-  }, [navigation])
 
   useEffect(() => {
     timeFormat()
@@ -104,7 +97,7 @@ const ClientDetailScreen = (props) => {
           {/* <Text style={styles.dateTime}>{`Date: ${dateFormat(new Date())} | ${setTime}`}</Text> */}
           {/* <Text style={styles.dateTime}>{`Time: ${setTime}`}</Text> */}
         </View>
-        <ThriftsPayment artisan={artisan} token={token} setloading={setloading} />
+        <ThriftsPayment artisan={artisan} token={token} setloading={setloading} navigation={navigation} />
         <View style={[styles.section1, { justifyContent: 'flex-start' }]}>
           <Text style={{ color: '#01065B', fontSize: moderateScale(18) }}>Activity Summary</Text>
         </View>

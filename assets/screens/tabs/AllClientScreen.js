@@ -42,10 +42,6 @@ const AllClientScreen = ({ navigation }) => {
     navigation.setOptions({
       headerShown: true,
       header: () => <Header>
-        <Pressable onPress={() => navigation.goBack()}>
-          <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
-        </Pressable>
-        <Text>{'Artisans'}</Text>
       </Header>,
       tabBarIcon: ({ color, size }) => (
         <Ionicons name="ios-people-outline" size={size} color={color} />
@@ -147,7 +143,7 @@ const AllClientScreen = ({ navigation }) => {
             }}
             data={agentArtisans} keyExtractor={(item) => { item._id }} renderItem={(data) =>
               <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(data.item.thrifts))}`}
-                nameOfClient={data.item.full_name} key={data.item._id} artisan={data.item} getUser={getUser} />}
+                nameOfClient={data.item.full_name} key={data.item._id} artisan={data.item} />}
           />
         </View>
       </ScrollView>
