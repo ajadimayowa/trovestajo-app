@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-export const host = `https://trovestbackend.up.railway.app`
+export const host = `https://tro-vestcapitalpartners.com`
+// export const host = `https://trovestbackend.up.railway.app`
 // export const host = `http://localhost:5100`
 export const root = 'root:'
 export const UNAUHTORIZED = 'Unauthorized Access';
