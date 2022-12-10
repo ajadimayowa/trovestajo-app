@@ -13,17 +13,20 @@ import { useLayoutEffect } from "react";
 import Header from "../../components/main/Header";
 import { Ionicons } from "@expo/vector-icons";
 import { moderateScale, ScaledSheet } from "react-native-size-matters";
-import CircleCard from "../../components/cards/CircleCard";
-import { dateFormat, convertToThousand } from "../../../constants";
 import ThriftsPayment from '../modals/ThriftsPayment';
+import { useSelector, useDispatch } from 'react-redux';
+import Loader from '../../shared/Loader';
+import { COLORS } from '../../../constants';
 
 
 const { width, height } = Dimensions.get('window')
 const ClientDetailScreen = (props) => {
   // const minutes = new Date().getSeconds();
+  const selector = useSelector(state => state)
+  const { token, agentData } = selector.agent
   const { navigation, route } = props
-  const { artisan, totalSaved } = route.params
-
+  const { artisan, totalSaved, getUser } = route.params
+  const [loading, setloading] = useState(false)
   const [setTime, setsetTime] = useState('')
 
   const timeFormat = () => {
@@ -34,11 +37,20 @@ const ClientDetailScreen = (props) => {
 
     const timeOfDay = hours > 11 ? 'PM' : 'AM'
     if (hours > 12) hours = hours % 12
+    if (hours === 0) hours = 12
     hours = hours < 10 ? `0${hours}` : hours
     minutes = minutes < 10 ? `0${minutes}` : minutes
     seconds = seconds < 10 ? `0${seconds}` : seconds
     setsetTime(`${hours}:${minutes}:${seconds} ${timeOfDay}`)
   }
+
+  useEffect(() => {
+
+    getUser()
+    // return () => {
+    //   cleanup
+    // }
+  }, [navigation])
 
   useEffect(() => {
     timeFormat()
@@ -53,7 +65,8 @@ const ClientDetailScreen = (props) => {
             width,
             alignItems: 'center',
             justifyContent: 'space-between',
-            flexDirection: 'row'
+            flexDirection: 'row',
+            width: width * .97,
           }}>
             <Pressable onPress={() => navigation.goBack()}>
               <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
@@ -71,67 +84,44 @@ const ClientDetailScreen = (props) => {
     });
   }, [navigation]);
 
-  const handlePayment = () => {
-    Alert.alert('Payment Successfule')
-  }
   return (
-    <>
-      <ScrollView style={styles.screen}
+    <SafeAreaView style={styles.screen}>
+      {loading ? <Loader /> : <ScrollView style={styles.screen1}
         contentContainerStyle={styles.contentContainerStyle}
       >
-        <View style={[styles.section]}>
-          <CircleCard
-            externalStyle={{
-              width: moderateScale(140),
-              height: moderateScale(140),
-              borderRadius: moderateScale(70),
-              backgroundColor: "#fff",
-            }}
-          />
+        <View style={styles.section}>
+          <Image source={{ uri: 'https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg' }} style={{
+            width: moderateScale(130),
+            height: moderateScale(130),
+            borderRadius: moderateScale(70),
+            backgroundColor: "#fff",
+          }} />
           <Text style={[styles.p]}> {artisan?.full_name}</Text>
-          {/* <Text style={[styles.p, { fontSize: 12 }]}>
-            savings type goes here
-          </Text> */}
-          {/* <Text style={[styles.p, { fontSize: 12 }]}>
-            savings amount goes here
-          </Text> */}
+          <Text style={[styles.p, { fontSize: moderateScale(18), paddingBottom: moderateScale(10) }]}>
+            Daily
+          </Text>
+          <Text style={styles.dateTime}>{`${new Date().toDateString()} | ${setTime}`}</Text>
+          {/* <Text style={styles.dateTime}>{`Date: ${dateFormat(new Date())} | ${setTime}`}</Text> */}
+          {/* <Text style={styles.dateTime}>{`Time: ${setTime}`}</Text> */}
         </View>
-
-        <>
-          <Text style={styles.dateTime}>{`${dateFormat(new Date())} ${setTime}`}</Text>
-        </>
-        <ThriftsPayment />
-        {/* <View style={[styles.section, { height: 170 }]}>
-          <Pressable onPress={handlePayment} style={({ pressed }) => pressed ? styles.pressed : null}>
-            <CircleCard
-              externalStyle={{
-                width: 140,
-                height: 140,
-                borderRadius: 70,
-                backgroundColor: "#7D1312",
-              }}
-            ><Text style={styles.title}>Pay</Text>
-            </CircleCard>
-          </Pressable>
-        </View> */}
+        <ThriftsPayment artisan={artisan} token={token} setloading={setloading} />
         <View style={[styles.section1, { justifyContent: 'flex-start' }]}>
           <Text style={{ color: '#01065B', fontSize: moderateScale(18) }}>Activity Summary</Text>
         </View>
-        <View style={[styles.section, { height: 200, paddingVertical: null, alignItems: 'flex-start' }]}>
+        <View style={[styles.section, { alignItems: 'center', marginBottom: moderateScale(70) }]}>
           <View style={styles.activityCard}>
             <Text style={[{ color: '#fff', fontSize: moderateScale(18) }]}>Total amount saved</Text>
-
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ color: '#fff', fontSize: 37, fontWeight: '700' }}>{(totalSaved)}</Text>
+              <Text style={{ color: '#fff', fontSize: moderateScale(37), fontWeight: '700', marginTop: moderateScale(18) }}>{(totalSaved)}</Text>
             </View>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-evenly' }}>
-              <Text style={[{ color: '#fff', fontSize: moderateScale(15) }]}>Due for withdrawal?</Text>
-              <Text style={[{ color: '#fff', fontSize: moderateScale(15) }]}>No</Text>
+            <View style={{ flexDirection: 'row', alignContent: 'flex-start',justifyContent: 'space-between', marginTop: moderateScale(20) }}>
+              <Text style={[{ color: '#fff', fontSize: moderateScale(15), width: '50%' }]}>Due for withdrawal?</Text>
+              <Text style={[{ color: '#fff', fontSize: moderateScale(15),width: '50%'}]}>No</Text>
             </View>
           </View>
         </View>
-      </ScrollView>
-    </>
+      </ScrollView>}
+    </SafeAreaView>
   );
 };
 
@@ -139,31 +129,34 @@ const styles = ScaledSheet.create({
   screen: {
     flex: 1,
     width: width,
-    paddingTop: '40@msr',
+    // paddingBottom: '40@msr',
     backgroundColor: "#fff",
+  },
+  screen1: {
+    paddingTop: '30@msr',
   },
   contentContainerStyle: {
     alignItems: 'center'
   },
   section1: {
-    width: width * .97,
+    width: width * .92,
     paddingBottom: '10@msr',
     alignItems: "flex-start",
   },
   section: {
-    height: '250@msr',
     alignItems: "center",
   },
   activityCard: {
-    backgroundColor: '#01065B',
-    width: '350@msr',
-    height: '170@msr',
+    backgroundColor: COLORS.troBlue,
+    width: width * .92,
+    // height: '170@msr',
     padding: '20@msr',
+    paddingTop: '30@msr',
+    paddingBottom: '30@msr',
     justifyContent: 'space-between'
   },
   dateTime: {
-    marginTop: '-50@msr',
-    marginBottom: '20@msr',
+    marginBottom: '5@msr',
     color: '#7D1312',
     width,
     textAlign: 'center',

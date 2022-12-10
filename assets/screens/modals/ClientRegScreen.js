@@ -8,7 +8,7 @@ import { ScaledSheet } from "react-native-size-matters";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import DisplayMessage from "../../shared/ShowMessage";
 import { useDispatch, useSelector } from "react-redux";
-import { creatAgentArtisan } from "../../../redux/requests/requests";
+import { createAgentArtisan } from "../../../redux/requests/requests";
 import { ACCESS_DENIED, UNAUHTORIZED } from "../../../constants";
 import { getArtisanData } from "../../../redux/slices/artisan.slice";
 
@@ -61,7 +61,7 @@ const ClientRegScreen = (props) => {
           token: token
         }
         setloading(true)
-        const response = await creatAgentArtisan(formData)
+        const response = await createAgentArtisan(formData)
         const { success, message } = response.data
         if (success === true) {
           DisplayMessage(message, 'success', 'Success')

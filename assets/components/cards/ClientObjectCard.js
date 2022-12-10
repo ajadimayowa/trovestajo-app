@@ -6,17 +6,17 @@ import { useNavigation } from "@react-navigation/native";
 const { width, height } = Dimensions.get('window')
 const ClientObjectCard = (props) => {
   const navigation = useNavigation()
-  const { clientId, nameOfClient, totalSaved, externalOuterStyle, externalInnerStyle, artisan } = props;
-
+  const { clientId, nameOfClient, totalSaved, externalOuterStyle, externalInnerStyle, artisan,getUser } = props;
   const goToClientDetails = () => {
     navigation.navigate('ClientDetailScreen', {
       artisan: artisan,
-      totalSaved: totalSaved
+      totalSaved: totalSaved,
+      getUser:getUser
     })
   }
 
   return (
-    <View style={[styles.outerView, externalOuterStyle]}>
+    <View style={[styles.outerView, externalOuterStyle]} key={artisan._id}>
       <Pressable
         style={({ pressed }) => (pressed ? styles.pressed : null)}
         onPress={goToClientDetails}

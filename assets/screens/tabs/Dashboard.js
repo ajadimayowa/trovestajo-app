@@ -18,6 +18,7 @@ import { ScaledSheet } from 'react-native-size-matters';
 import { getArtisanData, pageLoading, getAgentArtisanSuccess } from "../../../redux/slices/artisan.slice";
 import { getAgentArtisan } from "../../../redux/requests/requests";
 import DisplayMessage from "../../shared/ShowMessage";
+import { ACCESS_DENIED, UNAUHTORIZED } from "../../../constants";
 
 
 const Dashboard = (props) => {
@@ -71,6 +72,13 @@ const Dashboard = (props) => {
           dispatch(getAgentArtisanSuccess(payload))
           setloading(false)
         }
+        else if (message === UNAUHTORIZED || message === ACCESS_DENIED) {
+          DisplayMessage(message, 'warning', 'Something went wrong')
+          setloading(false)
+          setTimeout(() => {
+            navigation.navigate("Login");
+          }, 2000);
+        }
         else {
           DisplayMessage(message, 'warning', 'Something went wrong')
           setloading(false)
@@ -78,7 +86,9 @@ const Dashboard = (props) => {
       }
       else {
         setloading(false)
-        navigation.navigate("Login");
+        setTimeout(() => {
+          navigation.navigate("Login");
+        }, 2000);
       }
     } catch (error) {
       DisplayMessage(error.message, 'danger', 'Error Occured')

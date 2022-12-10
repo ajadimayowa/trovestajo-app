@@ -17,7 +17,7 @@ export const loginAgent = (data) => {
     return axios(requestOptions);
 }
 
-export const creatAgentArtisan = (data) => {
+export const createAgentArtisan = (data) => {
     headers.authorization = `Bearer ${data.token}`
     const requestOptions = {
         method: "post",
@@ -48,6 +48,18 @@ export const getTotalAgents = (payload) => {
     }
     return axios(requestOptions);
 }
+
+export const collectThrift = (data) => {
+    headers.authorization = `Bearer ${data.token}`
+    const requestOptions = {
+        method: "post",
+        url: `${baseUrl}/collect-thrift`,
+        headers: headers,
+        data: data.data
+    }
+    return axios(requestOptions);
+}
+
 
 export const getAdmin = (token) => {
     headers.authorization = `Bearer ${token}`
