@@ -5,8 +5,6 @@ const {width } = Dimensions.get('window')
 const LabelCard = ({
   title,
   totalClientRegistered,
-  onPress,
-  externalOuterStyle,
   externalInnerStyle,
 }) => {
   return (

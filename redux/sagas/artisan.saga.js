@@ -5,7 +5,6 @@ import { getAgentArtisanSuccess, getArtisanFailure } from '../slices/artisan.sli
 
 export function* getArtisanSaga(action) {
     try {
-        console.log('action',action)
         const response = yield call(getAgentArtisan, action.payload);
         const { success, message, data } = response.data;
         if (success === true) {

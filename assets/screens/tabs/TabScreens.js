@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { useLayoutEffect } from "react";
 import { Text } from "react-native";
+import {moderateScale} from 'react-native-size-matters'
 import Dashboard from "../tabs/Dashboard";
 import AllTransactionScreen from "../tabs/AllTransactionScreen";
 import AllClientScreen from "../tabs/AllClientScreen";
@@ -21,8 +22,9 @@ const TabScreens = ({ navigation }) => {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: "#01065B",
-          height: 62,
+          height: moderateScale(62),
         },
+        headerShown: false
       }}
     >
       <tabs.Screen name="Dashboard" component={Dashboard} />

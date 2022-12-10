@@ -9,7 +9,7 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "stretch",
-      "backgroundColor": "#ffffff"
+      "background": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
@@ -24,10 +24,16 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.trovestfinance.mobile"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "b40aeb25-7ab5-464e-bfe4-0a212f751648"
+      }
     }
   }
 }

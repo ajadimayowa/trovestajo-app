@@ -9,6 +9,9 @@ const artisanSlice = createSlice({
         token: ''
     },
     reducers: {
+        pageLoading: (state, action) => {
+            state.isLoading = action.payload;
+        },
         getArtisanData: (state, action) => {
             state.isLoading = true;
             state.token = action.payload
@@ -20,12 +23,12 @@ const artisanSlice = createSlice({
             state.isLoading = isLoading;
         },
         getArtisanFailure: (state) => {
-            state.isLoading = action.payload.isLoading;
+            state.isLoading = false;
             state.success = action.payload.success
         }
     }
 })
 
-export const { getArtisanData, getAgentArtisanSuccess, getArtisanFailure } = artisanSlice.actions
+export const { pageLoading, getArtisanData, getAgentArtisanSuccess, getArtisanFailure } = artisanSlice.actions
 
 export default artisanSlice.reducer

@@ -1,35 +1,35 @@
 import React, { useLayoutEffect } from "react";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from "@expo/vector-icons";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native";
-import { ScaledSheet } from 'react-native-size-matters';
-
+import { ScaledSheet } from "react-native-size-matters";
+import Header from "../../components/main/Header";
+import PrimaryInput from "../../components/inputs/PrimaryInput";
+import LabelCard from "../../components/cards/LabelCard";
 
 const AllTransactionScreen = ({ navigation }) => {
-
   const checkButton = () => {
-    navigation.navigate('Main')
-  }
+    navigation.navigate("Main");
+  };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      tabBarIcon: ({ color, size }) => <Ionicons name="wallet-outline" size={size}
-        color={color} />,
+      header: () => (
+        <Header>
+          <PrimaryInput />
+        </Header>
+      ),
+      tabBarIcon: ({ color, size }) => (
+        <Ionicons name="wallet-outline" size={size} color={color} />
+      ),
     });
   }, [navigation]);
   return (
     <SafeAreaView style={styles.screen}>
-      {/* logo section */}
       <View style={styles.container}>
-
-        {/* form section */}
-        <View style={[styles.section, { marginTop: "30%" }]}>
-
-        </View>
-        {/* support section */}
-        <View style={[styles.section, { marginTop: "30%", height: '7%', justifyContent: 'space-between' }]}>
-          <Text style={[styles.p, { color: '#01065B' }]}>Forgot Password ?</Text>
-          <Text style={[styles.p, { color: '#7A0D0C' }]}>Contact Support</Text>
+       
+        <View style={[styles.section, { marginTop: "10%" }]}>
+          <LabelCard title={'Transaction History'} />
         </View>
       </View>
     </SafeAreaView>
@@ -55,9 +55,9 @@ const styles = ScaledSheet.create({
     alignItems: "center",
   },
   p: {
-    color: '#fff',
-    fontSize: '14@msr',
-  }
+    color: "#fff",
+    fontSize: "14@msr",
+  },
 });
 
 export default AllTransactionScreen;

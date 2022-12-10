@@ -1,8 +1,8 @@
 import { View, StyleSheet, Text } from "react-native";
 
-const CircleCard = ({ children }) => {
+const CircleCard = ({ children,externalStyle }) => {
   
-  return (<View style ={styles.container}>
+  return (<View style ={[styles.container, externalStyle]}>
     <Text style={styles.p}>{children}</Text>
   </View>)
 }

@@ -15,21 +15,25 @@ import CardButton from "../../components/buttons/CardButton";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../shared/Loader";
 import { ScaledSheet } from 'react-native-size-matters';
-import { getArtisanData } from "../../../redux/slices/artisan.slice";
+import { getArtisanData, pageLoading, getAgentArtisanSuccess } from "../../../redux/slices/artisan.slice";
+import { getAgentArtisan } from "../../../redux/requests/requests";
+import DisplayMessage from "../../shared/ShowMessage";
+import { ACCESS_DENIED, UNAUHTORIZED } from "../../../constants";
 
 
-const Dashboard = ({ navigation }) => {
+const Dashboard = (props) => {
+  const { navigation } = props
   const dispatch = useDispatch()
   const { agentData, token } = useSelector(state => state.agent)
-  const { isLoading, artisans,success }  = useSelector(state => state.artisan)
+  const { isLoading, artisans, success } = useSelector(state => state.artisan)
   const [agent, setagent] = useState()
   const [loading, setloading] = useState(false)
+
+  
   const handleNewClientReg = () => {
     navigation.navigate('RegNewClient')
   }
-  const checkButton = () => {
-    navigation.navigate("Main");
-  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -42,18 +46,55 @@ const Dashboard = ({ navigation }) => {
 
   useEffect(() => {
     setloading(true)
-    if (token) {
-      setagent(agentData)
-      dispatch(getArtisanData(token))
-      if (isLoading === false) {
-        setloading(false)
+    getArtisans()
+    const unsubscribe = navigation.addListener('focus', () => {
+      setloading(true)
+      dispatch(pageLoading(true))
+      getArtisans()
+    });
+    return unsubscribe;
+  }, [token, navigation])
+
+  const getArtisans = async () => {
+    try {
+      if (token) {
+        setagent(agentData)
+        // make a normal request and use this to set the artiasna instead of redux saga
+        const response = await getAgentArtisan(token)
+        const { success, message, data } = response.data
+        if (success === true) {
+          const payload = {
+            data,
+            message: message,
+            success: success,
+            isLoading: false
+          }
+          dispatch(getAgentArtisanSuccess(payload))
+          setloading(false)
+        }
+        else if (message === UNAUHTORIZED || message === ACCESS_DENIED) {
+          DisplayMessage(message, 'warning', 'Something went wrong')
+          setloading(false)
+          setTimeout(() => {
+            navigation.navigate("Login");
+          }, 2000);
+        }
+        else {
+          DisplayMessage(message, 'warning', 'Something went wrong')
+          setloading(false)
+        }
       }
-    }
-    else {
+      else {
+        setloading(false)
+        setTimeout(() => {
+          navigation.navigate("Login");
+        }, 2000);
+      }
+    } catch (error) {
+      DisplayMessage(error.message, 'danger', 'Error Occured')
       setloading(false)
-      navigation.navigate("Login");
     }
-  }, [token])
+  }
 
   return (
     <ScrollView style={styles.screen}>
@@ -90,7 +131,7 @@ const Dashboard = ({ navigation }) => {
                 },
               ]}
             >
-              <CircleCard>{agentData?.artisans.length}</CircleCard>
+              <CircleCard>{artisans?.length}</CircleCard>
               <Text
                 style={{
                   width: "70%",
