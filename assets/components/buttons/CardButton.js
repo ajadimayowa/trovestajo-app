@@ -2,7 +2,7 @@ import { View, Pressable, Text } from "react-native";
 import { ScaledSheet } from 'react-native-size-matters';
 import { COLORS } from "../../../constants";
 
-const CardButton = ({ children, onPress, externalOuterStyle, externalInnerStyle }) => {
+const CardButton = ({ children, onPress, externalOuterStyle, externalInnerStyle,textStyles }) => {
   return (
     <View style={[styles.outerView, externalOuterStyle, { margin: '2%' }]}>
       <Pressable
@@ -10,7 +10,7 @@ const CardButton = ({ children, onPress, externalOuterStyle, externalInnerStyle 
         onPress={onPress}
       >
         <View style={[styles.innerView, externalInnerStyle]}>
-          <Text style={styles.p}>{children}</Text>
+          <Text style={[styles.p,textStyles]}>{children}</Text>
         </View>
       </Pressable>
     </View>

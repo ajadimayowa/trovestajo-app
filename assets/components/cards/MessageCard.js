@@ -1,15 +1,15 @@
 import { View, StyleSheet, Text } from "react-native";
+import { moderateScale, ScaledSheet } from "react-native-size-matters";
+import { COLORS } from "../../../constants";
 
-const MessageCard = ({}) => {
+const MessageCard = ({ }) => {
   return (
     <View style={styles.container}>
       <View
         style={{
-          flex: 1,
           width: "100%",
           justifyContent: "center",
-          
-          padding: 10,
+          padding: moderateScale(10),
         }}
       >
         <Text style={styles.p}>0 Unread Messages</Text>
@@ -21,28 +21,28 @@ const MessageCard = ({}) => {
           width: "100%",
           padding: 10,
           flexDirection: "row",
-          alignItems:'center',
+          alignItems: 'center',
           justifyContent: "space-around",
           // backgroundColor:'pink'
-          
+
         }}
       >
         <View style={{ width: "80%" }}>
-            <Text
-              style={{
-                // backgroundColor: "green",
-                fontSize: 10,
-                width:'100%',
-                flex:1,
-                color:'#fff',
-                flexWrap:'wrap'
-              }}
-            >
-              We appreciate your effort as an agent Keep up the good job
-            </Text>
-          
+          <Text
+            style={{
+              // backgroundColor: "green",
+              fontSize: moderateScale(10),
+              width: '100%',
+              color: '#fff',
+              flexWrap: 'wrap',
+              fontFamily: 'regular'
+            }}
+          >
+            We appreciate your effort as an agent Keep up the good job
+          </Text>
+
         </View>
-        <View style={{backgroundColor:'#fff', height:25, width:25, borderRadius:8, justifyContent:'center', alignItems:'center'}}>
+        <View style={{ backgroundColor: '#fff', height: moderateScale(25), width: moderateScale(25), borderRadius: 8, justifyContent: 'center', alignItems: 'center' }}>
           <Text>0</Text>
         </View>
       </View>
@@ -50,16 +50,15 @@ const MessageCard = ({}) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   container: {
-    backgroundColor:'#01065B',
+    backgroundColor: COLORS.troBlue,
     width: "90%",
-    height: 80,
+    height: '90@msr',
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 5,
+    borderRadius: '5@msr',
     borderWidth: 1,
-    // borderColor: "#7D1312",
     shadowColor: "#0000",
     shadowOffset: [0, 3],
   },
@@ -68,8 +67,8 @@ const styles = StyleSheet.create({
   section_two: {},
   section_two_views: {},
   p: {
-    fontSize: 15,
-    fontWeight:'600',
+    fontSize: '15@msr',
+    fontFamily: 'semiBold',
     color: "#fff",
   },
 });

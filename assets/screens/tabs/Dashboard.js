@@ -14,11 +14,11 @@ import MessageCard from "../../components/cards/MessageCard";
 import CardButton from "../../components/buttons/CardButton";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../shared/Loader";
-import { ScaledSheet } from 'react-native-size-matters';
+import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 import { getArtisanData, pageLoading, getAgentArtisanSuccess } from "../../../redux/slices/artisan.slice";
 import { getAgentArtisan } from "../../../redux/requests/requests";
 import DisplayMessage from "../../shared/ShowMessage";
-import { ACCESS_DENIED, UNAUHTORIZED } from "../../../constants";
+import { ACCESS_DENIED, COLORS, UNAUHTORIZED } from "../../../constants";
 
 
 const Dashboard = (props) => {
@@ -110,7 +110,7 @@ const Dashboard = (props) => {
                 { justifyContent: "space-around", marginTop: "5%" },
               ]}
             >
-              <Text style={{ fontSize: 14, fontWeight: "600" }}>
+              <Text style={{ fontSize: moderateScale(14), fontFamily: "regular" }}>
                 Here is Your Performance So far
               </Text>
               <Feather name="activity" size={24} color="black" />
@@ -128,7 +128,7 @@ const Dashboard = (props) => {
                   {
                     alignItems: "center",
                     justifyContent: "space-around",
-                    padding: 10,
+                    padding: moderateScale(10),
                   },
                 ]}
               >
@@ -137,8 +137,9 @@ const Dashboard = (props) => {
                   style={{
                     width: "70%",
                     textAlign: "center",
-                    color: "#7D1312",
-                    fontWeight: "600",
+                    color: COLORS.troBrown,
+                    fontFamily: "bold",
+                    fontSize: moderateScale(14)
                   }}
                 >
                   Clients Registered
@@ -151,12 +152,13 @@ const Dashboard = (props) => {
               >
                 <CircleCard>85%</CircleCard>
                 <Text
-                  style={{
-                    width: "70%",
-                    textAlign: "center",
-                    color: "#7D1312",
-                    fontWeight: "600",
-                  }}
+                style={{
+                  width: "70%",
+                  textAlign: "center",
+                  color: COLORS.troBrown,
+                  fontFamily: "bold",
+                  fontSize: moderateScale(13)
+                }}
                 >
                   Timely Cash Pick-up
                 </Text>
@@ -168,12 +170,13 @@ const Dashboard = (props) => {
               >
                 <CircleCard>76%</CircleCard>
                 <Text
-                  style={{
-                    width: "70%",
-                    textAlign: "center",
-                    color: "#7D1312",
-                    fontWeight: "600",
-                  }}
+                style={{
+                  width: "70%",
+                  textAlign: "center",
+                  color: COLORS.troBrown,
+                  fontFamily: "bold",
+                  fontSize: moderateScale(13)
+                }}
                 >
                   TimelyCash Deposit
                 </Text>
@@ -195,10 +198,10 @@ const Dashboard = (props) => {
               },
             ]}
           >
-            <Text style={{ fontSize: 19, fontWeight: "600", color: "#01065B" }}>
+            <Text style={{ fontSize: moderateScale(19), fontFamily: "bold", color: COLORS.troBlue }}>
               {`${agent?.first_name} ${agent?.last_name.charAt(0)}`}
             </Text>
-            <Text style={{ fontSize: 12, fontWeight: "600", color: "#01065B" }}>
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "bold", color: COLORS.troBlue }}>
               {`${agent?.assigned_id}`}
             </Text>
           </View>
@@ -232,8 +235,8 @@ const Dashboard = (props) => {
             ]}
           >
             <View style={[{ alignItems: "center" }]}>
-              <Text style={{ fontSize: 19, fontWeight: '800' }}>Agent {`${agent?.first_name}`}</Text>
-              <Text style={{ fontSize: 9 }}>What would you like to do today?</Text>
+              <Text style={{  fontSize: moderateScale(19), fontFamily: "bold", color: COLORS.troBlue  }}>Agent {`${agent?.first_name}`}</Text>
+              <Text style={{  fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue  }}>What would you like to do today?</Text>
             </View>
           </View>
           <View
@@ -247,10 +250,10 @@ const Dashboard = (props) => {
               },
             ]}
           >
-            <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }}>
+            <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }} textStyles={{fontSize: moderateScale(10), fontFamily: "bold"}}>
               Register New Client
             </CardButton>
-            <CardButton externalInnerStyle={{ backgroundColor: '#7D1312' }}>Deposit Collected Funds.</CardButton>
+            <CardButton externalInnerStyle={{ backgroundColor: COLORS.troBrown }} textStyles={{fontSize: moderateScale(10), fontFamily: "bold"}}>Deposit Collected Funds.</CardButton>
           </View>
         </SafeAreaView>
       </ScrollView>

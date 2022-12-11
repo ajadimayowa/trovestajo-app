@@ -3,6 +3,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Foundation } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { COLORS } from "../../../constants";
+import { moderateScale } from "react-native-size-matters";
 
 const Card = ({}) => {
   return (
@@ -19,26 +20,26 @@ const Card = ({}) => {
       >
         <View style={{ width: "50%", alignItems:'flex-start', flex:3 }}>
           <View>
-            <Text style={{ fontSize: 10, fontWeight: "700", color: "#01065B" }}>
+            <Text style={{ fontSize: moderateScale(10), fontFamily: "bold", color: COLORS.troBlue }}>
               Designated Local Govmt
             </Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Ionicons style={{marginRight:5}} name="location" size={8.57} color="black" />
-            <Text style={{ fontSize: 10, fontWeight: "500" }}>
+            <Text style={{  fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue }}>
               Eti - Osa Lga
             </Text>
           </View>
         </View>
         <View style={{ width: "50%", alignItems:'flex-start', flex:2 }}>
           <View>
-            <Text style={{ fontSize: 10, fontWeight: "700", color: "#01065B" }}>
+            <Text style={{ fontSize: moderateScale(10), fontFamily: "bold", color: COLORS.troBlue }}>
               Next Review Date
             </Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
           <MaterialCommunityIcons style={{marginRight:5}} name="calendar" size={11.11} color="black" />
-            <Text style={{ fontSize: 10, fontWeight: "500" }}>25/06/2022</Text>
+            <Text style={{ fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue}}>25/06/2022</Text>
           </View>
         </View>
       </View>
@@ -54,33 +55,33 @@ const Card = ({}) => {
       >
         <View style={{ width: "50%",flex:3 }}>
           <View>
-            <Text style={{ fontSize: 10, fontWeight: "700", color: "#01065B" }}>
+            <Text style={{ fontSize: moderateScale(10), fontFamily: "bold", color: COLORS.troBlue }}>
               Admin Handler
             </Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center"}}>
           <Ionicons style={{marginRight:5}} name="person-sharp" size={10} color="black" />
-            <Text style={{ fontSize: 10, fontWeight: "500" }}>
+            <Text style={{  fontSize: moderateScale(12), fontFamily: "regular", color: COLORS.troBlue }}>
               Stephanie Jules
             </Text>
           </View>
         </View>
         <View style={{ width: "50%", alignItems:'flex-start', flex:2}}>
           <View>
-            <Text style={{ fontSize: 10, fontWeight: "700", color: "#01065B",textAlign:'right'}}>
+            <Text style={{ fontSize: moderateScale(10), fontFamily: "bold", color: COLORS.troBlue,textAlign:'right'}}>
             Contact Info
             </Text>
           </View>
           <View>
             <View style={{width:'100%', flexDirection: "row", alignItems: "center"}}>
             <Foundation style={{marginRight:5}} name="telephone" size={10} color="black" />
-            <Text style={{ fontSize: 10, fontWeight: "500" }}>
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "regular", color: COLORS.troBlue }}>
             08166064166
             </Text>
             </View>
             <View style={{width:'100%', flexDirection: "row", alignItems: "center"}}>
             <MaterialCommunityIcons style={{marginRight:5}} name="email" size={10} color="black" />
-            <Text style={{ fontSize: 10, fontWeight: "500"}}>stephjules@trovest.com</Text>
+            <Text style={{  fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue}}>stephjules@trovest.com</Text>
             </View>
           </View>
         </View>
