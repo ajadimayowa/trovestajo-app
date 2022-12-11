@@ -60,6 +60,16 @@ export const collectThrift = (data) => {
     return axios(requestOptions);
 }
 
+export const getAgentCollection = (data) => {
+    const { agent_id, token } = data
+    headers.authorization = `Bearer ${token}`
+    const requestOptions = {
+        method: "get",
+        url: `${baseUrl}/thrifts/${agent_id}`,
+        headers: headers,
+    }
+    return axios(requestOptions);
+}
 
 export const getAdmin = (token) => {
     headers.authorization = `Bearer ${token}`
@@ -70,6 +80,7 @@ export const getAdmin = (token) => {
     }
     return axios(requestOptions);
 }
+
 export const loginAdminRequest = (data) => {
     const requestOptions = {
         method: "post",

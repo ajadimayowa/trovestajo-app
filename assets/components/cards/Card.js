@@ -2,6 +2,7 @@ import { View, StyleSheet, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { Foundation } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { COLORS } from "../../../constants";
 
 const Card = ({}) => {
   return (
@@ -90,7 +91,7 @@ const Card = ({}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#F4F4F4",
+    backgroundColor: COLORS.cardColor,
     flexDirection: "column",
     width: 369,
     height: 167,

@@ -1,6 +1,7 @@
 import { View, Pressable, Text, Dimensions } from "react-native";
 import { ScaledSheet } from 'react-native-size-matters';
 import { useNavigation } from "@react-navigation/native";
+import { COLORS } from "../../../constants";
 
 
 const { width, height } = Dimensions.get('window')
@@ -17,6 +18,7 @@ const ClientObjectCard = (props) => {
   return (
     <View style={[styles.outerView, externalOuterStyle]} key={artisan._id}>
       <Pressable
+        key={artisan._id}
         style={({ pressed }) => (pressed ? styles.pressed : null)}
         onPress={goToClientDetails}
       >
@@ -46,7 +48,7 @@ const styles = ScaledSheet.create({
     flexDirection: 'row',
     marginTop: '10@msr',
     padding: '10@msr',
-    backgroundColor: "#F4F4F4",
+    backgroundColor: COLORS.cardColor,
     alignItems: "center",
     justifyContent: "space-between",
   },

@@ -8,7 +8,9 @@ export const ACCESS_DENIED = 'Access Denied';
 export const agentKey = `${root}agent_key`
 export const COLORS = {
     troBlue: '#01065B',
-    troBrown: '#7A0D0C'
+    troBrown: '#7A0D0C',
+    backgroundGray: '#e3e3e3',
+    cardColor: '#F4F4F4'
 }
 
 export const agentToken = async () => {

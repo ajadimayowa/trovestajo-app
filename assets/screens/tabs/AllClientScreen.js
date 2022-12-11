@@ -106,7 +106,7 @@ const AllClientScreen = ({ navigation }) => {
         setloading(false)
         setrefreshing(false)
         setTimeout(() => {
-          navigation.navigate("Login");
+          checkButton()
         }, 2000);
       }
     } catch (error) {
