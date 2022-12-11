@@ -143,9 +143,9 @@ const AllClientScreen = ({ navigation }) => {
             }}
             data={agentArtisans}
             keyExtractor={(item) => { item._id }}
-            renderItem={(data) =>
-              <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(data.item.thrifts))}`}
-                nameOfClient={data.item.full_name} key={data.item._id} artisan={data.item} />}
+            renderItem={({ item }) =>
+              <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(item.thrifts))}`}
+                nameOfClient={item.full_name} key={item._id} artisan={item} />}
           />
         </View>
       </ScrollView>
