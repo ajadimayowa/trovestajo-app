@@ -29,7 +29,7 @@ const Dashboard = (props) => {
   const [agent, setagent] = useState()
   const [loading, setloading] = useState(false)
 
-  
+
   const handleNewClientReg = () => {
     navigation.navigate('RegNewClient')
   }
@@ -97,162 +97,164 @@ const Dashboard = (props) => {
   }
 
   return (
-    <ScrollView style={styles.screen}>
+    <>
       {loading && <Loader />}
-      <SafeAreaView style={styles.container}>
-        {/* top section starts here */}
-        <View style={[styles.section, styles.topSection]}>
-          {/* first row */}
-          <View
-            style={[
-              styles.SectionViewRows,
-              { justifyContent: "space-around", marginTop: "5%" },
-            ]}
-          >
-            <Text style={{ fontSize: 14, fontWeight: "600" }}>
-              Here is Your Performance So far
-            </Text>
-            <Feather name="activity" size={24} color="black" />
-          </View>
-          {/* second row */}
-          <View
-            style={[
-              styles.SectionViewRows,
-              { justifyContent: "space-around", flex: 5 },
-            ]}
-          >
-            {/* col 1 */}
+      <ScrollView style={styles.screen}>
+        <SafeAreaView style={styles.container}>
+          {/* top section starts here */}
+          <View style={[styles.section, styles.topSection]}>
+            {/* first row */}
             <View
               style={[
-                {
-                  alignItems: "center",
-                  justifyContent: "space-around",
-                  padding: 10,
-                },
+                styles.SectionViewRows,
+                { justifyContent: "space-around", marginTop: "5%" },
               ]}
             >
-              <CircleCard>{artisans?.length}</CircleCard>
-              <Text
-                style={{
-                  width: "70%",
-                  textAlign: "center",
-                  color: "#7D1312",
-                  fontWeight: "600",
-                }}
-              >
-                Clients Registered
+              <Text style={{ fontSize: 14, fontWeight: "600" }}>
+                Here is Your Performance So far
               </Text>
+              <Feather name="activity" size={24} color="black" />
             </View>
-
-            {/* col 2 */}
+            {/* second row */}
             <View
-              style={[{ alignItems: "center", justifyContent: "space-around" }]}
+              style={[
+                styles.SectionViewRows,
+                { justifyContent: "space-around", flex: 5 },
+              ]}
             >
-              <CircleCard>85%</CircleCard>
-              <Text
-                style={{
-                  width: "70%",
-                  textAlign: "center",
-                  color: "#7D1312",
-                  fontWeight: "600",
-                }}
+              {/* col 1 */}
+              <View
+                style={[
+                  {
+                    alignItems: "center",
+                    justifyContent: "space-around",
+                    padding: 10,
+                  },
+                ]}
               >
-                Timely Cash Pick-up
-              </Text>
-            </View>
+                <CircleCard>{artisans?.length}</CircleCard>
+                <Text
+                  style={{
+                    width: "70%",
+                    textAlign: "center",
+                    color: "#7D1312",
+                    fontWeight: "600",
+                  }}
+                >
+                  Clients Registered
+                </Text>
+              </View>
 
-            {/* col 3 */}
-            <View
-              style={[{ alignItems: "center", justifyContent: "space-around" }]}
-            >
-              <CircleCard>76%</CircleCard>
-              <Text
-                style={{
-                  width: "70%",
-                  textAlign: "center",
-                  color: "#7D1312",
-                  fontWeight: "600",
-                }}
+              {/* col 2 */}
+              <View
+                style={[{ alignItems: "center", justifyContent: "space-around" }]}
               >
-                TimelyCash Deposit
-              </Text>
+                <CircleCard>85%</CircleCard>
+                <Text
+                  style={{
+                    width: "70%",
+                    textAlign: "center",
+                    color: "#7D1312",
+                    fontWeight: "600",
+                  }}
+                >
+                  Timely Cash Pick-up
+                </Text>
+              </View>
+
+              {/* col 3 */}
+              <View
+                style={[{ alignItems: "center", justifyContent: "space-around" }]}
+              >
+                <CircleCard>76%</CircleCard>
+                <Text
+                  style={{
+                    width: "70%",
+                    textAlign: "center",
+                    color: "#7D1312",
+                    fontWeight: "600",
+                  }}
+                >
+                  TimelyCash Deposit
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
 
-        <View
-          style={[
-            styles.section,
-            {
-              padding: 15,
-              height: 60,
-              alignItems: "center",
-              justifyContent: "space-between",
-              flexDirection: "row",
-              marginTop: "2%",
-              backgroundColor: "#fff",
-            },
-          ]}
-        >
-          <Text style={{ fontSize: 19, fontWeight: "600", color: "#01065B" }}>
-            {`${agent?.first_name} ${agent?.last_name.charAt(0)}`}
-          </Text>
-          <Text style={{ fontSize: 12, fontWeight: "600", color: "#01065B" }}>
-            {`${agent?.assigned_id}`}
-          </Text>
-        </View>
-
-        <View
-          style={[styles.section, { marginTop: 10, backgroundColor: null }]}
-        >
-          <Card />
-        </View>
-
-        <View
-          style={[
-            styles.section,
-            {
-              backgroundColor: null,
-              justifyContent: "center",
-              marginTop: "8%",
-            },
-          ]}
-        >
-          <MessageCard />
-        </View>
-        <View
-          style={[
-            styles.section,
-            {
-              backgroundColor: null,
-              justifyContent: "center",
-              marginTop: "3%",
-            },
-          ]}
-        >
-          <View style={[{ alignItems: "center" }]}>
-            <Text style={{ fontSize: 19, fontWeight: '800' }}>Agent {`${agent?.first_name}`}</Text>
-            <Text style={{ fontSize: 9 }}>What would you like to do today?</Text>
+          <View
+            style={[
+              styles.section,
+              {
+                padding: 15,
+                height: 60,
+                alignItems: "center",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                marginTop: "2%",
+                backgroundColor: "#fff",
+              },
+            ]}
+          >
+            <Text style={{ fontSize: 19, fontWeight: "600", color: "#01065B" }}>
+              {`${agent?.first_name} ${agent?.last_name.charAt(0)}`}
+            </Text>
+            <Text style={{ fontSize: 12, fontWeight: "600", color: "#01065B" }}>
+              {`${agent?.assigned_id}`}
+            </Text>
           </View>
-        </View>
-        <View
-          style={[
-            styles.section,
-            {
-              backgroundColor: null,
-              flexDirection: "row",
-              justifyContent: "center",
-              marginTop: "3%",
-            },
-          ]}
-        >
-          <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }}>
-            Register New Client
-          </CardButton>
-          <CardButton externalInnerStyle={{ backgroundColor: '#7D1312' }}>Deposit Collected Funds.</CardButton>
-        </View>
-      </SafeAreaView>
-    </ScrollView>
+
+          <View
+            style={[styles.section, { marginTop: 10, backgroundColor: null }]}
+          >
+            <Card />
+          </View>
+
+          <View
+            style={[
+              styles.section,
+              {
+                backgroundColor: null,
+                justifyContent: "center",
+                marginTop: "8%",
+              },
+            ]}
+          >
+            <MessageCard />
+          </View>
+          <View
+            style={[
+              styles.section,
+              {
+                backgroundColor: null,
+                justifyContent: "center",
+                marginTop: "3%",
+              },
+            ]}
+          >
+            <View style={[{ alignItems: "center" }]}>
+              <Text style={{ fontSize: 19, fontWeight: '800' }}>Agent {`${agent?.first_name}`}</Text>
+              <Text style={{ fontSize: 9 }}>What would you like to do today?</Text>
+            </View>
+          </View>
+          <View
+            style={[
+              styles.section,
+              {
+                backgroundColor: null,
+                flexDirection: "row",
+                justifyContent: "center",
+                marginTop: "3%",
+              },
+            ]}
+          >
+            <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }}>
+              Register New Client
+            </CardButton>
+            <CardButton externalInnerStyle={{ backgroundColor: '#7D1312' }}>Deposit Collected Funds.</CardButton>
+          </View>
+        </SafeAreaView>
+      </ScrollView>
+    </>
   );
 };
 
