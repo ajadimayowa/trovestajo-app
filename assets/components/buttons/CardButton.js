@@ -1,5 +1,6 @@
 import { View, Pressable, Text } from "react-native";
 import { ScaledSheet } from 'react-native-size-matters';
+import { COLORS } from "../../../constants";
 
 const CardButton = ({ children, onPress, externalOuterStyle, externalInnerStyle }) => {
   return (
@@ -29,7 +30,7 @@ const styles = ScaledSheet.create({
     minWidth: "100%",
     minHeight: '45@msr',
     borderRadius: '5@msr',
-    backgroundColor: "#01065B",
+    backgroundColor: COLORS.troBlue,
     alignItems: "center",
     justifyContent: "center",
   },

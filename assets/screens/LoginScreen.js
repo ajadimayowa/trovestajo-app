@@ -13,6 +13,7 @@ import { loginAgent } from "../../redux/requests/requests";
 import { agentKey, COLORS } from "../../constants";
 import Loader from "../shared/Loader";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScaledSheet } from "react-native-size-matters";
 
 const LoginScreen = (props) => {
   const dispatch = useDispatch()
@@ -105,7 +106,7 @@ const LoginScreen = (props) => {
             {/* support section */}
             <View style={[styles.section, { marginTop: "30%", height: '7%', justifyContent: 'space-between' }]}>
               <Text style={[styles.p, { color: COLORS.troBlue }]}>Forgot Password ?</Text>
-              <Text style={[styles.p, { color: COLORS.troBrown }]}>Contact Support</Text>
+              <Text style={[styles.p, { color: COLORS.troGold }]}>Contact Support</Text>
             </View>
           </View>
         </SafeAreaView>
@@ -114,7 +115,7 @@ const LoginScreen = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
   screen: {
     flex: 1,
   },
@@ -134,7 +135,8 @@ const styles = StyleSheet.create({
   },
   p: {
     color: '#fff',
-    fontSize: 14,
+    fontSize: '18@msr',
+    fontFamily: 'regular'
   }
 });
 

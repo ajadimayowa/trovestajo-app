@@ -19,6 +19,7 @@ import Loader from '../../shared/Loader';
 import { COLORS } from '../../../constants';
 
 
+
 const { width, height } = Dimensions.get('window')
 const ClientDetailScreen = (props) => {
   // const minutes = new Date().getSeconds();

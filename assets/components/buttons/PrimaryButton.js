@@ -1,4 +1,6 @@
 import { View,StyleSheet, Pressable,Text} from "react-native";
+import { ScaledSheet } from "react-native-size-matters";
+import { COLORS } from "../../../constants";
 const PrimaryButton = ({children, onPress, externalStyle,externalOuterStyle})=>{
 return(
     <View style={[styles.outerView, {marginTop:"5%"}, externalOuterStyle]}>
@@ -11,10 +13,10 @@ return(
 }
 export default PrimaryButton;
 
-const styles = StyleSheet.create({
+const styles = ScaledSheet.create({
     outerView:{
         width:'90%',
-        height:45, 
+        height:'45@msr', 
          
     },
     pressed:{
@@ -22,16 +24,16 @@ const styles = StyleSheet.create({
     },
     innerView:{
         minWidth:'100%',
-        minHeight:45,
+        minHeight:'45@msr',
         borderRadius:5,
-        backgroundColor:'#01065B',
+        backgroundColor: COLORS.troBlue,
         alignItems:'center',
         justifyContent:'center'
     },
     p:{
         color:'#fff',
-        fontSize:15,
-        fontWeight:'700'
+        fontSize:'15@msr',
+        fontFamily: 'bold'
     },
     outerStyle :{
 

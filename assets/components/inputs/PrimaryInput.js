@@ -19,7 +19,7 @@ const styles = ScaledSheet.create({
         width: '90%',
         height: '30@msr',
         color: '#01065B',
-        fontWeight: '700',
+        fontFamily: 'bold',
         fontSize: '18@msr',
         margin: '15@msr',
         borderBottomWidth: 1,

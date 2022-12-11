@@ -7,7 +7,7 @@ import { COLORS } from "../../../constants";
 const { width, height } = Dimensions.get('window')
 const ClientObjectCard = (props) => {
   const navigation = useNavigation()
-  const { clientId, nameOfClient, totalSaved, externalOuterStyle, externalInnerStyle, artisan,getUser } = props;
+  const { clientId, nameOfClient, totalSaved, externalOuterStyle, externalInnerStyle, artisan, getUser } = props;
   const goToClientDetails = () => {
     navigation.navigate('ClientDetailScreen', {
       artisan: artisan,
@@ -53,7 +53,7 @@ const styles = ScaledSheet.create({
     justifyContent: "space-between",
   },
   p: {
-    color: "#01065B",
+    color: COLORS.troBlue,
     fontSize: 11,
     fontWeight: "700",
     textAlign: 'center'

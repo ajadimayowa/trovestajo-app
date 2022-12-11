@@ -1,8 +1,8 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native";
-import { ScaledSheet } from "react-native-size-matters";
+import { moderateScale, ScaledSheet } from "react-native-size-matters";
 import Header from "../../components/main/Header";
 import LabelCard from "../../components/cards/LabelCard";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
@@ -22,6 +22,7 @@ const AllTransactionScreen = (props) => {
   const { agentData, token } = useSelector(state => state.agent)
   const [loading, setloading] = useState(false)
   const [collections, setcollections] = useState([])
+  const [section, setsection] = useState('collections')
   console.log('agentData', agentData._id)
   const checkButton = () => {
     navigation.navigate("Main");
@@ -83,60 +84,75 @@ const AllTransactionScreen = (props) => {
     }
   }
   return (
-    <SafeAreaView style={styles.screen}>
-      <View style={styles.container}>
-        <LabelCard title={"Transaction History"} />
-
-        <View style={styles.section}>
-          <View
-            style={{
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "space-around",
-            }}
-          >
-            <PrimaryButton
-              externalOuterStyle={{ width: 102, borderRadius: null }}
-              externalStyle={{ backgroundColor: "#3E3B3B", borderRadius: null }}
+    <>
+      {loading && <Loader />}
+      <ScrollView style={styles.screen} contentContainerStyle={styles.contentContainerStyle}>
+        <View style={styles.container}>
+          <LabelCard title={"Transaction History"} />
+          <View style={styles.section}>
+            <View
+              style={{
+                width: "100%",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
             >
-              Collections
-            </PrimaryButton>
-            <PrimaryButton
-              externalOuterStyle={{ width: 102 }}
-              externalStyle={{ backgroundColor: "#6C6868", borderRadius: null }}
-            >
-              Deposits
-            </PrimaryButton>
-            <PrimaryButton
-              externalOuterStyle={{ width: 102 }}
-              externalStyle={{ backgroundColor: "#6C6868", borderRadius: null }}
-            >
-              Payouts
-            </PrimaryButton>
-          </View> 
+              <PrimaryButton
+                externalOuterStyle={{ width: 102, borderRadius: null }}
+                externalStyle={{ backgroundColor: section === 'collections' ?  "#3E3B3B" : '#6C6868' , borderRadius: null }}
+                onPress={()=> setsection('collections')}
+              >
+                Collections
+              </PrimaryButton>
+              <PrimaryButton
+                externalOuterStyle={{ width: moderateScale(102) }}
+                externalStyle={{  backgroundColor: section === 'deposits' ?  "#3E3B3B" : '#6C6868', borderRadius: null }}
+                onPress={()=> setsection('deposits')}
+              >
+                Deposits
+              </PrimaryButton>
+              <PrimaryButton
+                externalOuterStyle={{ width: 102 }}
+                externalStyle={{ backgroundColor: section === 'payouts' ?  "#3E3B3B" : '#6C6868', borderRadius: null }}
+                onPress={()=> setsection('payouts')}
+              >
+                Payouts
+              </PrimaryButton>
+            </View>
+          </View>
         </View>
-        <ScrollView style={{marginTop:10}} contentContainerStyle={{paddingHorizontal:'2%'}}>
-            <TransactionObjectCard />
-            <TransactionObjectCard />
-            <TransactionObjectCard />
-            <TransactionObjectCard />
-            <TransactionObjectCard />
-            <TransactionObjectCard />
-          </ScrollView>
-      </View>
-    </SafeAreaView>
+        <ScrollView style={{ marginTop: moderateScale(30) }}>
+          {section === 'collections' && <SharedList
+            data={collections}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} status={0} />}
+          />}
+          {section === 'deposits' && <SharedList
+            data={collections}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} status={1} />}
+          />}
+          {section === 'payouts' && <SharedList
+            data={collections}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} />}
+          />}
+        </ScrollView>
+      </ScrollView>
+    </>
   );
 };
 
 const styles = ScaledSheet.create({
   screen: {
     flex: 1,
-    backgroundColor:'#fff'
+    backgroundColor: '#fff'
   },
   contentContainerStyle: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: '#e3e3e3'
+    marginTop: '10@msr',
+    backgroundColor: COLORS.backgroundGray
   },
   container: {
     alignItems: "center",
@@ -167,7 +183,7 @@ const styles = ScaledSheet.create({
   thrifttext1: {
     fontSize: '18@msr',
     fontWeight: '800',
-    color: COLORS.troBrown
+    color: COLORS.troGold
   }
 });
 
