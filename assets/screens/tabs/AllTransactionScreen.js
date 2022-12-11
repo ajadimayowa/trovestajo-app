@@ -1,18 +1,18 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
+import { SafeAreaView } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
 import Header from "../../components/main/Header";
-import PrimaryInput from "../../components/inputs/PrimaryInput";
 import LabelCard from "../../components/cards/LabelCard";
+import PrimaryButton from "../../components/buttons/PrimaryButton";
+import TransactionObjectCard from "../../components/cards/TransactionObjectCard";
 import { useSelector } from "react-redux";
 import DisplayMessage from "../../shared/ShowMessage";
 import SharedList from "../../shared/SharedList";
 import { getAgentCollection } from "../../../redux/requests/requests";
 import { ACCESS_DENIED, COLORS, convertToThousand, UNAUHTORIZED } from "../../../constants";
 import Loader from "../../shared/Loader";
-
-
 
 
 
@@ -83,38 +83,55 @@ const AllTransactionScreen = (props) => {
     }
   }
   return (
-    <>
-      {loading && <Loader />}
-      <ScrollView style={styles.screen}
-        contentContainerStyle={styles.contentContainerStyle}
-      >
-        <View style={styles.container}>
-          <LabelCard title={'Transaction History'} />
-          <View style={styles.section}>
-            <SharedList
-              data={collections}
-              keyExtractor={(item) => item._id}
-              renderItem={({ item }) => (
-                item.status === 1 && <View key={item._id} style={styles.thrifts}>
-                  <View>
-                    <Text style={styles.thrifttext1}>{item.payment_reference}</Text>
-                    <Text style={styles.thrifttext}>{`${new Date(item.datePaid).toDateString()} | ${new Date(item.datePaid).toLocaleTimeString()}`}</Text>
-                  </View>
-                  <Text style={styles.thrifttext}>{`${convertToThousand(item?.total)}`}</Text>
-                </View>
-              )}
-            />
-          </View>
+    <SafeAreaView style={styles.screen}>
+      <View style={styles.container}>
+        <LabelCard title={"Transaction History"} />
+
+        <View style={styles.section}>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "space-around",
+            }}
+          >
+            <PrimaryButton
+              externalOuterStyle={{ width: 102, borderRadius: null }}
+              externalStyle={{ backgroundColor: "#3E3B3B", borderRadius: null }}
+            >
+              Collections
+            </PrimaryButton>
+            <PrimaryButton
+              externalOuterStyle={{ width: 102 }}
+              externalStyle={{ backgroundColor: "#6C6868", borderRadius: null }}
+            >
+              Deposits
+            </PrimaryButton>
+            <PrimaryButton
+              externalOuterStyle={{ width: 102 }}
+              externalStyle={{ backgroundColor: "#6C6868", borderRadius: null }}
+            >
+              Payouts
+            </PrimaryButton>
+          </View> 
         </View>
-      </ScrollView>
-    </>
+        <ScrollView style={{marginTop:10}} contentContainerStyle={{paddingHorizontal:'2%'}}>
+            <TransactionObjectCard />
+            <TransactionObjectCard />
+            <TransactionObjectCard />
+            <TransactionObjectCard />
+            <TransactionObjectCard />
+            <TransactionObjectCard />
+          </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
 const styles = ScaledSheet.create({
   screen: {
     flex: 1,
-    width: width
+    backgroundColor:'#fff'
   },
   contentContainerStyle: {
     flex: 1,
@@ -123,10 +140,14 @@ const styles = ScaledSheet.create({
   },
   container: {
     alignItems: "center",
+
+    // backgroundColor:'green'
   },
   section: {
-    marginTop: '15@msr',
-    width: width * .97,
+    width: "100%",
+    // backgroundColor:'yellow',
+    alignItems: "center",
+    paddingHorizontal: "2%",
   },
   thrifts: {
     backgroundColor: COLORS.cardColor,

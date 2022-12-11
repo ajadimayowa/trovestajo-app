@@ -1,10 +1,10 @@
 import { View,StyleSheet, Pressable,Text} from "react-native";
-const PrimaryButton = ({children, onPress})=>{
+const PrimaryButton = ({children, onPress, externalStyle,externalOuterStyle})=>{
 return(
-    <View style={[styles.outerView, {marginTop:"5%"}]}>
+    <View style={[styles.outerView, {marginTop:"5%"}, externalOuterStyle]}>
         <Pressable style={({pressed})=>pressed ? styles.pressed : null}
         onPress={onPress}>
-            <View style={styles.innerView}><Text style={styles.p}>{children}</Text></View>
+            <View style={[styles.innerView,externalStyle]}><Text style={styles.p}>{children}</Text></View>
         </Pressable>
     </View>
 )
@@ -14,7 +14,8 @@ export default PrimaryButton;
 const styles = StyleSheet.create({
     outerView:{
         width:'90%',
-        height:45,  
+        height:45, 
+         
     },
     pressed:{
         opacity:0.7
