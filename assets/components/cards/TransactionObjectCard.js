@@ -7,12 +7,15 @@ import { COLORS, convertToThousand, timeFunction } from "../../../constants";
 const { width, height } = Dimensions.get('window')
 const TransactionObjectCard = (props) => {
 
-  const { externalOuterStyle, externalInnerStyle, item, status } = props;
-
+  const { externalOuterStyle, externalInnerStyle, item, status, navigation } = props;
+  // DepositThriftScreen
   return (
     <>
       {item.status === status && <Pressable
         style={({ pressed }) => (pressed ? styles.pressed : null)}
+        onPress={() => item.status === 0 && navigation.navigate('DepositThriftScreen', {
+          collection: item
+        })}
       >
         <View style={[styles.innerView, externalInnerStyle]}>
           <View style={styles.outerStyle}>

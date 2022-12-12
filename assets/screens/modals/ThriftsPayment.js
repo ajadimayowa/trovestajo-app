@@ -10,18 +10,22 @@ import Loader from "../../shared/Loader";
 
 const { width } = Dimensions.get('window')
 export default function ThriftsPayment(props) {
-  const { artisan, token,setloading ,navigation} = props
+  const { artisan, token, setloading, navigation } = props
   const [modalVisible, setModalVisible] = useState(false);
   const [amount, setamount] = useState(0)
 
 
   const payThrift = async () => {
+    const hour = new Date().getHours()
     try {
       if (parseInt(amount) === 0) {
         return Alert.alert('Amount is empty')
       }
       if (parseInt(amount) < 1000) {
         return Alert.alert('1000 is the minimum amount allowed')
+      }
+      if (hour >= 17) {
+        return Alert.alert('Payment can only be made on or before 5pm')
       }
       else {
         setloading(true)
@@ -65,7 +69,6 @@ export default function ThriftsPayment(props) {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            {/* <Text style={styles.modalText}>Hello World!</Text> */}
             <View style={styles.modalInput}>
               <TextInput placeholder={'Enter Amount'}
                 keyboardType={'number-pad'}
@@ -73,21 +76,19 @@ export default function ThriftsPayment(props) {
                 onChangeText={(text) => setamount(text)}
               />
             </View>
-            <View style={styles.modalInput}>
-              <PrimaryButton
-                style={styles.submit}
-                button={styles.modalButton}
+            <View style={styles.modalInput1}>
+              <Pressable
+                style={styles.modalButton}
                 onPress={() => payThrift()}
               >
-                Pay
-              </PrimaryButton>
-              <PrimaryButton
-                style={styles.submit}
-                button={styles.modalButton}
+                <Text style={styles.submit}>Pay</Text>
+              </Pressable>
+              <Pressable
+                style={styles.modalButton}
                 onPress={() => setModalVisible(!modalVisible)}
               >
-                Close
-              </PrimaryButton>
+                <Text style={styles.submit}>Close</Text>
+              </Pressable>
             </View>
           </View>
         </View>
@@ -138,6 +139,12 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
   },
 
+  modalInput1: {
+    width: '90%',
+    justifyContent: 'space-around',
+    alignContent: 'center',
+    flexDirection: 'row'
+  },
   modalTextInput: {
     fontSize: '18@msr',
     width: '90%',
@@ -146,17 +153,19 @@ const styles = ScaledSheet.create({
     borderBottomWidth: '2@msr'
   },
   modalButton: {
-    width: '90%',
+    width: '45%',
     backgroundColor: COLORS.troBlue,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: '25@msr',
-    paddingTop: '10@msr',
-    paddingBottom: '10@msr',
+    paddingTop: '7@msr',
+    paddingBottom: '7@msr',
     elevation: 2
   },
   submit: {
     fontSize: '20@msr',
+    fontFamily: 'medium',
+    color: '#fff'
   },
   button: {
     marginTop: '20@msr',

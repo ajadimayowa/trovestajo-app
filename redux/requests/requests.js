@@ -71,6 +71,17 @@ export const getAgentCollection = (data) => {
     return axios(requestOptions);
 }
 
+export const depositCollectedFunds = (data) => {
+    const { collection_id, payment_reference,token } = data
+    headers.authorization = `Bearer ${token}`
+    const requestOptions = {
+        method: "POST",
+        url: `${baseUrl}/deposit-funds?payment_reference=${payment_reference}&collection_id=${collection_id}`,
+        headers: headers,
+    }
+    return axios(requestOptions);
+}
+
 export const getAdmin = (token) => {
     headers.authorization = `Bearer ${token}`
     const requestOptions = {

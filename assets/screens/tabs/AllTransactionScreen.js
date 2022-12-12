@@ -23,7 +23,8 @@ const AllTransactionScreen = (props) => {
   const [loading, setloading] = useState(false)
   const [collections, setcollections] = useState([])
   const [section, setsection] = useState('collections')
-  console.log('agentData', agentData._id)
+
+
   const checkButton = () => {
     navigation.navigate("Main");
   };
@@ -43,9 +44,10 @@ const AllTransactionScreen = (props) => {
 
   useEffect(() => {
     getAllCollectionHistory()
-    // return () => {
-    //   getAllCollectionHistory()
-    // }
+    const unsubscribe = navigation.addListener('focus', () => {
+      getAllCollectionHistory()
+    });
+    return unsubscribe
   }, [navigation])
 
 
@@ -62,7 +64,6 @@ const AllTransactionScreen = (props) => {
         if (success === true) {
           setcollections(data)
           setloading(false)
-          console.log('data', data.length)
         }
         else if (success === false && (message === ACCESS_DENIED || message === UNAUHTORIZED)) {
           setloading(false)
@@ -79,7 +80,6 @@ const AllTransactionScreen = (props) => {
       }
     } catch (error) {
       setloading(false)
-      console.log('response error', error)
       DisplayMessage(error.message, 'danger', 'Error Occured')
     }
   }
@@ -99,22 +99,22 @@ const AllTransactionScreen = (props) => {
             >
               <PrimaryButton
                 externalOuterStyle={{ width: 102, borderRadius: null }}
-                externalStyle={{ backgroundColor: section === 'collections' ?  "#3E3B3B" : '#6C6868' , borderRadius: null }}
-                onPress={()=> setsection('collections')}
+                externalStyle={{ backgroundColor: section === 'collections' ? "#3E3B3B" : '#6C6868', borderRadius: null }}
+                onPress={() => setsection('collections')}
               >
                 Collections
               </PrimaryButton>
               <PrimaryButton
                 externalOuterStyle={{ width: moderateScale(102) }}
-                externalStyle={{  backgroundColor: section === 'deposits' ?  "#3E3B3B" : '#6C6868', borderRadius: null }}
-                onPress={()=> setsection('deposits')}
+                externalStyle={{ backgroundColor: section === 'deposits' ? "#3E3B3B" : '#6C6868', borderRadius: null }}
+                onPress={() => setsection('deposits')}
               >
                 Deposits
               </PrimaryButton>
               <PrimaryButton
                 externalOuterStyle={{ width: 102 }}
-                externalStyle={{ backgroundColor: section === 'payouts' ?  "#3E3B3B" : '#6C6868', borderRadius: null }}
-                onPress={()=> setsection('payouts')}
+                externalStyle={{ backgroundColor: section === 'payouts' ? "#3E3B3B" : '#6C6868', borderRadius: null }}
+                onPress={() => setsection('payouts')}
               >
                 Payouts
               </PrimaryButton>
@@ -125,17 +125,17 @@ const AllTransactionScreen = (props) => {
           {section === 'collections' && <SharedList
             data={collections}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} status={0} />}
+            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} status={0} navigation={navigation} />}
           />}
           {section === 'deposits' && <SharedList
             data={collections}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} status={1} />}
+            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} status={1} navigation={navigation} />}
           />}
           {section === 'payouts' && <SharedList
             data={collections}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} />}
+            renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} navigation={navigation} />}
           />}
         </ScrollView>
       </ScrollView>

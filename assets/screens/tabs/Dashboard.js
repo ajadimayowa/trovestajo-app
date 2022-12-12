@@ -253,7 +253,8 @@ const Dashboard = (props) => {
             <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }} textStyles={{fontSize: moderateScale(10), fontFamily: "bold"}}>
               Register New Client
             </CardButton>
-            <CardButton onPress={()=>navigation.navigate("DepositThriftScreen")} externalInnerStyle={{ backgroundColor: COLORS.troBrown }} textStyles={{fontSize: moderateScale(10), fontFamily: "bold"}}>Deposit Collected Funds.</CardButton>
+            {/* onPress={()=>navigation.navigate("DepositThriftScreen")} */}
+            <CardButton onPress={()=>navigation.navigate("AgentBio")} externalInnerStyle={{ backgroundColor: COLORS.troBrown }} textStyles={{fontSize: moderateScale(10), fontFamily: "bold"}}>Deposit Collected Funds.</CardButton>
           </View>
         </SafeAreaView>
       </ScrollView>

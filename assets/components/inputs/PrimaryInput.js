@@ -1,12 +1,13 @@
 import { Pressable, TextInput, View, StyleSheet } from "react-native";
 import { Ionicons } from '@expo/vector-icons'
 import { ScaledSheet } from "react-native-size-matters";
+import { COLORS } from "../../../constants";
 
 const PrimaryInput = (props) => {
     const { placeholder } = props
     return (
         <TextInput
-            placeholder={placeholder}
+            // placeholder={placeholder}
             style={styles.inputStyle}
             {...props}
         />
@@ -20,9 +21,9 @@ const styles = ScaledSheet.create({
         height: '30@msr',
         color: '#01065B',
         fontFamily: 'bold',
-        fontSize: '14@msr',
+        fontSize: '17@msr',
         margin: '15@msr',
         borderBottomWidth: 1,
-        borderBottomColor: '#01065B'
+        borderBottomColor: COLORS.troBlue
     }
 })

@@ -1,5 +1,5 @@
 import { View, Pressable, Text, Dimensions } from "react-native";
-import { ScaledSheet } from 'react-native-size-matters';
+import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 import { useNavigation } from "@react-navigation/native";
 import { COLORS } from "../../../constants";
 
@@ -25,10 +25,10 @@ const ClientObjectCard = (props) => {
         <View style={[styles.innerView, externalInnerStyle]}>
           <Text style={styles.p}>{nameOfClient}</Text>
           <View style={{
-            backgroundColor: '#7D1312', minHeight: 24, minWidth: 65, borderRadius: 3,
+            backgroundColor: COLORS.troBrown,  width: moderateScale(75), paddingTop: moderateScale(7), paddingBottom: moderateScale(7),borderRadius: 3,
             alignItems: 'center', justifyContent: 'center'
           }}>
-            <Text style={{ color: '#fff' }} >{totalSaved}</Text>
+            <Text style={{ color: '#fff', fontFamily: 'medium', fontSize: moderateScale(14), textAlign: 'center' }} >{`${totalSaved}`}</Text> 
           </View>
         </View>
       </Pressable>
@@ -54,8 +54,8 @@ const styles = ScaledSheet.create({
   },
   p: {
     color: COLORS.troBlue,
-    fontSize: 11,
-    fontWeight: "700",
+    fontSize: '15@msr',
+    fontFamily: "semiBold",
     textAlign: 'center'
   },
   outerStyle: {},

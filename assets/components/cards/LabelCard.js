@@ -1,7 +1,8 @@
 import { View, Text, Dimensions } from "react-native";
-import { ScaledSheet,moderateScale } from 'react-native-size-matters';
+import { ScaledSheet, moderateScale } from 'react-native-size-matters';
+import { COLORS } from "../../../constants";
 
-const {width } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 const LabelCard = ({
   title,
   totalClientRegistered,
@@ -12,15 +13,14 @@ const LabelCard = ({
       <Text style={styles.p}>{title}</Text>
       <View
         style={{
-          backgroundColor: "#7D1312",
-          minHeight: moderateScale(24),
-          minWidth: moderateScale(65),
+          backgroundColor: COLORS.troBrown,
+          width: moderateScale(75),
           borderRadius: moderateScale(3),
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Text style={{ color: "#fff" }}>{totalClientRegistered}</Text>
+        <Text style={[styles.p, { marginBottom: moderateScale(7), marginTop: moderateScale(5) }]}>{totalClientRegistered}</Text>
       </View>
     </View>
   );
@@ -42,8 +42,8 @@ const styles = ScaledSheet.create({
   },
   p: {
     color: "#fff",
-    fontSize: 16,
-    fontWeight: "700",
+    fontSize: '16@msr',
+    fontFamily: "semiBold",
     textAlign: "center",
   },
   outerStyle: {},

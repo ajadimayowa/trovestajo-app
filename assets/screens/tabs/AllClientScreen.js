@@ -142,7 +142,7 @@ const AllClientScreen = ({ navigation }) => {
               alignSelf: 'center'
             }}
             data={agentArtisans}
-            keyExtractor={(item) => { item._id }}
+            keyExtractor={(item) => item._id}
             renderItem={({ item }) =>
               <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(item.thrifts))}`}
                 nameOfClient={item.full_name} key={item._id} artisan={item} />}

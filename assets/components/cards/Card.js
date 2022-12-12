@@ -11,14 +11,12 @@ const Card = ({}) => {
       <View
         style={{
           flex: 1,
-          // backgroundColor:'pink',
           alignItems: "center",
-          justifyContent: "space-around",
-          padding: "5%",
+          justifyContent: "space-between",
           flexDirection: "row",
         }}
       >
-        <View style={{ width: "50%", alignItems:'flex-start', flex:3 }}>
+        <View style={{ width: "50%", alignItems:'flex-start' }}>
           <View>
             <Text style={{ fontSize: moderateScale(10), fontFamily: "bold", color: COLORS.troBlue }}>
               Designated Local Govmt
@@ -26,7 +24,7 @@ const Card = ({}) => {
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Ionicons style={{marginRight:5}} name="location" size={8.57} color="black" />
-            <Text style={{  fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue }}>
+            <Text style={{  fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue }}>
               Eti - Osa Lga
             </Text>
           </View>
@@ -39,7 +37,7 @@ const Card = ({}) => {
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
           <MaterialCommunityIcons style={{marginRight:5}} name="calendar" size={11.11} color="black" />
-            <Text style={{ fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue}}>25/06/2022</Text>
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue}}>25/06/2022</Text>
           </View>
         </View>
       </View>
@@ -48,12 +46,12 @@ const Card = ({}) => {
           flex: 1,
           width: "100%",
           alignItems: "center",
-          justifyContent: "space-around",
-          padding: "5%",
+          justifyContent: "space-between",
+          padding: "2%",
           flexDirection: "row",
         }}
       >
-        <View style={{ width: "50%",flex:3 }}>
+        <View style={{ width: "50%"}}>
           <View>
             <Text style={{ fontSize: moderateScale(10), fontFamily: "bold", color: COLORS.troBlue }}>
               Admin Handler
@@ -61,7 +59,7 @@ const Card = ({}) => {
           </View>
           <View style={{ flexDirection: "row", alignItems: "center"}}>
           <Ionicons style={{marginRight:5}} name="person-sharp" size={10} color="black" />
-            <Text style={{  fontSize: moderateScale(12), fontFamily: "regular", color: COLORS.troBlue }}>
+            <Text style={{  fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue }}>
               Stephanie Jules
             </Text>
           </View>
@@ -81,7 +79,7 @@ const Card = ({}) => {
             </View>
             <View style={{width:'100%', flexDirection: "row", alignItems: "center"}}>
             <MaterialCommunityIcons style={{marginRight:5}} name="email" size={10} color="black" />
-            <Text style={{  fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue}}>stephjules@trovest.com</Text>
+            <Text style={{  fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue}}>stephjules@trovest.com</Text>
             </View>
           </View>
         </View>
