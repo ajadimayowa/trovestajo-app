@@ -19,7 +19,8 @@ const TransactionObjectCard = (props) => {
       >
         <View style={[styles.innerView, externalInnerStyle]}>
           <View style={styles.outerStyle}>
-            <Text style={styles.thriftData}>{`${new Date(item?.createdAt).toDateString()} ${timeFunction(item?.createdAt)}`}</Text>
+            {item.status === 0 && <Text style={`${new Date(item?.createdAt).toDateString()} ${timeFunction(item?.createdAt)}`}>{item?.createdAt}</Text>}
+            {item.status === 1 && <Text style={`${new Date(item?.updatedAt).toDateString()} ${timeFunction(item?.createdAt)}`}>{item?.updatedAt}</Text>}
             <View style={styles.amountStyle}>
               <Text style={styles.amountStyleText}>{`${convertToThousand(item?.total)}`}</Text>
             </View>

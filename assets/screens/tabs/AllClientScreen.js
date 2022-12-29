@@ -83,6 +83,7 @@ const AllClientScreen = ({ navigation }) => {
             success: success,
             isLoading: false
           }
+          console.log('data',data.length)
           setagentArtisans(data)
           dispatch(getAgentArtisanSuccess(payload))
           setloading(false)

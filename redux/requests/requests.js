@@ -5,7 +5,7 @@ const baseUrl = `${host}/api/v1/agent`
 // const baseUrl = `${host}/api/v1`
 
 const headers = {
-    'Content-Type': 'application/json'
+    'Accept': 'application/json'
 }
 export const loginAgent = (data) => {
     const requestOptions = {
@@ -17,13 +17,14 @@ export const loginAgent = (data) => {
     return axios(requestOptions);
 }
 
-export const createAgentArtisan = (data) => {
-    headers.authorization = `Bearer ${data.token}`
+export const createAgentArtisan = (token, data) => {
+    headers.authorization = `Bearer ${token}`
+    headers['Content-Type'] = 'multipart/form-data'
     const requestOptions = {
         method: "post",
         url: `${baseUrl}/create-artisan`,
         headers: headers,
-        data: data.data
+        data: data
     }
     return axios(requestOptions);
 }
@@ -72,7 +73,7 @@ export const getAgentCollection = (data) => {
 }
 
 export const depositCollectedFunds = (data) => {
-    const { collection_id, payment_reference,token } = data
+    const { collection_id, payment_reference, token } = data
     headers.authorization = `Bearer ${token}`
     const requestOptions = {
         method: "POST",

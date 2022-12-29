@@ -46,10 +46,16 @@ const ClientDetailScreen = (props) => {
   }
 
 
+  // useEffect(() => {
+  //   timeFormat()
+  // }, [])
   useEffect(() => {
-    timeFormat()
-  }, [])
+    let secTimer = setInterval( () => {
+      timeFormat()
+    },1009)
 
+    return () => clearInterval(secTimer);
+}, []);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -84,32 +90,30 @@ const ClientDetailScreen = (props) => {
         contentContainerStyle={styles.contentContainerStyle}
       >
         <View style={styles.section}>
-          <Image source={{ uri: 'https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg' }} style={{
+          <Image source={{ uri: (artisan?.image || 'https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg') }} style={{
             width: moderateScale(130),
             height: moderateScale(130),
             borderRadius: moderateScale(70),
             backgroundColor: "#fff",
           }} />
           <Text style={[styles.p]}> {artisan?.full_name}</Text>
-          <Text style={[styles.p, { fontSize: moderateScale(18), paddingBottom: moderateScale(10) }]}>
+          <Text style={[styles.p, { fontSize: moderateScale(18), paddingBottom: moderateScale(10), fontFamily: 'medium' }]}>
             Daily
           </Text>
           <Text style={styles.dateTime}>{`${new Date().toDateString()} | ${setTime}`}</Text>
-          {/* <Text style={styles.dateTime}>{`Date: ${dateFormat(new Date())} | ${setTime}`}</Text> */}
-          {/* <Text style={styles.dateTime}>{`Time: ${setTime}`}</Text> */}
         </View>
         <ThriftsPayment artisan={artisan} token={token} setloading={setloading} navigation={navigation} />
         <View style={[styles.section1, { justifyContent: 'flex-start' }]}>
-          <Text style={{ color: '#01065B', fontSize: moderateScale(18) }}>Activity Summary</Text>
+          <Text style={{ color: '#01065B', fontSize: moderateScale(18), fontFamily: 'medium' }}>Activity Summary</Text>
         </View>
         <View style={[styles.section, { alignItems: 'center', marginBottom: moderateScale(70) }]}>
           <View style={styles.activityCard}>
-            <Text style={[{ color: '#fff', fontSize: moderateScale(18) }]}>Total amount saved</Text>
+            <Text style={[{ color: '#fff', fontSize: moderateScale(18), fontFamily: 'medium' }]}>Total amount saved</Text>
             <View style={{ alignItems: 'center' }}>
-              <Text style={{ color: '#fff', fontSize: moderateScale(37), fontWeight: '700', marginTop: moderateScale(18) }}>{(totalSaved)}</Text>
+              <Text style={{ color: '#fff', fontSize: moderateScale(37), fontFamily: 'medium', marginTop: moderateScale(18) }}>{(totalSaved)}</Text>
             </View>
             <View style={{ flexDirection: 'row', alignContent: 'flex-start',justifyContent: 'space-between', marginTop: moderateScale(20) }}>
-              <Text style={[{ color: '#fff', fontSize: moderateScale(15), width: '50%' }]}>Due for withdrawal?</Text>
+              <Text style={[{ color: '#fff', fontSize: moderateScale(14), width: '60%', fontFamily: 'medium' }]}>Due for withdrawal?</Text>
               <Text style={[{ color: '#fff', fontSize: moderateScale(15),width: '50%'}]}>No</Text>
             </View>
           </View>
@@ -154,12 +158,13 @@ const styles = ScaledSheet.create({
     color: '#7D1312',
     width,
     textAlign: 'center',
-    fontSize: '18@msr'
+    fontFamily: 'medium',
+    fontSize: '17@msr'
   },
   p: {
     marginTop: '10@msr',
     fontSize: '18@msr',
-    fontWeight: "600",
+    fontFamily: "semiBold",
   },
   title: {
     fontSize: '37@msr',

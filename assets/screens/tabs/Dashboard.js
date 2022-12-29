@@ -26,7 +26,7 @@ const Dashboard = (props) => {
   const dispatch = useDispatch()
   const { agentData, token } = useSelector(state => state.agent)
   const { isLoading, artisans, success } = useSelector(state => state.artisan)
-  const [agent, setagent] = useState()
+  const [agent, setagent] = useState({})
   const [loading, setloading] = useState(false)
 
 
@@ -57,6 +57,7 @@ const Dashboard = (props) => {
 
   const getArtisans = async () => {
     try {
+      console.log('agentData', agentData?.first_name)
       if (token) {
         setagent(agentData)
         // make a normal request and use this to set the artiasna instead of redux saga
@@ -95,7 +96,9 @@ const Dashboard = (props) => {
       setloading(false)
     }
   }
+  const calculateTimelyCashPickupAndDeposit = () => {
 
+  }
   return (
     <>
       {loading && <Loader />}
@@ -150,15 +153,16 @@ const Dashboard = (props) => {
               <View
                 style={[{ alignItems: "center", justifyContent: "space-around" }]}
               >
-                <CircleCard>85%</CircleCard>
+                <CircleCard>0%</CircleCard>
+                {/* <CircleCard>85%</CircleCard> */}
                 <Text
-                style={{
-                  width: "70%",
-                  textAlign: "center",
-                  color: COLORS.troBrown,
-                  fontFamily: "bold",
-                  fontSize: moderateScale(13)
-                }}
+                  style={{
+                    width: "70%",
+                    textAlign: "center",
+                    color: COLORS.troBrown,
+                    fontFamily: "bold",
+                    fontSize: moderateScale(13)
+                  }}
                 >
                   Timely Cash Pick-up
                 </Text>
@@ -168,15 +172,16 @@ const Dashboard = (props) => {
               <View
                 style={[{ alignItems: "center", justifyContent: "space-around" }]}
               >
-                <CircleCard>76%</CircleCard>
+                <CircleCard>0%</CircleCard>
+                {/* <CircleCard>76%</CircleCard> */}
                 <Text
-                style={{
-                  width: "70%",
-                  textAlign: "center",
-                  color: COLORS.troBrown,
-                  fontFamily: "bold",
-                  fontSize: moderateScale(13)
-                }}
+                  style={{
+                    width: "70%",
+                    textAlign: "center",
+                    color: COLORS.troBrown,
+                    fontFamily: "bold",
+                    fontSize: moderateScale(13)
+                  }}
                 >
                   TimelyCash Deposit
                 </Text>
@@ -199,7 +204,7 @@ const Dashboard = (props) => {
             ]}
           >
             <Text style={{ fontSize: moderateScale(19), fontFamily: "bold", color: COLORS.troBlue }}>
-              {`${agent?.first_name} ${agent?.last_name.charAt(0)}`}
+              {`${agent?.first_name} ${agent?.last_name}`}
             </Text>
             <Text style={{ fontSize: moderateScale(12), fontFamily: "bold", color: COLORS.troBlue }}>
               {`${agent?.assigned_id}`}
@@ -209,7 +214,7 @@ const Dashboard = (props) => {
           <View
             style={[styles.section, { marginTop: 10, backgroundColor: null }]}
           >
-            <Card />
+            <Card admin={agent?.admin_id} />
           </View>
 
           <View
@@ -235,8 +240,8 @@ const Dashboard = (props) => {
             ]}
           >
             <View style={[{ alignItems: "center" }]}>
-              <Text style={{  fontSize: moderateScale(19), fontFamily: "bold", color: COLORS.troBlue  }}>Agent {`${agent?.first_name}`}</Text>
-              <Text style={{  fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue  }}>What would you like to do today?</Text>
+              <Text style={{ fontSize: moderateScale(19), fontFamily: "bold", color: COLORS.troBlue }}>Agent {`${agent?.first_name}`}</Text>
+              <Text style={{ fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue }}>What would you like to do today?</Text>
             </View>
           </View>
           <View
@@ -250,11 +255,11 @@ const Dashboard = (props) => {
               },
             ]}
           >
-            <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }} textStyles={{fontSize: moderateScale(10), fontFamily: "bold"}}>
+            <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }} textStyles={{ fontSize: moderateScale(10), fontFamily: "bold" }}>
               Register New Client
             </CardButton>
             {/* onPress={()=>navigation.navigate("DepositThriftScreen")} */}
-            <CardButton onPress={()=>navigation.navigate("AgentBio")} externalInnerStyle={{ backgroundColor: COLORS.troBrown }} textStyles={{fontSize: moderateScale(10), fontFamily: "bold"}}>Deposit Collected Funds.</CardButton>
+            <CardButton onPress={() => navigation.navigate("AgentBio")} externalInnerStyle={{ backgroundColor: COLORS.troBrown }} textStyles={{ fontSize: moderateScale(10), fontFamily: "bold" }}>Deposit Collected Funds.</CardButton>
           </View>
         </SafeAreaView>
       </ScrollView>

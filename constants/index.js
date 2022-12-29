@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 export const host = `https://tro-vestcapitalpartners.com`
-// export const host = `https://trovestbackend.up.railway.app`
+export const AWS_URL = 'https://trovestajo.s3.us-west-1.amazonaws.com'
 // export const host = `http://localhost:5100`
 export const root = 'root:'
 export const UNAUHTORIZED = 'Unauthorized Access';
@@ -32,6 +32,13 @@ export const dateFormat = (date) => {
     return `${day}-${month}-${year}`
 }
 
+export const returnYearMonthDate = async (date) => {
+    const year = new Date(date).getFullYear();
+    const month = new Date(date).getMonth();
+    const day = new Date(date).getDate();
+    return `${year}-${month}-${day}`
+}
+
 export const timeFunction = (data) => {
     const date = new Date(data);
     let hours = date.getHours();
@@ -44,8 +51,8 @@ export const timeFunction = (data) => {
     hours = hours < 10 ? `0${hours}` : hours
     minutes = minutes < 10 ? `0${minutes}` : minutes
     seconds = seconds < 10 ? `0${seconds}` : seconds
-   return `${hours}:${minutes}:${seconds} ${timeOfDay}`
-  }
+    return `${hours}:${minutes}:${seconds} ${timeOfDay}`
+}
 
 export const convertToThousand = (value) => {
     value = value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") || 0

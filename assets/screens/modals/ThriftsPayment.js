@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Modal, Text, Pressable, View, Dimensions, TextInput } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
-import { COLORS } from "../../../constants";
+import { COLORS,returnYearMonthDate } from "../../../constants";
 import PrimaryInput from '../../components/inputs/PrimaryInput'
 import PrimaryButton from '../../components/buttons/PrimaryButton'
 import { collectThrift } from "../../../redux/requests/requests";
@@ -30,7 +30,7 @@ export default function ThriftsPayment(props) {
       else {
         setloading(true)
         const formData = {}
-        formData.date_paid = new Date();
+        formData.date_paid = await returnYearMonthDate(new Date());
         formData.amount = parseInt(amount);
         formData.artisan_id = artisan._id
         const requestData = {
@@ -120,9 +120,9 @@ const styles = ScaledSheet.create({
   modalView: {
     width: width * .8,
     backgroundColor: "white",
-    borderRadius: '10@msr',
-    paddingTop: '25@msr',
-    paddingBottom: '25@msr',
+    borderRadius: '7@msr',
+    paddingTop: '40@msr',
+    paddingBottom: '35@msr',
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
@@ -157,10 +157,9 @@ const styles = ScaledSheet.create({
     backgroundColor: COLORS.troBlue,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: '25@msr',
-    paddingTop: '7@msr',
-    paddingBottom: '7@msr',
-    elevation: 2
+    marginTop: '30@msr',
+    paddingTop: '5@msr',
+    paddingBottom: '5@msr',
   },
   submit: {
     fontSize: '20@msr',
@@ -179,7 +178,7 @@ const styles = ScaledSheet.create({
   },
   textStyle: {
     color: "white",
-    fontWeight: "bold",
+    fontFamily: "bold",
     textAlign: "center",
     fontSize: '18@msr'
   },
