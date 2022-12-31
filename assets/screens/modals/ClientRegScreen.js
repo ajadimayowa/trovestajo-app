@@ -65,7 +65,7 @@ const ClientRegScreen = (props) => {
                 { resize: { width: 500, height: 500 } },
                 { rotate: 0 },
               ],
-                { compress: 0.1, format: ImageManipulator.SaveFormat.PNG });
+                { compress: 0.9, format: ImageManipulator.SaveFormat.PNG });
             setartisanImage({
               name: 'artisan-image',
               uri: newresult.uri,
