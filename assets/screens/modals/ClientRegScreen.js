@@ -14,6 +14,7 @@ import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
 import SharedList from "../../shared/SharedList";
 import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import uuid from 'react-native-uuid';
 
 const { width, height } = Dimensions.get('window')
 const ClientRegScreen = (props) => {
@@ -105,7 +106,7 @@ const ClientRegScreen = (props) => {
               ],
                 { compress: 0.1, format: ImageManipulator.SaveFormat.PNG });
             const imageItem = {
-              id: new Date().getTime(),
+              id: uuid.v4(),
               name: 'artisan-image',
               uri: newresult.uri,
               "type": "image/jpeg"
@@ -123,6 +124,14 @@ const ClientRegScreen = (props) => {
     }
   }
 
+  const deleteImage = (id) => {
+    const filteredItem = identification.filter(item => {
+      if (item.id !== id) {
+        return item
+      }
+    })
+    setidentification(filteredItem)
+  }
   const registerArtisan = async () => {
     try {
       const valid = await checkInput()
@@ -181,14 +190,11 @@ const ClientRegScreen = (props) => {
       >
         <View style={styles.container}>
           <Image source={{ uri: imageUri }} style={{
-            width: moderateScale(130),
-            height: moderateScale(130),
-            // borderRadius: moderateScale(70),
+            width: moderateScale(180),
+            height: moderateScale(180),
+            borderRadius: moderateScale(180),
             backgroundColor: "#fff",
           }} />
-          {imageUri && <View style={styles.butttonSeperate}>
-            <MaterialIcons name="delete-outline" size={30} color={COLORS.troGold} />
-          </View>}
           <View style={styles.butttonSeperate}>
             <TouchableOpacity onPress={() => selectPicture()}>
               <Image source={require('../../components/assets/images/upload.png')} style={styles.butttonSeperateImage} />
@@ -201,7 +207,7 @@ const ClientRegScreen = (props) => {
             value={artisanForm.full_name}
             onChangeText={(text) => setartisanForm({ ...artisanForm, full_name: text })}
           />
-          <PrimaryInput placeholder={'Means of Id'}
+          <PrimaryInput placeholder={'Means of Identification'}
             value={artisanForm.identification}
             onChangeText={(text) => setartisanForm({ ...artisanForm, identification: text })}
           />
@@ -209,14 +215,6 @@ const ClientRegScreen = (props) => {
             value={artisanForm.identification_number}
             onChangeText={(text) => setartisanForm({ ...artisanForm, identification_number: text })}
           />
-          <View style={styles.butttonSeperate}>
-            <TouchableOpacity onPress={() => selectIdentification()}>
-              <Image source={require('../../components/assets/images/upload.png')} style={styles.butttonSeperateImage} />
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Image source={require('../../components/assets/images/shutter.png')} style={styles.butttonSeperateImage} />
-            </TouchableOpacity>
-          </View>
           <SharedList
             data={identification}
             keyExtractor={(item) => item.id}
@@ -228,21 +226,35 @@ const ClientRegScreen = (props) => {
                   height: moderateScale(130),
                   marginLeft: moderateScale(5),
                   marginRight: moderateScale(5),
-                  // borderRadius: moderateScale(70),
+                  marginBottom: moderateScale(10),
                   backgroundColor: "#fff",
                 }} />
-                <Pressable onPress={() => console.log('iteeem', item.id)}>
+                <Pressable onPress={() => deleteImage(item.id)}>
                   <MaterialIcons name="delete-outline" size={30} color={COLORS.troGold} />
                 </Pressable>
               </View>
             )}
           />
+          <View style={styles.butttonSeperate}>
+            <TouchableOpacity onPress={() => selectIdentification()}>
+              <Image source={require('../../components/assets/images/upload.png')} style={styles.butttonSeperateImage} />
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Image source={require('../../components/assets/images/shutter.png')} style={styles.butttonSeperateImage} />
+            </TouchableOpacity>
+          </View>
           <PrimaryInput placeholder={'Address'}
             value={artisanForm.address}
+            inputStyles={{
+              marginTop: moderateScale(20)
+            }}
             onChangeText={(text) => setartisanForm({ ...artisanForm, address: text })}
           />
           <PrimaryInput placeholder={'Phone Number'}
             value={artisanForm.mobile}
+            inputStyles={{
+              marginTop: moderateScale(20)
+            }}
             onChangeText={(text) => setartisanForm({ ...artisanForm, mobile: text })}
           />
           <PrimaryInput placeholder={'Bvn'}
@@ -253,11 +265,11 @@ const ClientRegScreen = (props) => {
             value={artisanForm.next_kin}
             onChangeText={(text) => setartisanForm({ ...artisanForm, next_kin: text })}
           />
-          <PrimaryInput placeholder={'Phone Number'}
+          <PrimaryInput placeholder={'Next of Kin Phone Number'}
             value={artisanForm.next_kin_mobile}
             onChangeText={(text) => setartisanForm({ ...artisanForm, next_kin_mobile: text })}
           />
-          <PrimaryInput placeholder={'Address'}
+          <PrimaryInput placeholder={'Next of kin Address'}
             value={artisanForm.next_kin_address}
             onChangeText={(text) => setartisanForm({ ...artisanForm, next_kin_address: text })}
           />

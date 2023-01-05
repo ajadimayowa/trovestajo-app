@@ -2,6 +2,15 @@
   "expo": {
     "name": "trovest-ajo",
     "slug": "trovest-ajo",
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Tro-Vest Ajo will like to gain access to your photos to upload.",
+          "cameraPermission": "Allow Tro-Vest Ajo to access your camera"
+        }
+      ]
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

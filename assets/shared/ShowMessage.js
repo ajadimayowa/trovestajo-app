@@ -7,7 +7,7 @@ export default function DisplayMessage(message, type, description = 'Information
         type: type,
         icon: 'auto',
         position: position,
-        statusBarHeight: 50,
+        // statusBarHeight: 30,
         autoHide: true,
     })
 }
