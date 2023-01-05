@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Alert, Modal, Text, Pressable, View, Dimensions, TextInput } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
-import { COLORS,returnYearMonthDate } from "../../../constants";
+import { COLORS, returnYearMonthDate } from "../../../constants";
 import PrimaryInput from '../../components/inputs/PrimaryInput'
 import PrimaryButton from '../../components/buttons/PrimaryButton'
 import { collectThrift } from "../../../redux/requests/requests";
@@ -18,15 +18,19 @@ export default function ThriftsPayment(props) {
   const payThrift = async () => {
     const hour = new Date().getHours()
     try {
+      console.log('Numm',  Number.isInteger(amount))
+      if (Number.isInteger(amount) === false) {
+        return Alert.alert('Enter digits above 1,000')
+      }
       if (parseInt(amount) === 0) {
         return Alert.alert('Amount is empty')
       }
-      if (parseInt(amount) < 1000) {
+      if (Number.isInteger(amount) === true && parseInt(amount) < 1000) {
         return Alert.alert('1000 is the minimum amount allowed')
       }
-      if (hour >= 17) {
-        return Alert.alert('Payment can only be made on or before 5pm')
-      }
+      // if (hour >= 17) {
+      //   return Alert.alert('Payment can only be made on or before 5pm')
+      // }
       else {
         setloading(true)
         const formData = {}
@@ -73,7 +77,8 @@ export default function ThriftsPayment(props) {
               <TextInput placeholder={'Enter Amount'}
                 keyboardType={'number-pad'}
                 style={styles.modalTextInput}
-                onChangeText={(text) => setamount(text)}
+                onChangeText={(text) => setamount(parseInt(text))}
+                value={parseInt(amount)}
               />
             </View>
             <View style={styles.modalInput1}>
