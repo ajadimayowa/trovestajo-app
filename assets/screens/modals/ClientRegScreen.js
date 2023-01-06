@@ -1,5 +1,5 @@
+import React, { useEffect, useState } from "react";
 import { Dimensions, Image, Pressable, ScrollView, TouchableOpacity, View } from "react-native"
-import { useEffect, useState } from "react";
 import Header from "../../components/main/Header";
 import Loader from '../../shared/Loader'
 import PrimaryInput from "../../components/inputs/PrimaryInput";
@@ -13,7 +13,8 @@ import { getArtisanData } from "../../../redux/slices/artisan.slice";
 import * as ImagePicker from 'expo-image-picker';
 import * as ImageManipulator from 'expo-image-manipulator';
 import SharedList from "../../shared/SharedList";
-import { AntDesign, MaterialIcons } from '@expo/vector-icons';
+import SelectList from 'react-native-dropdown-select-list'
+import { MaterialIcons } from '@expo/vector-icons';
 import uuid from 'react-native-uuid';
 
 const { width, height } = Dimensions.get('window')
@@ -27,6 +28,28 @@ const ClientRegScreen = (props) => {
   const [artisanForm, setartisanForm] = useState({ full_name: '', identification: '', identification_number: '', address: '', mobile: '', bvn: '', next_kin: '', next_kin_mobile: '', next_kin_address: '' })
   const [artisanImage, setartisanImage] = useState({})
   const [identification, setidentification] = useState([])
+  const [identificationTypes, setidentificationTypes] = useState([
+    {
+      id: "1",
+      key: "Nin",
+      value: "Nin"
+    },
+    {
+      id: "2",
+      key: "Passport",
+      value: "Passport"
+    },
+    {
+      id: "3",
+      key: "Drivers license",
+      value: "Drivers license"
+    },
+    {
+      id: "4",
+      key: "BVN",
+      value: "BVN"
+    }
+  ])
   const [imageUri, setimageUri] = useState('https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg')
   const handleGoToPrevScreen = () => {
     navigation.goBack()
@@ -321,6 +344,17 @@ const styles = ScaledSheet.create({
     margin: '5@msr',
     marginTop: '20@msr',
     marginRight: '7@msr'
+  },
+  vs: {
+    marginLeft: 0,
+    marginBottom: 0,
+    width: "100%",
+    paddingLeft: '10@msr',
+    borderRadius: '12@msr',
+    overflow: 'hidden',
+    backgroundColor: "#F1F1F1",
+    marginTop: '5@msr',
+    borderWidth: 0
   }
 })
 

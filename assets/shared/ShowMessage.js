@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { showMessage } from 'react-native-flash-message';
 
 export default function DisplayMessage(message, type, description = 'Information', position = 'top') {
@@ -7,7 +8,7 @@ export default function DisplayMessage(message, type, description = 'Information
         type: type,
         icon: 'auto',
         position: position,
-        // statusBarHeight: 30,
+        statusBarHeight: Platform.OS === 'ios' ? 30 : 40,
         autoHide: true,
     })
 }
