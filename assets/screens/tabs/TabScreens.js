@@ -29,7 +29,7 @@ const TabScreens = ({ navigation }) => {
     >
       <tabs.Screen name="Dashboard" component={Dashboard} />
       <tabs.Screen name="AllClients" component={AllClientScreen} />
-      <tabs.Screen name="AgentBio" component={AllTransactionScreen} />
+      <tabs.Screen name="TransactionScreen" component={AllTransactionScreen} />
     </tabs.Navigator>
   );
 };

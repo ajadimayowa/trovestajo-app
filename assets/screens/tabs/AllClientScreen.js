@@ -6,33 +6,34 @@ import {
   ScrollView,
   Dimensions,
   Text,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
-import Header from "../../components/main/Header";
 import { Ionicons } from "@expo/vector-icons";
 import ClientObjectCard from "../../components/cards/ClientObjectCard";
 import LabelCard from "../../components/cards/LabelCard";
 import { AllCustormer } from "../../store/data";
 import { useSelector, useDispatch } from "react-redux";
 import SharedList from "../../shared/SharedList";
-import { ScaledSheet } from 'react-native-size-matters';
+import { ScaledSheet } from "react-native-size-matters";
 import { calculateRevenueAmount, convertToThousand } from "../../../constants";
 import Loader from "../../shared/Loader";
 import { getAgentArtisan } from "../../../redux/requests/requests";
 import { getAgentArtisanSuccess } from "../../../redux/slices/artisan.slice";
 import DisplayMessage from "../../shared/ShowMessage";
+import DefaultHeader from "../../components/main/DefaultHeader";
+import Header from "../../components/main/Header";
+import PrimaryInput from "../../components/inputs/PrimaryInput";
 
+const { width } = Dimensions.get("window");
 
-
-const { width } = Dimensions.get('window')
 const AllClientScreen = ({ navigation }) => {
-  const dispatch = useDispatch()
-  const selector = useSelector(state => state)
-  const [agentArtisans, setagentArtisans] = useState([])
-  const { token, agentData } = selector.agent
-  const { artisans } = selector.artisan
-  const [loading, setloading] = useState(false)
-  const [refreshing, setrefreshing] = useState(false)
+  const dispatch = useDispatch();
+  const selector = useSelector((state) => state);
+  const [agentArtisans, setagentArtisans] = useState([]);
+  const { token, agentData } = selector.agent;
+  const { artisans } = selector.artisan;
+  const [loading, setloading] = useState(false);
+  const [refreshing, setrefreshing] = useState(false);
 
   const checkButton = () => {
     navigation.navigate("Login");
@@ -41,8 +42,11 @@ const AllClientScreen = ({ navigation }) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      header: () => <Header>
-      </Header>,
+      header: () => (
+        <Header>
+          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter Client Name To Search…."} />
+        </Header>
+      ),
       tabBarIcon: ({ color, size }) => (
         <Ionicons name="ios-people-outline" size={size} color={color} />
       ),
@@ -50,86 +54,80 @@ const AllClientScreen = ({ navigation }) => {
   }, [navigation]);
 
   useEffect(() => {
-    getUser()
-    const unsubscribe = navigation.addListener('focus', () => {
-      getUser()
+    getUser();
+    const unsubscribe = navigation.addListener("focus", () => {
+      getUser();
     });
     return unsubscribe;
-  }, [navigation])
+  }, [navigation]);
 
   const getUser = () => {
     if (token) {
-      setloading(true)
-      setrefreshing(true)
-      setagentArtisans(artisans)
-      getArtisans()
+      setloading(true);
+      setrefreshing(true);
+      setagentArtisans(artisans);
+      getArtisans();
+    } else {
+      setloading(false);
+      setrefreshing(false);
+      checkButton();
     }
-    else {
-      setloading(false)
-      setrefreshing(false)
-      checkButton()
-    }
-  }
+  };
 
   const getArtisans = async () => {
     try {
       if (token) {
-        const response = await getAgentArtisan(token)
-        const { success, message, data } = response.data
+        const response = await getAgentArtisan(token);
+        const { success, message, data } = response.data;
         if (success === true) {
           const payload = {
             data,
             message: message,
             success: success,
-            isLoading: false
-          }
-          console.log('data',data.length)
-          setagentArtisans(data)
-          dispatch(getAgentArtisanSuccess(payload))
-          setloading(false)
-          setrefreshing(false)
-        }
-        else if (message === UNAUHTORIZED || message === ACCESS_DENIED) {
-          DisplayMessage(message, 'warning', 'Something went wrong')
-          setloading(false)
-          setrefreshing(false)
+            isLoading: false,
+          };
+          console.log("data", data.length);
+          setagentArtisans(data);
+          dispatch(getAgentArtisanSuccess(payload));
+          setloading(false);
+          setrefreshing(false);
+        } else if (message === UNAUHTORIZED || message === ACCESS_DENIED) {
+          DisplayMessage(message, "warning", "Something went wrong");
+          setloading(false);
+          setrefreshing(false);
           setTimeout(() => {
             navigation.navigate("Login");
           }, 2000);
+        } else {
+          DisplayMessage(message, "warning", "Something went wrong");
+          setloading(false);
+          setrefreshing(false);
         }
-        else {
-          DisplayMessage(message, 'warning', 'Something went wrong')
-          setloading(false)
-          setrefreshing(false)
-        }
-      }
-      else {
-        setloading(false)
-        setrefreshing(false)
+      } else {
+        setloading(false);
+        setrefreshing(false);
         setTimeout(() => {
-          checkButton()
+          checkButton();
         }, 2000);
       }
     } catch (error) {
-      DisplayMessage(error.message, 'danger', 'Error Occured')
-      setloading(false)
-      setrefreshing(false)
+      DisplayMessage(error.message, "danger", "Error Occured");
+      setloading(false);
+      setrefreshing(false);
     }
-  }
+  };
 
   const onRefresh = () => {
-    getUser()
-  }
+    getUser();
+  };
   return (
     <>
       {loading && <Loader />}
-      <ScrollView style={styles.screen}
+      <ScrollView
+        style={styles.screen}
         contentContainerStyle={styles.contentContainerStyle}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         <LabelCard
@@ -139,14 +137,21 @@ const AllClientScreen = ({ navigation }) => {
         <View style={styles.container}>
           <SharedList
             style={{
-              width: width * .97,
-              alignSelf: 'center'
+              width: width * 0.97,
+              alignSelf: "center",
             }}
             data={agentArtisans}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) =>
-              <ClientObjectCard totalSaved={`${convertToThousand(calculateRevenueAmount(item.thrifts))}`}
-                nameOfClient={item.full_name} key={item._id} artisan={item} />}
+            renderItem={({ item }) => (
+              <ClientObjectCard
+                totalSaved={`${convertToThousand(
+                  calculateRevenueAmount(item.thrifts)
+                )}`}
+                nameOfClient={item.full_name}
+                key={item._id}
+                artisan={item}
+              />
+            )}
           />
         </View>
       </ScrollView>
@@ -158,16 +163,16 @@ const styles = ScaledSheet.create({
   screen: {
     flex: 1,
     width: width,
-    backgroundColor: '#e3e3e3'
+    backgroundColor: "#e3e3e3",
   },
   contentContainerStyle: {
     flex: 1,
     alignItems: "center",
   },
   container: {
-    width: width * .97,
+    width: width * 0.97,
     alignItems: "center",
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   section: {
     width: "100%",
@@ -175,11 +180,11 @@ const styles = ScaledSheet.create({
   },
   p: {
     color: "#fff",
-    fontSize: '14@msr',
+    fontSize: "14@msr",
   },
   left: {
-    width: '22@msr',
-    height: '22@msr',
+    width: "22@msr",
+    height: "22@msr",
   },
 });
 

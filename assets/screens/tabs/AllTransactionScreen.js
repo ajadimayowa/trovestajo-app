@@ -4,6 +4,7 @@ import { ScrollView, Text, View, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native";
 import { moderateScale, ScaledSheet } from "react-native-size-matters";
 import Header from "../../components/main/Header";
+import PrimaryInput from "../../components/inputs/PrimaryInput";
 import LabelCard from "../../components/cards/LabelCard";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
 import TransactionObjectCard from "../../components/cards/TransactionObjectCard";
@@ -18,7 +19,12 @@ import Loader from "../../shared/Loader";
 
 const { width, height } = Dimensions.get('window')
 const AllTransactionScreen = (props) => {
-  const { navigation } = props
+  const { navigation, route } = props
+
+  let deposit = props.route.params;
+
+  console.log(deposit)
+
   const { agentData, token } = useSelector(state => state.agent)
   const [loading, setloading] = useState(false)
   const [collections, setcollections] = useState([])
@@ -33,7 +39,7 @@ const AllTransactionScreen = (props) => {
       headerShown: true,
       header: () => (
         <Header>
-          {/* <PrimaryInput /> */}
+          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter ID To Search…."} />
         </Header>
       ),
       tabBarIcon: ({ color, size }) => (

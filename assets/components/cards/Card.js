@@ -17,28 +17,28 @@ const Card = (props) => {
           flexDirection: "row",
         }}
       >
-        <View style={{ width: "50%", alignItems:'flex-start' }}>
+        <View style={{paddingRight:"1%", width: "50%", alignItems:'flex-start' }}>
           <View>
-            <Text style={{ fontSize: moderateScale(14), fontFamily: "semiBold", color: COLORS.troBlue }}>
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "semiBold", color: COLORS.troBlue }}>
               Designated Local Govmt
             </Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Ionicons style={{marginRight:5}} name="location" size={8.57} color="black" />
-            <Text style={{  fontSize: moderateScale(16), fontFamily: "medium", color: COLORS.troBlue }}>
+            <Text style={{  fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue }}>
               Eti - Osa Lga
             </Text>
           </View>
         </View>
-        <View style={{ width: "50%", alignItems:'flex-start', flex:2 }}>
+        <View style={{ marginLeft:15,width: "50%", alignItems:'flex-start', flex:2 }}>
           <View>
-            <Text style={{ fontSize: moderateScale(14), fontFamily: "semiBold", color: COLORS.troBlue }}>
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "semiBold", color: COLORS.troBlue }}>
               Next Review Date
             </Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
           <MaterialCommunityIcons style={{marginRight:5}} name="calendar" size={11.11} color="black" />
-            <Text style={{ fontSize: moderateScale(16), fontFamily: "medium", color: COLORS.troBlue}}>25/06/2022</Text>
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue}}>25/06/2022</Text>
           </View>
         </View>
       </View>
@@ -50,31 +50,32 @@ const Card = (props) => {
           justifyContent: "space-between",
           padding: "2%",
           flexDirection: "row",
+          // backgroundColor:'yellow'
         }}
       >
         <View style={{ width: "50%"}}>
-          <View>
-            <Text style={{ fontSize: moderateScale(14), fontFamily: "semiBold", color: COLORS.troBlue }}>
+          <View >
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "semiBold", color: COLORS.troBlue }}>
               Admin Handler
             </Text>
           </View>
           <View style={{ flexDirection: "row", alignItems: "center"}}>
           <Ionicons style={{marginRight:5}} name="person-sharp" size={10} color="black" />
-            <Text style={{  fontSize: moderateScale(16), fontFamily: "medium", color: COLORS.troBlue, marginRight: moderateScale(20) }}>
+            <Text style={{  fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue, marginRight: moderateScale(20) }}>
             {`${admin?.first_name} ${admin?.last_name}`}
             </Text>
           </View>
         </View>
         <View style={{ width: "50%", alignItems:'flex-start'}}>
           <View>
-            <Text style={{ fontSize: moderateScale(14), fontFamily: "semiBold", color: COLORS.troBlue,textAlign:'right'}}>
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "semiBold", color: COLORS.troBlue,textAlign:'right'}}>
             Contact Info
             </Text>
           </View>
           <View>
             <View style={{width:'100%', flexDirection: "row", alignItems: "center"}}>
             <Foundation style={{marginRight:5}} name="telephone" size={10} color="black" />
-            <Text style={{ fontSize: moderateScale(14), fontFamily: "medium", color: COLORS.troBlue }}>
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue }}>
             {`${admin?.mobile}`}
             </Text>
             </View>

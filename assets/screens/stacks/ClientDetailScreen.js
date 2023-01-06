@@ -17,6 +17,7 @@ import ThriftsPayment from '../modals/ThriftsPayment';
 import { useSelector, useDispatch } from 'react-redux';
 import Loader from '../../shared/Loader';
 import { COLORS } from '../../../constants';
+import DefaultHeader from '../../components/main/DefaultHeader';
 
 
 
@@ -60,29 +61,14 @@ const ClientDetailScreen = (props) => {
     navigation.setOptions({
       headerShown: true,
       header: () => (
-        <Header>
-          <View style={{
-            width,
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            flexDirection: 'row',
-            width: width * .97,
-          }}>
-            <Pressable onPress={() => navigation.goBack()}>
-              <Image source={require('../../components/assets/images/left.png')} style={styles.left} />
-            </Pressable>
-            <Text style={[styles.p, { color: "#01065B" }]}>
-              {artisan?.full_name}
-            </Text>
-            <View />
-          </View>
-        </Header>
-      ),
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="ios-people-outline" size={size} color={color} />
-      ),
+        <DefaultHeader handleGoBack={handleGoBack} headerTitle={artisan?.full_name}/>
+      )
     });
   }, [navigation]);
+
+  const handleGoBack = ()=> {
+    navigation.goBack()
+  }
 
   return (
     <SafeAreaView style={styles.screen}>
@@ -97,7 +83,7 @@ const ClientDetailScreen = (props) => {
             backgroundColor: "#fff",
           }} />
           <Text style={[styles.p]}> {artisan?.full_name}</Text>
-          <Text style={[styles.p, { fontSize: moderateScale(18), paddingBottom: moderateScale(10), fontFamily: 'medium' }]}>
+          <Text style={[styles.p, { fontSize: moderateScale(16), paddingBottom: moderateScale(10), fontFamily: 'medium' }]}>
             Daily
           </Text>
           <Text style={styles.dateTime}>{`${new Date().toDateString()} | ${setTime}`}</Text>
@@ -159,7 +145,7 @@ const styles = ScaledSheet.create({
     width,
     textAlign: 'center',
     fontFamily: 'medium',
-    fontSize: '17@msr'
+    fontSize: '16@msr'
   },
   p: {
     marginTop: '10@msr',

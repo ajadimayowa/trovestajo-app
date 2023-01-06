@@ -1,6 +1,7 @@
 import { View, StyleSheet, Pressable, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-const IconButton = ({ children, onPress,iconName,externalInnerStyle }) => {
+import { FontAwesome } from '@expo/vector-icons';
+const IconButton = ({ children, onPress,iconName,iconSize,externalInnerStyle,iconColor }) => {
   return (
     
       <Pressable
@@ -8,7 +9,7 @@ const IconButton = ({ children, onPress,iconName,externalInnerStyle }) => {
         onPress={onPress}
       >
         <View style={[styles.innerView, externalInnerStyle]}>
-          <Ionicons name={iconName} />
+          <Ionicons name={iconName} size={iconSize} color={iconColor} />
           <Text style={styles.p}>{children}</Text>
         </View>
       </Pressable>
@@ -22,14 +23,16 @@ const styles = StyleSheet.create({
     opacity: 0.7,
   },
   innerView: {
-    height:50,
-    width:50,
+    height:25,
+    width:25,
+    borderRadius:3,
     flexDirection:'row',
     padding:'5%',
-    
-    backgroundColor: "#fff",
+    backgroundColor: "green",
     alignItems: "center",
     justifyContent: "center",
+    elevation:5
+    
   },
   p: {
     color: "blue",
