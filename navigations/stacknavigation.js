@@ -4,7 +4,10 @@ import LoginScreen from '../assets/screens/LoginScreen';
 import TabScreens from '../assets/screens/tabs/TabScreens';
 import ClientDetailScreen from '../assets/screens/stacks/ClientDetailScreen';
 import ClientRegScreen from '../assets/screens/modals/ClientRegScreen';
+<<<<<<< HEAD
 import DepositThriftScreen from '../assets/screens/stacks/DepositThriftScreen';
+=======
+>>>>>>> 26cb0fd (all screens done)
 
 
 const stack = createNativeStackNavigator()
@@ -17,7 +20,10 @@ export default function Stacknavigation() {
             <stack.Screen name="Main" component={TabScreens} />
             <stack.Screen name='RegNewClient' component={ClientRegScreen}/>
             <stack.Screen name='ClientDetailScreen' component={ClientDetailScreen}/>
+<<<<<<< HEAD
             <stack.Screen name='DepositThriftScreen' component={DepositThriftScreen}/>
+=======
+>>>>>>> 26cb0fd (all screens done)
         </stack.Navigator>
     )
 }

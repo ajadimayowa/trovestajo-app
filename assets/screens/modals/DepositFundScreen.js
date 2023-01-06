@@ -5,14 +5,21 @@ import Header from "../../components/main/Header";
 import PrimaryInput from "../../components/inputs/PrimaryInput";
 import { ScaledSheet } from "react-native-size-matters";
 import PrimaryButton from "../../components/buttons/PrimaryButton";
+<<<<<<< HEAD
 import { useSelector } from "react-redux";
 
+=======
+>>>>>>> 26cb0fd (all screens done)
 
 const { width, height } = Dimensions.get("window");
 
 const DepositFundScreen = ({navigation}) => {
+<<<<<<< HEAD
   const { agentData, token } = useSelector(state => state.agent)
   console.log('agentData',token)
+=======
+  
+>>>>>>> 26cb0fd (all screens done)
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
