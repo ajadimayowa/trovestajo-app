@@ -136,6 +136,7 @@ const DepositCollectionScreen = ({ navigation }) => {
         const requestData = {
           collection_id: thriftData._id,
           payment_reference: reference,
+          location: location,
           token: token
         }
         const response = await depositCollectedFunds(requestData)

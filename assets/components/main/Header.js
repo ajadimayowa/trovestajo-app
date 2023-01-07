@@ -1,4 +1,5 @@
 import { View, StyleSheet, Dimensions } from "react-native";
+import { moderateScale } from "react-native-size-matters";
 
 const { width, height } = Dimensions.get('window')
 const Header = (props) => {
@@ -12,7 +13,7 @@ const style = StyleSheet.create({
     flexDirection: "row",
     width,
     borderBottomColor: 'black',
-    borderBottomWidth: 0.19,
+    borderBottomWidth: moderateScale(1.2),
     alignItems: "center",
     paddingHorizontal: '5%',
     paddingTop: '15%',

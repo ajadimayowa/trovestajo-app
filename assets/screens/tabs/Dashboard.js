@@ -50,7 +50,7 @@ const Dashboard = (props) => {
               color: COLORS.troBlue,
             }}
           >
-            Trovest Ajo
+            Tro-Vest Ajo
           </Text>
           <IconButton iconName={'ios-notifications'} iconSize={16} externalInnerStyle={{ backgroundColor: '#fff', elevation: 0 }} />
         </Header>
