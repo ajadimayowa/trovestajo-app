@@ -20,7 +20,7 @@ const LabelCard = ({
           justifyContent: "center",
         }}
       >
-        <Text style={[styles.p, { marginBottom: moderateScale(7), marginTop: moderateScale(5) }]}>{totalClientRegistered}</Text>
+        {totalClientRegistered  && <Text style={[styles.p, { marginBottom: moderateScale(7), marginTop: moderateScale(5) }]}>{totalClientRegistered}</Text>}
       </View>
     </View>
   );

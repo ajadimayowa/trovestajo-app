@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect, useState } from "react";
+import React, { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import {
   Pressable,
   View,
@@ -34,6 +34,7 @@ const AllClientScreen = ({ navigation }) => {
   const { artisans } = selector.artisan;
   const [loading, setloading] = useState(false);
   const [refreshing, setrefreshing] = useState(false);
+  const [search, setsearch] = useState('')
 
   const checkButton = () => {
     navigation.navigate("Login");
@@ -44,7 +45,7 @@ const AllClientScreen = ({ navigation }) => {
       headerShown: true,
       header: () => (
         <Header>
-          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter Client Name To Search…."} />
+          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter Client Name To Search…."} onChangeText={(text) => setsearch(text)} />
         </Header>
       ),
       tabBarIcon: ({ color, size }) => (
@@ -61,18 +62,6 @@ const AllClientScreen = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
-  const getUser = () => {
-    if (token) {
-      setloading(true);
-      setrefreshing(true);
-      setagentArtisans(artisans);
-      getArtisans();
-    } else {
-      setloading(false);
-      setrefreshing(false);
-      checkButton();
-    }
-  };
 
   const getArtisans = async () => {
     try {
@@ -86,7 +75,6 @@ const AllClientScreen = ({ navigation }) => {
             success: success,
             isLoading: false,
           };
-          console.log("data", data.length);
           setagentArtisans(data);
           dispatch(getAgentArtisanSuccess(payload));
           setloading(false);
@@ -116,6 +104,40 @@ const AllClientScreen = ({ navigation }) => {
       setrefreshing(false);
     }
   };
+
+  const getUser = () => {
+    if (token) {
+      setloading(true);
+      setrefreshing(true);
+      setagentArtisans(artisans);
+      getArtisans();
+    } else {
+      setloading(false);
+      setrefreshing(false);
+      checkButton();
+    }
+  }
+
+  const handleKeyUp = async () => {
+    try {
+      if (search !== '') {
+        const matcher = new RegExp(`^${search}`, 'g');
+        const filteredData = agentArtisans.filter(name => name.full_name.match(matcher))
+        setagentArtisans(filteredData);
+      }
+      else {
+        return getUser()
+      }
+    } catch (error) {
+      DisplayMessage(error.message, "danger", "Error Occured");
+      setloading(false);
+      setrefreshing(false);
+    }
+  }
+  useMemo(() => {
+    handleKeyUp()
+  }, [search])
+
 
   const onRefresh = () => {
     getUser();

@@ -9,7 +9,6 @@ const PrimaryInput = (props) => {
     <View style={styles.wrapper}>
       <Ionicons name={iconName} size={iconSize} color={COLORS.troBlue} />
       <TextInput
-        // placeholder={placeholder}
         style={[styles.inputStyle, inputStyles]}
         {...props}
       />

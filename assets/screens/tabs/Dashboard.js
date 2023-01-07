@@ -17,9 +17,9 @@ import {
   pageLoading,
   getAgentArtisanSuccess,
 } from "../../../redux/slices/artisan.slice";
-import { getAgentArtisan } from "../../../redux/requests/requests";
+import { getAgentArtisan, getTodayThrift } from "../../../redux/requests/requests";
 import DisplayMessage from "../../shared/ShowMessage";
-import { ACCESS_DENIED, COLORS, UNAUHTORIZED } from "../../../constants";
+import { ACCESS_DENIED, COLORS, returnYearMonthDate, UNAUHTORIZED } from "../../../constants";
 
 const Dashboard = (props) => {
   const { navigation } = props;
@@ -40,9 +40,9 @@ const Dashboard = (props) => {
       headerShown: true,
       header: () => (
         <Header>
-          <IconButton externalInnerStyle={{backgroundColor:'#fff'}}
-          iconName={'ios-menu'} iconSize={20}
-          iconColor={'black'}/>
+          <IconButton externalInnerStyle={{ backgroundColor: '#fff' }}
+            iconName={'ios-menu'} iconSize={20}
+            iconColor={'black'} />
           <Text
             style={{
               fontSize: moderateScale(13),
@@ -52,7 +52,7 @@ const Dashboard = (props) => {
           >
             Trovest Ajo
           </Text>
-          <IconButton iconName={'ios-notifications'} iconSize={16} externalInnerStyle={{backgroundColor:'#fff',elevation:0}} />
+          <IconButton iconName={'ios-notifications'} iconSize={16} externalInnerStyle={{ backgroundColor: '#fff', elevation: 0 }} />
         </Header>
       ),
       tabBarIcon: ({ color, size }) => (
@@ -74,7 +74,6 @@ const Dashboard = (props) => {
 
   const getArtisans = async () => {
     try {
-      console.log("agentData", agentData?.first_name);
       if (token) {
         setagent(agentData);
         // make a normal request and use this to set the artiasna instead of redux saga
@@ -110,7 +109,9 @@ const Dashboard = (props) => {
       setloading(false);
     }
   };
-  const calculateTimelyCashPickupAndDeposit = () => {};
+
+  const calculateTimelyCashPickupAndDeposit = () => { };
+
   return (
     <>
       {loading && <Loader />}
@@ -244,7 +245,7 @@ const Dashboard = (props) => {
           <View
             style={[styles.section, { marginTop: 10, backgroundColor: null }]}
           >
-            <Card admin={agent?.admin_id} />
+            <Card admin={agent?.admin_id} agent={agent} />
           </View>
 
           <View
@@ -308,7 +309,6 @@ const Dashboard = (props) => {
             >
               Register New Client
             </CardButton>
-            {/* onPress={()=>navigation.navigate("DepositThriftScreen")} */}
             <CardButton
               onPress={() => navigation.navigate("DepositCollectionScreen")}
               externalInnerStyle={{ backgroundColor: COLORS.troBrown }}

@@ -6,7 +6,7 @@ import { COLORS } from "../../../constants";
 import { moderateScale } from "react-native-size-matters";
 
 const Card = (props) => {
-  const {admin }  = props
+  const { admin, agent } = props
   return (
     <View style={styles.container}>
       <View
@@ -26,7 +26,7 @@ const Card = (props) => {
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Ionicons style={{marginRight:5}} name="location" size={8.57} color="black" />
             <Text style={{  fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue }}>
-              Eti - Osa Lga
+              {agent?.designated_govt || 'NIL'}
             </Text>
           </View>
         </View>
@@ -38,7 +38,8 @@ const Card = (props) => {
           </View>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
           <MaterialCommunityIcons style={{marginRight:5}} name="calendar" size={11.11} color="black" />
-            <Text style={{ fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue}}>25/06/2022</Text>
+            {/* <Text style={{ fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue}}>{(agent?.review_date === null || agent?.review_date === undefined) ? 'No review date yet':  new Date(agent?.review_date).toLocaleDateString()}</Text> */}
+            <Text style={{ fontSize: moderateScale(12), fontFamily: "medium", color: COLORS.troBlue}}>{(agent?.review_date === null || agent?.review_date === undefined) ? 'No review date yet':  new Date(agent?.review_date).toDateString()}</Text>
           </View>
         </View>
       </View>

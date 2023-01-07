@@ -18,7 +18,6 @@ export default function ThriftsPayment(props) {
   const payThrift = async () => {
     const hour = new Date().getHours()
     try {
-      console.log('Numm',  Number.isInteger(amount))
       if (Number.isInteger(amount) === false) {
         return Alert.alert('Enter digits above 1,000')
       }

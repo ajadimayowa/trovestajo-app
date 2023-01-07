@@ -16,8 +16,8 @@ const TransactionObjectCard = (props) => {
       >
         <View style={[styles.innerView, externalInnerStyle]}>
           <View style={styles.outerStyle}>
-            {item.status === 0 && <Text style={`${new Date(item?.createdAt).toDateString()} ${timeFunction(item?.createdAt)}`}>{item?.createdAt}</Text>}
-            {item.status === 1 && <Text style={`${new Date(item?.updatedAt).toDateString()} ${timeFunction(item?.createdAt)}`}>{item?.updatedAt}</Text>}
+            {item.status === 0 && <Text style={styles.thriftData}>{new Date(item?.updatedAt).toDateString()}</Text>}
+            {item.status === 1 && <Text style={styles.thriftData}>{new Date(item?.updatedAt).toDateString()}</Text>}
             <View style={styles.amountStyle}>
               <Text style={styles.amountStyleText}>{`${convertToThousand(item?.total)}`}</Text>
             </View>
@@ -53,7 +53,7 @@ const styles = ScaledSheet.create({
     width: '97%'
   },
   thriftData: {
-    color: COLORS.troBrown,
+    color: COLORS.troGold,
     fontSize: '12@msr',
     fontFamily: 'semiBold',
     textAlign: 'center'
@@ -67,9 +67,10 @@ const styles = ScaledSheet.create({
   },
   collectionText1: {
     color: COLORS.troBrown,
+    marginTop: '10@msr',
     fontSize: '14@msr',
     fontFamily: 'semiBold',
-    textAlign: 'center',
+    textAlign: 'left',
     textTransform: 'uppercase'
   },
   amountStyle: {
@@ -77,8 +78,8 @@ const styles = ScaledSheet.create({
     alignItems: 'center',
     backgroundColor: COLORS.troBrown,
     width: '95@msr',
-    paddingTop: '10@msr',
-    paddingBottom: '10@msr',
+    paddingTop: '5@msr',
+    paddingBottom: '5@msr',
   },
   amountStyleText: {
     color: '#fff',

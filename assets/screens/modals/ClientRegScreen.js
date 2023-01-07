@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect } from "react";
-import { Dimensions, Image, Pressable, ScrollView, TouchableOpacity, View } from "react-native"
+import { Dimensions, Image, Pressable, ScrollView, TouchableOpacity, View, Text } from "react-native"
 import Header from "../../components/main/Header";
 import Loader from '../../shared/Loader'
 import PrimaryInput from "../../components/inputs/PrimaryInput";
@@ -13,11 +13,8 @@ import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
 import SharedList from "../../shared/SharedList";
 import SelectList from 'react-native-dropdown-select-list'
-import { MaterialIcons } from '@expo/vector-icons';
 import uuid from 'react-native-uuid';
 import { AntDesign, MaterialIcons, Entypo, Ionicons } from "@expo/vector-icons";
-import uuid from "react-native-uuid";
-import Header from "../../components/main/Header";
 import IconButton from "../../components/buttons/IconButton";
 
 const { width, height } = Dimensions.get("window");
@@ -124,8 +121,7 @@ const ClientRegScreen = (props) => {
     try {
       (async () => {
         // if (Platform.OS !== 'web') {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
+        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           DisplayMessage(
             "Sorry, we need camera roll permissions to make this work!",
@@ -158,7 +154,7 @@ const ClientRegScreen = (props) => {
         // }
       })();
     } catch (error) {
-      this.setState({ loading: false, message: error.meesage });
+      DisplayMessage(error.message, 'danger', 'Error Occured', 'top')
     }
   };
 
@@ -200,9 +196,86 @@ const ClientRegScreen = (props) => {
         // }
       })();
     } catch (error) {
-      this.setState({ loading: false, message: error.meesage });
+      DisplayMessage(error.message, 'danger', 'Error Occured', 'top')
     }
   };
+
+  const openCamera = async () => {
+    try {
+      const { status, granted } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status === "denied" && granted === false) {
+        DisplayMessage(
+          "Sorry, grant app permissions in your settings to be able to use camera!",
+          "warning",
+          "Permission Denied"
+        );
+      }
+      else {
+        let cameraResult = await ImagePicker.launchCameraAsync({
+          type: "image",
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+        if (!cameraResult.canceled) {
+          const newresult = await ImageManipulator.manipulateAsync(
+            cameraResult.assets[0].uri,
+            [{ resize: { width: 500, height: 500 } }, { rotate: 0 }],
+            { compress: 0.9, format: ImageManipulator.SaveFormat.PNG }
+          );
+          setartisanImage({
+            name: "artisan-image",
+            uri: newresult.uri,
+            type: "image/jpeg",
+          });
+          setimageUri(newresult.uri);
+        } else {
+          DisplayMessage("Image upload canceled", "warning", "Canceled");
+        }
+      }
+    } catch (error) {
+      DisplayMessage(error.message, 'danger', 'Error Occured', 'top')
+    }
+  }
+
+  const openCameraForIdentification = async () => {
+    try {
+      const { status, granted } = await ImagePicker.requestCameraPermissionsAsync();
+      if (status === "denied" && granted === false) {
+        DisplayMessage(
+          "Sorry, grant app permissions in your settings to be able to use camera!",
+          "warning",
+          "Permission Denied"
+        );
+      }
+      else {
+        let cameraResult = await ImagePicker.launchCameraAsync({
+          type: "image",
+          allowsEditing: true,
+          aspect: [1, 1],
+          quality: 1,
+        });
+        if (!cameraResult.canceled) {
+          const newresult = await ImageManipulator.manipulateAsync(
+            cameraResult.assets[0].uri,
+            [{ resize: { width: 500, height: 500 } }, { rotate: 0 }],
+            { compress: 0.1, format: ImageManipulator.SaveFormat.PNG }
+          );
+          const imageItem = {
+            id: uuid.v4(),
+            name: "artisan-image",
+            uri: newresult.uri,
+            type: "image/jpeg",
+          };
+          setidentification([...identification, imageItem]);
+        } else {
+          DisplayMessage("Image upload cancel", "Canceled");
+        }
+      }
+    } catch (error) {
+      DisplayMessage(error.message, 'danger', 'Error Occured', 'top')
+    }
+  }
 
   const deleteImage = (id) => {
     const filteredItem = identification.filter((item) => {
@@ -212,10 +285,10 @@ const ClientRegScreen = (props) => {
     });
     setidentification(filteredItem);
   };
+
   const registerArtisan = async () => {
     try {
       const valid = await checkInput();
-      console.log("Vale", valid);
       if (valid === false) {
         DisplayMessage("Some fields are empty", "warning", "Empty fields");
       } else {
@@ -278,7 +351,7 @@ const ClientRegScreen = (props) => {
                 style={styles.butttonSeperateImage}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => openCamera()}>
               <Image
                 source={require("../../components/assets/images/shutter.png")}
                 style={styles.butttonSeperateImage}
@@ -346,7 +419,7 @@ const ClientRegScreen = (props) => {
                 style={styles.butttonSeperateImage}
               />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => openCameraForIdentification()}>
               <Image
                 source={require("../../components/assets/images/shutter.png")}
                 style={styles.butttonSeperateImage}

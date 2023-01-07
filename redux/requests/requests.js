@@ -113,3 +113,14 @@ export const getAdminAgentCollection = (data) => {
     }
     return axios(requestOptions);
 }
+
+export const getTodayThrift = (data) => {
+    const { date_paid, token } = data
+    headers.authorization = `Bearer ${token}`
+    const requestOptions = {
+        method: "get",
+        url: `${baseUrl}/today-thrift?date_paid=${date_paid}`,
+        headers: headers,
+    }
+    return axios(requestOptions);
+}

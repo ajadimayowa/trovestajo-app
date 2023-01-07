@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect, useState } from "react";
+import React, { useLayoutEffect, useEffect, useState, useMemo } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { ScrollView, Text, View, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native";
@@ -23,12 +23,11 @@ const AllTransactionScreen = (props) => {
 
   let deposit = props.route.params;
 
-  console.log(deposit)
-
   const { agentData, token } = useSelector(state => state.agent)
   const [loading, setloading] = useState(false)
   const [collections, setcollections] = useState([])
   const [section, setsection] = useState('collections')
+  const [search, setsearch] = useState('')
 
 
   const checkButton = () => {
@@ -39,7 +38,7 @@ const AllTransactionScreen = (props) => {
       headerShown: true,
       header: () => (
         <Header>
-          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter ID To Search…."} />
+          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter ID To Search…."} onChangeText={(text) => setsearch(text)} />
         </Header>
       ),
       tabBarIcon: ({ color, size }) => (
@@ -89,6 +88,30 @@ const AllTransactionScreen = (props) => {
       DisplayMessage(error.message, 'danger', 'Error Occured')
     }
   }
+
+
+  const handleKeyUp = async () => {
+    try {
+      if (search !== '') {
+        setsection('deposits')
+        const matcher = new RegExp(`^${search}`, 'g');
+        const filteredData = collections.filter(collection => collection?.payment_reference.match(matcher))
+        setcollections(filteredData);
+      }
+      else {
+        setsection('collections')
+        return getAllCollectionHistory()
+      }
+    } catch (error) {
+      DisplayMessage(error.message, "danger", "Error Occured");
+      setloading(false);
+      setrefreshing(false);
+    }
+  }
+
+  useMemo(() => {
+    handleKeyUp()
+  }, [search])
   return (
     <>
       {loading && <Loader />}
