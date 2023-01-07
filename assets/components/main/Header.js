@@ -13,11 +13,11 @@ const style = StyleSheet.create({
     width,
     borderBottomColor: 'black',
     borderBottomWidth: 0.19,
-    alignItems: "space-around",
+    alignItems: "center",
     paddingHorizontal: '5%',
     paddingTop: '15%',
     paddingBottom: '5%',
-    justifyContent: 'center'
+    justifyContent: 'space-between'
 
   },
 });

@@ -13,9 +13,6 @@ const TransactionObjectCard = (props) => {
     <>
       {item.status === status && <Pressable
         style={({ pressed }) => (pressed ? styles.pressed : null)}
-        onPress={() => item.status === 0 && navigation.navigate('DepositThriftScreen', {
-          collection: item
-        })}
       >
         <View style={[styles.innerView, externalInnerStyle]}>
           <View style={styles.outerStyle}>

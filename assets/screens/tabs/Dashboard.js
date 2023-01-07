@@ -1,12 +1,9 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
-import {
-  ScrollView,
-  Text,
-  View,
-} from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import CircleCard from "../../components/cards/CircleCard";
 import { SafeAreaView } from "react-native";
 import Header from "../../components/main/Header";
+import IconButton from "../../components/buttons/IconButton";
 import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import Card from "../../components/cards/Card";
@@ -14,30 +11,50 @@ import MessageCard from "../../components/cards/MessageCard";
 import CardButton from "../../components/buttons/CardButton";
 import { useSelector, useDispatch } from "react-redux";
 import Loader from "../../shared/Loader";
-import { moderateScale, ScaledSheet } from 'react-native-size-matters';
-import { getArtisanData, pageLoading, getAgentArtisanSuccess } from "../../../redux/slices/artisan.slice";
+import { moderateScale, ScaledSheet } from "react-native-size-matters";
+import {
+  getArtisanData,
+  pageLoading,
+  getAgentArtisanSuccess,
+} from "../../../redux/slices/artisan.slice";
 import { getAgentArtisan } from "../../../redux/requests/requests";
 import DisplayMessage from "../../shared/ShowMessage";
 import { ACCESS_DENIED, COLORS, UNAUHTORIZED } from "../../../constants";
 
-
 const Dashboard = (props) => {
-  const { navigation } = props
-  const dispatch = useDispatch()
-  const { agentData, token } = useSelector(state => state.agent)
-  const { isLoading, artisans, success } = useSelector(state => state.artisan)
-  const [agent, setagent] = useState({})
-  const [loading, setloading] = useState(false)
-
+  const { navigation } = props;
+  const dispatch = useDispatch();
+  const { agentData, token } = useSelector((state) => state.agent);
+  const { isLoading, artisans, success } = useSelector(
+    (state) => state.artisan
+  );
+  const [agent, setagent] = useState({});
+  const [loading, setloading] = useState(false);
 
   const handleNewClientReg = () => {
-    navigation.navigate('RegNewClient')
-  }
+    navigation.navigate("RegNewClient");
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
-      header: () => <Header></Header>,
+      header: () => (
+        <Header>
+          <IconButton externalInnerStyle={{backgroundColor:'#fff'}}
+          iconName={'ios-menu'} iconSize={20}
+          iconColor={'black'}/>
+          <Text
+            style={{
+              fontSize: moderateScale(13),
+              fontFamily: "bold",
+              color: COLORS.troBlue,
+            }}
+          >
+            Trovest Ajo
+          </Text>
+          <IconButton iconName={'ios-notifications'} iconSize={16} externalInnerStyle={{backgroundColor:'#fff',elevation:0}} />
+        </Header>
+      ),
       tabBarIcon: ({ color, size }) => (
         <Ionicons name="home-outline" size={size} color={color} />
       ),
@@ -45,60 +62,55 @@ const Dashboard = (props) => {
   }, [navigation]);
 
   useEffect(() => {
-    setloading(true)
-    getArtisans()
-    const unsubscribe = navigation.addListener('focus', () => {
-      setloading(true)
-      dispatch(pageLoading(true))
-      getArtisans()
+    setloading(true);
+    getArtisans();
+    const unsubscribe = navigation.addListener("focus", () => {
+      setloading(true);
+      dispatch(pageLoading(true));
+      getArtisans();
     });
     return unsubscribe;
-  }, [token, navigation])
+  }, [token, navigation]);
 
   const getArtisans = async () => {
     try {
-      console.log('agentData', agentData?.first_name)
+      console.log("agentData", agentData?.first_name);
       if (token) {
-        setagent(agentData)
+        setagent(agentData);
         // make a normal request and use this to set the artiasna instead of redux saga
-        const response = await getAgentArtisan(token)
-        const { success, message, data } = response.data
+        const response = await getAgentArtisan(token);
+        const { success, message, data } = response.data;
         if (success === true) {
           const payload = {
             data,
             message: message,
             success: success,
-            isLoading: false
-          }
-          dispatch(getAgentArtisanSuccess(payload))
-          setloading(false)
-        }
-        else if (message === UNAUHTORIZED || message === ACCESS_DENIED) {
-          DisplayMessage(message, 'warning', 'Something went wrong')
-          setloading(false)
+            isLoading: false,
+          };
+          dispatch(getAgentArtisanSuccess(payload));
+          setloading(false);
+        } else if (message === UNAUHTORIZED || message === ACCESS_DENIED) {
+          DisplayMessage(message, "warning", "Something went wrong");
+          setloading(false);
           setTimeout(() => {
             navigation.navigate("Login");
           }, 2000);
+        } else {
+          DisplayMessage(message, "warning", "Something went wrong");
+          setloading(false);
         }
-        else {
-          DisplayMessage(message, 'warning', 'Something went wrong')
-          setloading(false)
-        }
-      }
-      else {
-        setloading(false)
+      } else {
+        setloading(false);
         setTimeout(() => {
           navigation.navigate("Login");
         }, 2000);
       }
     } catch (error) {
-      DisplayMessage(error.message, 'danger', 'Error Occured')
-      setloading(false)
+      DisplayMessage(error.message, "danger", "Error Occured");
+      setloading(false);
     }
-  }
-  const calculateTimelyCashPickupAndDeposit = () => {
-
-  }
+  };
+  const calculateTimelyCashPickupAndDeposit = () => {};
   return (
     <>
       {loading && <Loader />}
@@ -113,7 +125,9 @@ const Dashboard = (props) => {
                 { justifyContent: "space-around", marginTop: "5%" },
               ]}
             >
-              <Text style={{ fontSize: moderateScale(14), fontFamily: "regular" }}>
+              <Text
+                style={{ fontSize: moderateScale(14), fontFamily: "regular" }}
+              >
                 Here is Your Performance So far
               </Text>
               <Feather name="activity" size={24} color="black" />
@@ -142,7 +156,7 @@ const Dashboard = (props) => {
                     textAlign: "center",
                     color: COLORS.troBrown,
                     fontFamily: "bold",
-                    fontSize: moderateScale(14)
+                    fontSize: moderateScale(14),
                   }}
                 >
                   Clients Registered
@@ -151,7 +165,9 @@ const Dashboard = (props) => {
 
               {/* col 2 */}
               <View
-                style={[{ alignItems: "center", justifyContent: "space-around" }]}
+                style={[
+                  { alignItems: "center", justifyContent: "space-around" },
+                ]}
               >
                 <CircleCard>0%</CircleCard>
                 {/* <CircleCard>85%</CircleCard> */}
@@ -161,7 +177,7 @@ const Dashboard = (props) => {
                     textAlign: "center",
                     color: COLORS.troBrown,
                     fontFamily: "bold",
-                    fontSize: moderateScale(13)
+                    fontSize: moderateScale(13),
                   }}
                 >
                   Timely Cash Pick-up
@@ -170,7 +186,9 @@ const Dashboard = (props) => {
 
               {/* col 3 */}
               <View
-                style={[{ alignItems: "center", justifyContent: "space-around" }]}
+                style={[
+                  { alignItems: "center", justifyContent: "space-around" },
+                ]}
               >
                 <CircleCard>0%</CircleCard>
                 {/* <CircleCard>76%</CircleCard> */}
@@ -180,7 +198,7 @@ const Dashboard = (props) => {
                     textAlign: "center",
                     color: COLORS.troBrown,
                     fontFamily: "bold",
-                    fontSize: moderateScale(13)
+                    fontSize: moderateScale(13),
                   }}
                 >
                   TimelyCash Deposit
@@ -203,10 +221,22 @@ const Dashboard = (props) => {
               },
             ]}
           >
-            <Text style={{ fontSize: moderateScale(19), fontFamily: "bold", color: COLORS.troBlue }}>
+            <Text
+              style={{
+                fontSize: moderateScale(19),
+                fontFamily: "bold",
+                color: COLORS.troBlue,
+              }}
+            >
               {`${agent?.first_name} ${agent?.last_name}`}
             </Text>
-            <Text style={{ fontSize: moderateScale(12), fontFamily: "bold", color: COLORS.troBlue }}>
+            <Text
+              style={{
+                fontSize: moderateScale(12),
+                fontFamily: "bold",
+                color: COLORS.troBlue,
+              }}
+            >
               {`${agent?.assigned_id}`}
             </Text>
           </View>
@@ -240,8 +270,24 @@ const Dashboard = (props) => {
             ]}
           >
             <View style={[{ alignItems: "center" }]}>
-              <Text style={{ fontSize: moderateScale(19), fontFamily: "bold", color: COLORS.troBlue }}>Agent {`${agent?.first_name}`}</Text>
-              <Text style={{ fontSize: moderateScale(10), fontFamily: "regular", color: COLORS.troBlue }}>What would you like to do today?</Text>
+              <Text
+                style={{
+                  fontSize: moderateScale(19),
+                  fontFamily: "bold",
+                  color: COLORS.troBlue,
+                }}
+              >
+                Agent {`${agent?.first_name}`}
+              </Text>
+              <Text
+                style={{
+                  fontSize: moderateScale(12),
+                  fontFamily: "regular",
+                  color: COLORS.troBlue,
+                }}
+              >
+                What would you like to do today?
+              </Text>
             </View>
           </View>
           <View
@@ -255,11 +301,21 @@ const Dashboard = (props) => {
               },
             ]}
           >
-            <CardButton onPress={handleNewClientReg} externalInnerStyle={{ padding: 10 }} textStyles={{ fontSize: moderateScale(10), fontFamily: "bold" }}>
+            <CardButton
+              onPress={handleNewClientReg}
+              externalInnerStyle={{ padding: 10 }}
+              textStyles={{ fontSize: moderateScale(10), fontFamily: "bold" }}
+            >
               Register New Client
             </CardButton>
             {/* onPress={()=>navigation.navigate("DepositThriftScreen")} */}
-            <CardButton onPress={() => navigation.navigate("AgentBio")} externalInnerStyle={{ backgroundColor: COLORS.troBrown }} textStyles={{ fontSize: moderateScale(10), fontFamily: "bold" }}>Deposit Collected Funds.</CardButton>
+            <CardButton
+              onPress={() => navigation.navigate("DepositCollectionScreen")}
+              externalInnerStyle={{ backgroundColor: COLORS.troBrown }}
+              textStyles={{ fontSize: moderateScale(10), fontFamily: "bold" }}
+            >
+              Deposit Collected Funds.
+            </CardButton>
           </View>
         </SafeAreaView>
       </ScrollView>
@@ -278,21 +334,21 @@ const styles = ScaledSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
-    paddingBottom: '10%'
+    paddingBottom: "10%",
   },
   topSection: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#FFFFFF",
-    height: '220@msr',
-    marginBottom: '10@msr',
-    paddingBottom: '10@msr',
-    borderBottomLeftRadius: '40@msr',
-    borderBottomRightRadius: '40@msr',
+    height: "220@msr",
+    marginBottom: "10@msr",
+    paddingBottom: "10@msr",
+    borderBottomLeftRadius: "40@msr",
+    borderBottomRightRadius: "40@msr",
   },
   SectionViewRows: {
     flex: 1,
-    margin: '5@msr',
+    margin: "5@msr",
     flexDirection: "row",
     width: "100%",
   },
@@ -315,7 +371,7 @@ const styles = ScaledSheet.create({
   },
   p: {
     color: "#fff",
-    fontSize: '14@msr',
+    fontSize: "14@msr",
   },
 });
 

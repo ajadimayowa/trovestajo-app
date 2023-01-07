@@ -44,7 +44,7 @@ export default function ThriftsPayment(props) {
         const response = await collectThrift(requestData)
         const { data, success, message } = response.data
         if (response && response.data && success === true) {
-          navigation.navigate("AllClients");
+          navigation.goBack();
           setloading(false)
           setModalVisible(!modalVisible)
           DisplayMessage(message, 'success')

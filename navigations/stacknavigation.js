@@ -4,7 +4,9 @@ import LoginScreen from '../assets/screens/LoginScreen';
 import TabScreens from '../assets/screens/tabs/TabScreens';
 import ClientDetailScreen from '../assets/screens/stacks/ClientDetailScreen';
 import ClientRegScreen from '../assets/screens/modals/ClientRegScreen';
-import DepositThriftScreen from '../assets/screens/stacks/DepositThriftScreen';
+import DepositFundScreen from '../assets/screens/modals/DepositFundScreen';
+import DepositCollectionScreen from '../assets/screens/modals/DepositCollectionScreen';
+import AllTransactionScreen from '../assets/screens/tabs/AllTransactionScreen';
 
 
 const stack = createNativeStackNavigator()
@@ -17,7 +19,8 @@ export default function Stacknavigation() {
             <stack.Screen name="Main" component={TabScreens} />
             <stack.Screen name='RegNewClient' component={ClientRegScreen}/>
             <stack.Screen name='ClientDetailScreen' component={ClientDetailScreen}/>
-            <stack.Screen name='DepositThriftScreen' component={DepositThriftScreen}/>
+            <stack.Screen name='DepositCollectionScreen' component={DepositCollectionScreen}/>
+            <stack.Screen name='AllTransactionScreen' component={AllTransactionScreen}/>
         </stack.Navigator>
     )
 }

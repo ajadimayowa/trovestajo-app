@@ -88,13 +88,13 @@ const LoginScreen = (props) => {
             </View>
             {/* form section */}
             <View style={[styles.section, { marginTop: "30%" }]}>
-              <PrimaryInput placeholder={"Enter ID"}
+              <PrimaryInput iconName={'person'} iconSize={16} placeholder={"Enter ID"}
                 value={agentData.assigned_id}
                 onChangeText={(text) => {
                   setagentData({ ...agentData, assigned_id: text })
                 }}
               />
-              <PrimaryInput placeholder={"Enter Your Password"}
+              <PrimaryInput iconName={'md-lock-closed-sharp'} iconSize={16} placeholder={"Enter Your Password"}
                 secureTextEntry={true}
                 value={agentData.password}
                 onChangeText={(text) => {
@@ -135,7 +135,7 @@ const styles = ScaledSheet.create({
   },
   p: {
     color: '#fff',
-    fontSize: '18@msr',
+    fontSize: '12@msr',
     fontFamily: 'regular'
   }
 });
