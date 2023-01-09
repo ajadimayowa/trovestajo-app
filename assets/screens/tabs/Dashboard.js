@@ -20,6 +20,7 @@ import {
 import { getAgentArtisan, getTodayThrift } from "../../../redux/requests/requests";
 import DisplayMessage from "../../shared/ShowMessage";
 import { ACCESS_DENIED, COLORS, returnYearMonthDate, UNAUHTORIZED } from "../../../constants";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Dashboard = (props) => {
   const { navigation } = props;
@@ -75,6 +76,7 @@ const Dashboard = (props) => {
   const getArtisans = async () => {
     try {
       if (token) {
+        AsyncStorage.setItem('@TRO_VEST_TOKEN',token)
         setagent(agentData);
         // make a normal request and use this to set the artiasna instead of redux saga
         const response = await getAgentArtisan(token);

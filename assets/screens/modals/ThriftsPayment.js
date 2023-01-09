@@ -27,9 +27,9 @@ export default function ThriftsPayment(props) {
       if (Number.isInteger(amount) === true && parseInt(amount) < 1000) {
         return Alert.alert('1000 is the minimum amount allowed')
       }
-      // if (hour >= 17) {
-      //   return Alert.alert('Payment can only be made on or before 5pm')
-      // }
+      if (hour >= 17) {
+        return Alert.alert('Payment can only be made on or before 5pm')
+      }
       else {
         setloading(true)
         const formData = {}

@@ -119,7 +119,6 @@ const ClientRegScreen = (props) => {
   const selectPicture = async () => {
     try {
       (async () => {
-        // if (Platform.OS !== 'web') {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== "granted") {
           DisplayMessage(
@@ -150,7 +149,6 @@ const ClientRegScreen = (props) => {
             DisplayMessage("Image upload canceled", "warning", "Canceled");
           }
         }
-        // }
       })();
     } catch (error) {
       DisplayMessage(error.message, 'danger', 'Error Occured', 'top')

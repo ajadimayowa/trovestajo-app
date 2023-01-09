@@ -122,10 +122,11 @@ const AllClientScreen = ({ navigation }) => {
     try {
       if (search !== '') {
         const matcher = new RegExp(`^${search}`, 'g');
-        const filteredData = agentArtisans.filter(name => name.full_name.match(matcher))
+        const filteredData = agentArtisans.filter(name => name?.full_name.match(matcher))
         setagentArtisans(filteredData);
       }
       else {
+        setagentArtisans([]);
         return getUser()
       }
     } catch (error) {
@@ -134,6 +135,7 @@ const AllClientScreen = ({ navigation }) => {
       setrefreshing(false);
     }
   }
+
   useMemo(() => {
     handleKeyUp()
   }, [search])
@@ -154,10 +156,10 @@ const AllClientScreen = ({ navigation }) => {
       >
         <LabelCard
           title={"Your Registered Artisans"}
-          totalClientRegistered={agentArtisans.length}
+          totalClientRegistered={(agentArtisans && agentArtisans.length > 0) && agentArtisans.length}
         />
         <View style={styles.container}>
-          <SharedList
+          {agentArtisans.length > 0 && < SharedList
             style={{
               width: width * 0.97,
               alignSelf: "center",
@@ -167,14 +169,14 @@ const AllClientScreen = ({ navigation }) => {
             renderItem={({ item }) => (
               <ClientObjectCard
                 totalSaved={`${convertToThousand(
-                  calculateRevenueAmount(item.thrifts)
+                  calculateRevenueAmount(item?.thrifts)
                 )}`}
-                nameOfClient={item.full_name}
+                nameOfClient={item?.full_name}
                 key={item._id}
                 artisan={item}
               />
             )}
-          />
+          />}
         </View>
       </ScrollView>
     </>
