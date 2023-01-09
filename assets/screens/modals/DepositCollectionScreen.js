@@ -146,7 +146,8 @@ const DepositCollectionScreen = ({ navigation }) => {
           DisplayMessage(message, 'success', 'Funds deposited awaiting confirmation')
           setTimeout(() => {
             // navigation.goBack()
-            navigation.navigate("Main", paymentData);
+            // navigation.navigate("Main", paymentData);
+            navigation.navigate("TransactionScreen", paymentData);
           }, 1200);
         }
         else if (success === false && (message === UNAUHTORIZED || message === ACCESS_DENIED)) {
