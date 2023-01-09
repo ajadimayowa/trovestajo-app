@@ -12,7 +12,6 @@ import { ACCESS_DENIED, COLORS, UNAUHTORIZED } from "../../../constants";
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from "expo-image-manipulator";
 import SharedList from "../../shared/SharedList";
-import SelectList from 'react-native-dropdown-select-list'
 import uuid from 'react-native-uuid';
 import { AntDesign, MaterialIcons, Entypo, Ionicons } from "@expo/vector-icons";
 import IconButton from "../../components/buttons/IconButton";

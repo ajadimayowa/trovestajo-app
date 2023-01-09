@@ -1,11 +1,21 @@
-import React from 'react'
-import SelectList from 'react-native-dropdown-select-list'
+import React from "react";
+import { Picker } from '@react-native-picker/picker';
 
 const ListPicker = (props) => {
-    const { data, setSelected, onSelect } = props
+    const { data, setSelected, selected } = props;
+
     return (
-        <SelectList setSelected={setSelected} data={data} onSelect={onSelect} {...props} />
-    )
+        <>
+            <Picker
+                {...props}
+                selectedValue={selected}
+                onValueChange={setSelected}>
+                {data.map((item, index) => (
+                    <Picker.Item label={item.value} value={item.key} key={index} />
+                ))}
+            </Picker>
+        </>
+    );
 
 };
 
