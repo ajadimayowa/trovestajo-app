@@ -5,6 +5,7 @@ import {moderateScale} from 'react-native-size-matters'
 import Dashboard from "../tabs/Dashboard";
 import AllTransactionScreen from "../tabs/AllTransactionScreen";
 import AllClientScreen from "../tabs/AllClientScreen";
+import {Ionicons} from "@expo/vector-icons"
 const tabs = createBottomTabNavigator();
 
 const TabScreens = ({ navigation }) => {
@@ -27,9 +28,23 @@ const TabScreens = ({ navigation }) => {
         headerShown: false
       }}
     >
-      <tabs.Screen name="Dashboard" component={Dashboard} />
-      <tabs.Screen name="AllClients" component={AllClientScreen} />
-      <tabs.Screen name="TransactionScreen" component={AllTransactionScreen} />
+      <tabs.Screen options={{
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="home-outline" size={size} color={color} />
+        )
+      }} name="Dashboard" component={Dashboard} />
+
+      <tabs.Screen options={{
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="ios-people-outline" size={size} color={color} />
+        )
+      }} name="AllClients" component={AllClientScreen} />
+
+      <tabs.Screen options={{
+        tabBarIcon: ({ color, size }) => (
+          <Ionicons name="wallet-outline" size={size} color={color} />
+        )
+      }} name="TransactionScreen" component={AllTransactionScreen} />
     </tabs.Navigator>
   );
 };

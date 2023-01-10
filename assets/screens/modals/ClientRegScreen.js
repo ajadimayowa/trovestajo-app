@@ -496,6 +496,7 @@ const styles = ScaledSheet.create({
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
+    paddingHorizontal:'4%'
   },
   container: {
     marginTop: "20@msr",

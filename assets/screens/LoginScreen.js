@@ -21,6 +21,11 @@ const LoginScreen = (props) => {
   const { agent } = useSelector(state => state.agent)
   const [loading, setloading] = useState(false)
   const [agentData, setagentData] = useState({ assigned_id: '', password: '' })
+  const [secureTextEntry, setSecureTextEntry] = useState(true)
+
+  const togglePasswordShow = ()=>{
+    setSecureTextEntry(!secureTextEntry)
+  }
 
 
   const checkInput = () => {
@@ -94,8 +99,7 @@ const LoginScreen = (props) => {
                   setagentData({ ...agentData, assigned_id: text })
                 }}
               />
-              <PrimaryInput iconName={'md-lock-closed-sharp'} iconSize={16} placeholder={"Enter Your Password"}
-                secureTextEntry={true}
+              <PrimaryInput inputType ='password' iconName={'md-lock-closed-sharp'} icon2Name={'eye'} iconSize={16} placeholder={"Enter Password"}
                 value={agentData.password}
                 onChangeText={(text) => {
                   setagentData({ ...agentData, password: text })
