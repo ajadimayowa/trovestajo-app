@@ -47,7 +47,7 @@ const Dashboard = (props) => {
             iconColor={'black'} />
           <Text
             style={{
-              fontSize: moderateScale('14@msr'),
+              fontSize: moderateScale(14),
               fontFamily: "bold",
               color: COLORS.troBlue,
             }}
@@ -135,7 +135,7 @@ const Dashboard = (props) => {
               ]}
             >
               <Text
-                style={{ fontSize: moderateScale(14), fontFamily: "regular" }}
+                style={{ fontSize: moderateScale(14), fontFamily: "regular", color:COLORS.troBlue }}
               >
                 Here is Your Performance So far
               </Text>
