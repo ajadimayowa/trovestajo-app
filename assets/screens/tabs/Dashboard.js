@@ -19,7 +19,7 @@ import {
 } from "../../../redux/slices/artisan.slice";
 import { getAgentArtisan, getTodayThrift } from "../../../redux/requests/requests";
 import DisplayMessage from "../../shared/ShowMessage";
-import { ACCESS_DENIED, COLORS, returnYearMonthDate, UNAUHTORIZED } from "../../../constants";
+import { ACCESS_DENIED, agentKey, COLORS, returnYearMonthDate, UNAUHTORIZED } from "../../../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Dashboard = (props) => {
@@ -42,7 +42,7 @@ const Dashboard = (props) => {
       tabBarShowIcon: false,
       header: () => (
         <Header>
-          <IconButton onPress={handleLogOut} externalInnerStyle={{ backgroundColor: '#fff', elevation:null }}
+          <IconButton onPress={handleLogOut} externalInnerStyle={{ backgroundColor: '#fff', elevation: null }}
             iconName={'power'} iconSize={20}
             iconColor={'black'} />
           <Text
@@ -71,18 +71,23 @@ const Dashboard = (props) => {
     return unsubscribe;
   }, [token, navigation]);
 
-  const handleLogOut= ()=>{
+  const handleLogOut = async () => {
+    setloading(true)
+    await AsyncStorage.removeItem(`${agentKey}`)
+    setTimeout(() => {
+      navigation.navigate('Login')
+    }, 1200);
     console.log('Logged Out')
   }
 
-  const handleNotification = ()=>{
+  const handleNotification = () => {
     Alert.alert('No notification at this time')
   }
 
   const getArtisans = async () => {
     try {
       if (token) {
-        AsyncStorage.setItem('@TRO_VEST_TOKEN',token)
+        AsyncStorage.setItem('@TRO_VEST_TOKEN', token)
         setagent(agentData);
         // make a normal request and use this to set the artiasna instead of redux saga
         const response = await getAgentArtisan(token);
@@ -135,7 +140,7 @@ const Dashboard = (props) => {
               ]}
             >
               <Text
-                style={{ fontSize: moderateScale(14), fontFamily: "regular", color:COLORS.troBlue }}
+                style={{ fontSize: moderateScale(14), fontFamily: "regular", color: COLORS.troBlue }}
               >
                 Here is Your Performance So far
               </Text>
@@ -251,7 +256,7 @@ const Dashboard = (props) => {
           </View>
 
           <View
-            style={[styles.section, { marginTop: 10, backgroundColor:null, paddingHorizontal:'2%' }]}
+            style={[styles.section, { marginTop: 10, backgroundColor: null, paddingHorizontal: '2%' }]}
           >
             <Card admin={agent?.admin_id} agent={agent} />
           </View>

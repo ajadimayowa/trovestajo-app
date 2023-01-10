@@ -1,4 +1,4 @@
-import { Dimensions, Text, ScrollView, View, Pressable } from "react-native";
+import { Dimensions, Text, ScrollView, View, Pressable, Alert } from "react-native";
 import { useEffect, useState, useLayoutEffect } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import Header from "../../components/main/Header";
@@ -97,7 +97,7 @@ const DepositCollectionScreen = ({ navigation }) => {
         if (success === true) {
           if (data.status === 1) {
             setthriftData({})
-            setmessage('')
+            setmessage('No thrift collected today')
             setloading(false)
           }
           else {
@@ -125,39 +125,44 @@ const DepositCollectionScreen = ({ navigation }) => {
     }
   };
 
-  const depositFunds = async () => {
+  const depositFunds = async (amount) => {
     try {
       const { reference, location } = paymentData
-      if (reference === '' && location === '') {
-        return DisplayMessage('Some fields are empty', 'warning', 'Empty field', 'center')
+      if (amount === '' || amount === undefined || amount === null || amount === 0) {
+        DisplayMessage('No thrift collected today, collect more thrifts to make payment', 'warning', 'Empty collection')
       }
       else {
-        setloading(true)
-        const requestData = {
-          collection_id: thriftData._id,
-          payment_reference: reference,
-          location: location,
-          token: token
-        }
-        const response = await depositCollectedFunds(requestData)
-        const { success, data, message } = response.data
-        if (success === true) {
-          setloading(false)
-          DisplayMessage(message, 'success', 'Funds deposited awaiting confirmation')
-          setTimeout(() => {
-            // navigation.goBack()
-            // navigation.navigate("Main", paymentData);
-            navigation.navigate("TransactionScreen", paymentData);
-          }, 1200);
-        }
-        else if (success === false && (message === UNAUHTORIZED || message === ACCESS_DENIED)) {
-          setloading(false)
-          DisplayMessage(message, 'warning', 'Unauthorized')
-          navigation.navigate('Login')
+        if (reference === '' && location === '') {
+          return DisplayMessage('Some fields are empty', 'warning', 'Empty field', 'center')
         }
         else {
-          setloading(false)
-          DisplayMessage(message, 'warning', 'Something went wrong')
+          setloading(true)
+          const requestData = {
+            collection_id: thriftData._id,
+            payment_reference: reference,
+            location: location,
+            token: token
+          }
+          const response = await depositCollectedFunds(requestData)
+          const { success, data, message } = response.data
+          if (success === true) {
+            setloading(false)
+            DisplayMessage(message, 'success', 'Funds deposited awaiting confirmation')
+            setTimeout(() => {
+              // navigation.goBack()
+              // navigation.navigate("Main", paymentData);
+              navigation.navigate("TransactionScreen", paymentData);
+            }, 1200);
+          }
+          else if (success === false && (message === UNAUHTORIZED || message === ACCESS_DENIED)) {
+            setloading(false)
+            DisplayMessage(message, 'warning', 'Unauthorized')
+            navigation.navigate('Login')
+          }
+          else {
+            setloading(false)
+            DisplayMessage(message, 'warning', 'Something went wrong')
+          }
         }
       }
     } catch (error) {
@@ -198,12 +203,19 @@ const DepositCollectionScreen = ({ navigation }) => {
           contentContainerStyle={styles.contentContainerStyle}
         >
           <View style={styles.container}>
-            <PrimaryInput iconName={'document-text-sharp'} iconSize={16} placeholder={"POS Transaction Reference"} onChangeText={(text) => setpaymentData({...paymentData, reference: text})} />
-            <PrimaryInput iconName={'location'} iconSize={16} placeholder={"POS Location"}  onChangeText={(text) => setpaymentData({...paymentData, location: text})}/>
+            <PrimaryInput iconName={'document-text-sharp'} iconSize={16} placeholder={"POS Transaction Reference"} onChangeText={(text) => setpaymentData({ ...paymentData, reference: text })} />
+            <PrimaryInput iconName={'location'} iconSize={16} placeholder={"POS Location"} onChangeText={(text) => setpaymentData({ ...paymentData, location: text })} />
 
             <PrimaryButton
               externalStyle={{ backgroundColor: "#7D1312" }}
-              onPress={depositFunds}
+              onPress={() => {
+                if (message === 'No thrift collected today') {
+                  DisplayMessage('No thrift collected today, collect more thrifts to make payment', 'warning', 'Empty collection')
+                }
+                else {
+                  depositFunds(thriftData?.total)
+                }
+              }}
             >
               Submit
             </PrimaryButton>

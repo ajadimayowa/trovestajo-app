@@ -18,16 +18,20 @@ import { ScaledSheet } from "react-native-size-matters";
 const LoginScreen = (props) => {
   const dispatch = useDispatch()
   const { navigation } = props
-  const { agent } = useSelector(state => state.agent)
+  const { agent, token } = useSelector(state => state.agent)
   const [loading, setloading] = useState(false)
   const [agentData, setagentData] = useState({ assigned_id: '', password: '' })
   const [secureTextEntry, setSecureTextEntry] = useState(true)
 
-  const togglePasswordShow = ()=>{
+  const togglePasswordShow = () => {
     setSecureTextEntry(!secureTextEntry)
   }
 
-
+  // useEffect(() => {
+  //   if (token !== null) {
+  //     navigation.navigate('Main')
+  //   }
+  // }, [])
   const checkInput = () => {
     let valid = true
     if (agentData.assigned_id === '' || agentData.password === '') {
@@ -59,6 +63,7 @@ const LoginScreen = (props) => {
           dispatch(getAgentSuccess(info))
           DisplayMessage(message, 'success', 'Success')
           navigation.navigate('Main')
+          setagentData({ assigned_id: '', password: '' })
           setloading(false)
         }
       }
@@ -99,7 +104,7 @@ const LoginScreen = (props) => {
                   setagentData({ ...agentData, assigned_id: text })
                 }}
               />
-              <PrimaryInput inputType ='password' iconName={'md-lock-closed-sharp'} icon2Name={'eye'} iconSize={16} placeholder={"Enter Password"}
+              <PrimaryInput inputType='password' iconName={'md-lock-closed-sharp'} icon2Name={'eye'} iconSize={16} placeholder={"Enter Password"}
                 value={agentData.password}
                 onChangeText={(text) => {
                   setagentData({ ...agentData, password: text })

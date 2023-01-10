@@ -15,18 +15,10 @@ export default function Stacknavigation() {
     const { token } = useSelector((state) => state.agent);
     const [loginToken, setloginToken] = useState('')
 
-    const getToken = async () => {
-        const userToken = await AsyncStorage.getItem('@TRO_VEST_TOKEN')
-        if (null) return
-        setloginToken(userToken)
+    console.log('token',token)
 
-    }
-
-    useEffect(() => {
-        getToken()
-    }, [])
     return (
-        <stack.Navigator initialRouteName={loginToken ? 'Main' : 'Login'} screenOptions={{
+        <stack.Navigator initialRouteName={token ? 'Main' : 'Login'} screenOptions={{
             headerShown: false
         }}>
             <stack.Screen name="Login" component={LoginScreen} />
