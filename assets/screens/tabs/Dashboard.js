@@ -47,12 +47,12 @@ const Dashboard = (props) => {
             iconColor={'black'} />
           <Text
             style={{
-              fontSize: moderateScale(13),
+              fontSize: moderateScale('14@msr'),
               fontFamily: "bold",
               color: COLORS.troBlue,
             }}
           >
-            Tro-Vest Ajo
+            Tro-Vest Alajo
           </Text>
           <IconButton onPress={handleNotification} iconName={'ios-notifications'} iconSize={16} externalInnerStyle={{ backgroundColor: '#fff', elevation: 0 }} />
         </Header>
