@@ -45,12 +45,10 @@ const AllClientScreen = ({ navigation }) => {
       headerShown: true,
       header: () => (
         <Header>
-          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter Client Name To Search…."} onChangeText={(text) => setsearch(text)} />
+          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter Client Name To Search…."} 
+          onChangeText={(text) => setsearch(text)} />
         </Header>
-      ),
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="ios-people-outline" size={size} color={color} />
-      ),
+      )
     });
   }, [navigation]);
 

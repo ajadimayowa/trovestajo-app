@@ -30,7 +30,7 @@ export default function Stacknavigation() {
             headerShown: false
         }}>
             <stack.Screen name="Login" component={LoginScreen} />
-            <stack.Screen name="Main" component={TabScreens} />
+            <stack.Screen name="Main"  component={TabScreens} />
             <stack.Screen name='RegNewClient' component={ClientRegScreen} />
             <stack.Screen name='ClientDetailScreen' component={ClientDetailScreen} />
             <stack.Screen name='DepositCollectionScreen' component={DepositCollectionScreen} />

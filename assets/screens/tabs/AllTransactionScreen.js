@@ -40,10 +40,7 @@ const AllTransactionScreen = (props) => {
         <Header>
           <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter ID To Search…."} onChangeText={(text) => setsearch(text)} />
         </Header>
-      ),
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="wallet-outline" size={size} color={color} />
-      ),
+      )
     });
   }, [navigation]);
 

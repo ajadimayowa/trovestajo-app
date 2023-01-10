@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 import CircleCard from "../../components/cards/CircleCard";
 import { SafeAreaView } from "react-native";
 import Header from "../../components/main/Header";
@@ -39,26 +39,24 @@ const Dashboard = (props) => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: true,
+      tabBarShowIcon: false,
       header: () => (
         <Header>
-          <IconButton externalInnerStyle={{ backgroundColor: '#fff' }}
-            iconName={'ios-menu'} iconSize={20}
+          <IconButton onPress={handleLogOut} externalInnerStyle={{ backgroundColor: '#fff', elevation:null }}
+            iconName={'power'} iconSize={20}
             iconColor={'black'} />
           <Text
             style={{
-              fontSize: moderateScale(13),
+              fontSize: moderateScale(14),
               fontFamily: "bold",
               color: COLORS.troBlue,
             }}
           >
-            Tro-Vest Ajo
+            Tro-Vest Alajo
           </Text>
-          <IconButton iconName={'ios-notifications'} iconSize={16} externalInnerStyle={{ backgroundColor: '#fff', elevation: 0 }} />
+          <IconButton onPress={handleNotification} iconName={'ios-notifications'} iconSize={16} externalInnerStyle={{ backgroundColor: '#fff', elevation: 0 }} />
         </Header>
-      ),
-      tabBarIcon: ({ color, size }) => (
-        <Ionicons name="home-outline" size={size} color={color} />
-      ),
+      )
     });
   }, [navigation]);
 
@@ -72,6 +70,14 @@ const Dashboard = (props) => {
     });
     return unsubscribe;
   }, [token, navigation]);
+
+  const handleLogOut= ()=>{
+    console.log('Logged Out')
+  }
+
+  const handleNotification = ()=>{
+    Alert.alert('No notification at this time')
+  }
 
   const getArtisans = async () => {
     try {
@@ -129,7 +135,7 @@ const Dashboard = (props) => {
               ]}
             >
               <Text
-                style={{ fontSize: moderateScale(14), fontFamily: "regular" }}
+                style={{ fontSize: moderateScale(14), fontFamily: "regular", color:COLORS.troBlue }}
               >
                 Here is Your Performance So far
               </Text>
@@ -245,7 +251,7 @@ const Dashboard = (props) => {
           </View>
 
           <View
-            style={[styles.section, { marginTop: 10, backgroundColor: null }]}
+            style={[styles.section, { marginTop: 10, backgroundColor:null, paddingHorizontal:'2%' }]}
           >
             <Card admin={agent?.admin_id} agent={agent} />
           </View>

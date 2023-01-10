@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.cardColor,
     flexDirection: "column",
-    width: 369,
+    width: '100%',
     height: 167,
     alignItems: "center",
     borderRadius: 15,
