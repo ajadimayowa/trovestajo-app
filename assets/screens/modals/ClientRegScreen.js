@@ -306,9 +306,23 @@ const ClientRegScreen = (props) => {
         if (success === true) {
           DisplayMessage(message, "success", "Success");
           setloading(false);
-          setTimeout(() => {
-            handleGoToPrevScreen();
-          }, 900);
+          setimageUri("https://minervastrategies.com/wp-content/uploads/2016/03/default-avatar.jpg")
+          setartisanForm({
+            full_name: "",
+            identification: "",
+            identification_number: "",
+            address: "",
+            mobile: "",
+            bvn: "",
+            next_kin: "",
+            next_kin_mobile: "",
+            next_kin_address: "",
+          })
+          setidentification([])
+          setartisanImage({})
+          // setTimeout(() => {
+          //   handleGoBack()
+          // }, 900);
         } else if (message === ACCESS_DENIED || message === UNAUHTORIZED) {
           setloading(false);
           DisplayMessage(message, "warning", ACCESS_DENIED);
@@ -496,7 +510,7 @@ const styles = ScaledSheet.create({
     display: "flex",
     justifyContent: "center",
     alignContent: "center",
-    paddingHorizontal:'4%'
+    paddingHorizontal: '4%'
   },
   container: {
     marginTop: "20@msr",
