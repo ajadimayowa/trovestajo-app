@@ -1,25 +1,18 @@
 {
-  "cli": {
-    "version": ">= 3.0.0"
-  },
   "build": {
-    "development": {
-      "developmentClient": true,
-      "distribution": "internal",
+    "trovest-alajo": {
       "android": {
         "buildType": "apk"
       }
     },
-    "preview": {
-      "distribution": "internal"
-    },
-    "production": {
+    "preview2": {
       "android": {
-        "buildType": "apk"
-     }
-    }
-  },
-  "submit": {
+        "gradleCommand": ":app:assembleRelease"
+      }
+    },
+    "preview3": {
+      "developmentClient": true
+    },
     "production": {}
   }
 }
