@@ -5,7 +5,7 @@ import { ScaledSheet } from "react-native-size-matters";
 import { COLORS } from "../../../constants";
 
 const PrimaryInput = (props) => {
-  const [secureText, setSecureText] = useState(true)
+  const [secureText, setSecureText] = useState(false)
   const {
     placeholder,
     inputStyles,
@@ -29,7 +29,7 @@ const PrimaryInput = (props) => {
       style={[styles.inputStyle, inputStyles, inputType == 'password'? {marginLeft:5}:null]}
       {...props} />
       <Pressable onPress={togglePasswordShow}>
-        <Ionicons name={icon2Name} size={iconSize} color={COLORS.troBlue} />
+        <Ionicons name={secureText ?'eye-off':icon2Name} size={iconSize} color={COLORS.troBlue} />
       </Pressable>
     </View>
   );

@@ -3,7 +3,7 @@ import { Alert, Image, ImageBackground, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, StyleSheet } from "react-native";
 import bgImage from "../components/assets/images/login-screen-bg.png";
-import loginScreenLogo from "../components/assets/images/login-screen-logo.png";
+import loginScreenLogo from "../media/trov-mine-logo.png";
 import PrimaryInput from "../components/inputs/PrimaryInput";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import DisplayMessage from "../shared/ShowMessage";
