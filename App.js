@@ -10,7 +10,7 @@ import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 import { fontsLoaded } from './constants';
 import Loader from './assets/shared/Loader';
-
+ 
 
 const persistor = persistStore(store)
 export default function App() {
