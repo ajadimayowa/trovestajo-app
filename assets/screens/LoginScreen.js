@@ -3,7 +3,7 @@ import { Alert, Image, ImageBackground, Text, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, StyleSheet } from "react-native";
 import bgImage from "../components/assets/images/login-screen-bg.png";
-import loginScreenLogo from "../media/trov-mine-logo.png";
+import loginScreenLogo from "../media/tov-minds-login-logo.png";
 import PrimaryInput from "../components/inputs/PrimaryInput";
 import PrimaryButton from "../components/buttons/PrimaryButton";
 import DisplayMessage from "../shared/ShowMessage";
@@ -93,7 +93,7 @@ const LoginScreen = (props) => {
             <View style={[styles.section, { marginTop: "50%" }]}>
               <Image
                 source={loginScreenLogo}
-                style={{ width: 212, height: 77 }}
+                style={{ width: 250, height: 77 }}
               />
             </View>
             {/* form section */}
