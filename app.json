@@ -16,7 +16,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/tov-minds.gif",
+      "image": "./assets/splash.png",
       "resizeMode": "stretch",
       "background": "#ffffff"
     },
