@@ -451,6 +451,7 @@ const ClientRegScreen = (props) => {
             iconSize={16}
             placeholder={"Phone Number"}
             value={artisanForm.mobile}
+            maxLength={11}
             onChangeText={(text) =>
               setartisanForm({ ...artisanForm, mobile: text })
             }
@@ -476,6 +477,7 @@ const ClientRegScreen = (props) => {
           <PrimaryInput
             iconName={"call"}
             iconSize={16}
+            maxLength={11}
             placeholder={"Next of Kin Phone Number"}
             value={artisanForm.next_kin_mobile}
             onChangeText={(text) =>

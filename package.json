@@ -8,7 +8,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "apk": "eas build --profile production --platform android",
+    "apk": "eas build --profile apk --platform android",
     "bundle": "expo build:android -t app-bundle",
     "ipa": "expo build:ios -t ipa",
     "submit": "eas submit -p ios"

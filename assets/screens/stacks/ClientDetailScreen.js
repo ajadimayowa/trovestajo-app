@@ -102,6 +102,10 @@ const ClientDetailScreen = (props) => {
               <Text style={[{ color: '#fff', fontSize: moderateScale(14), width: '60%', fontFamily: 'medium' }]}>Due for withdrawal?</Text>
               <Text style={[{ color: '#fff', fontSize: moderateScale(15),width: '50%'}]}>No</Text>
             </View>
+            <View style={{ flexDirection: 'row', alignContent: 'flex-start',justifyContent: 'space-between', marginTop: moderateScale(20) }}>
+              <Text style={[{ color: '#fff', fontSize: moderateScale(14), width: '60%', fontFamily: 'medium' }]}>Withdrawal Date</Text>
+              <Text style={[{ color: '#fff', fontSize: moderateScale(15),width: '50%'}]}>{`${new Date(artisan?.liquidation_date).toDateString()}`}</Text>
+            </View>
           </View>
         </View>
       </ScrollView>}

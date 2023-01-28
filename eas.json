@@ -1,6 +1,6 @@
 {
   "build": {
-    "trovest-alajo": {
+    "apk": {
       "android": {
         "buildType": "apk"
       }

@@ -5,7 +5,8 @@ import {moderateScale} from 'react-native-size-matters'
 import Dashboard from "../tabs/Dashboard";
 import AllTransactionScreen from "../tabs/AllTransactionScreen";
 import AllClientScreen from "../tabs/AllClientScreen";
-import {Ionicons} from "@expo/vector-icons"
+import { Ionicons } from "@expo/vector-icons"
+
 const tabs = createBottomTabNavigator();
 
 const TabScreens = ({ navigation }) => {

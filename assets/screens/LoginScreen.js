@@ -27,6 +27,9 @@ const LoginScreen = (props) => {
     setSecureTextEntry(!secureTextEntry)
   }
 
+  // useLayoutEffect(() => {
+  //   setagentData({ assigned_id: '', password: '' })
+  // }, [])
   // useEffect(() => {
   //   if (token !== null) {
   //     navigation.navigate('Main')
@@ -34,6 +37,7 @@ const LoginScreen = (props) => {
   // }, [])
   const checkInput = () => {
     let valid = true
+    console.log('agentData',agentData.assigned_id === '')
     if (agentData.assigned_id === '' || agentData.password === '') {
       valid = false
     }
@@ -43,6 +47,7 @@ const LoginScreen = (props) => {
   const agentLogin = async () => {
     try {
       const valid = checkInput()
+      console.log('valid',valid)
       if (valid === false) {
         DisplayMessage('Some fields are empty', 'warning', 'Empty fields')
       } else {
@@ -60,6 +65,7 @@ const LoginScreen = (props) => {
             token: token
           }
           await AsyncStorage.setItem(`${agentKey}`, token)
+          setagentData({ assigned_id: '', password: '' })
           dispatch(getAgentSuccess(info))
           DisplayMessage(message, 'success', 'Success')
           navigation.navigate('Main')
