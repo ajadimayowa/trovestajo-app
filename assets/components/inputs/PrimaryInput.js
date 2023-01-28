@@ -5,7 +5,7 @@ import { ScaledSheet } from "react-native-size-matters";
 import { COLORS } from "../../../constants";
 
 const PrimaryInput = (props) => {
-  const [secureText, setSecureText] = useState(false)
+  const [secureText, setSecureText] = useState(true)
   const {
     placeholder,
     inputStyles,

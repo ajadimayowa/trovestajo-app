@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Tro-Vest Ajo",
+    "name": "TOV Minds Alajo",
     "slug": "trovest-ajo",
     "plugins": [
       [
@@ -11,7 +11,7 @@
         }
       ]
     ],
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -37,7 +37,7 @@
       "package": "com.trovestfinance.mobile"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/adaptive-icon.png"
     },
     "extra": {
       "eas": {
