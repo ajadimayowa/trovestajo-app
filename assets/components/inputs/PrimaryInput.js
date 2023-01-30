@@ -16,21 +16,20 @@ const PrimaryInput = (props) => {
     iconColor,
   } = props;
 
- 
-    const togglePasswordShow =()=>{
-      setSecureText(!secureText)
-    }
-  
-  
+  const togglePasswordShow = () => {
+    setSecureText(!secureText)
+  }
+
+
   return (
     <View style={styles.wrapper}>
       <Ionicons name={iconName} size={iconSize} color={COLORS.troBlue} />
       <TextInput secureTextEntry={inputType === 'password' ? secureText : false}
-      style={[styles.inputStyle, inputStyles, inputType == 'password'? {marginLeft:5}:null]}
-      {...props} />
-      <Pressable onPress={togglePasswordShow}>
-        <Ionicons name={secureText ?'eye-off':icon2Name} size={iconSize} color={COLORS.troBlue} />
-      </Pressable>
+        style={[styles.inputStyle, inputStyles, inputType === 'password' ? { marginLeft: 5 } : null]}
+        {...props} />
+      {inputType === 'password' && <Pressable onPress={togglePasswordShow}>
+        <Ionicons name={secureText ? 'eye-off' : icon2Name} size={iconSize} color={COLORS.troBlue} />
+      </Pressable>}
     </View>
   );
 };
@@ -45,7 +44,7 @@ const styles = ScaledSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: COLORS.troBlue,
     margin: "15@msr",
-    paddingRight:"10@msr"
+    paddingRight: "10@msr"
   },
   inputStyle: {
     width: "90%",

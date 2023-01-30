@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useEffect, useState } from "react";
-import { Alert, ScrollView, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View, BackHandler } from "react-native";
 import CircleCard from "../../components/cards/CircleCard";
 import { SafeAreaView } from "react-native";
 import Header from "../../components/main/Header";
@@ -21,6 +21,7 @@ import { getAgentArtisan, getTodayThrift } from "../../../redux/requests/request
 import DisplayMessage from "../../shared/ShowMessage";
 import { ACCESS_DENIED, agentKey, COLORS, returnYearMonthDate, UNAUHTORIZED } from "../../../constants";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { logOutAgent } from "../../../redux/slices/agent.slice";
 
 const Dashboard = (props) => {
   const { navigation } = props;
@@ -68,16 +69,39 @@ const Dashboard = (props) => {
       dispatch(pageLoading(true));
       getArtisans();
     });
+
     return unsubscribe;
+
   }, [token, navigation]);
 
+  const backAction = () => {
+    if (!navigation.isFocused()) {
+      return false
+    }
+    else {
+      Alert.alert("Hold on!", "Are you sure you want to go back?", [
+        {
+          text: "Cancel",
+          onPress: () => null,
+          style: "cancel"
+        },
+        { text: "YES", onPress: () => BackHandler.exitApp() }
+      ]);
+      return true;
+    }
+  };
+  
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+    return () => backHandler.remove();
+  }, [])
   const handleLogOut = async () => {
     setloading(true)
     await AsyncStorage.removeItem(`${agentKey}`)
+    dispatch(logOutAgent());
     setTimeout(() => {
       navigation.navigate('Login')
-    }, 1200);
-    console.log('Logged Out')
+    }, 700);
   }
 
   const handleNotification = () => {
@@ -104,18 +128,14 @@ const Dashboard = (props) => {
         } else if (message === UNAUHTORIZED || message === ACCESS_DENIED) {
           DisplayMessage(message, "warning", "Something went wrong");
           setloading(false);
-          setTimeout(() => {
-            navigation.navigate("Login");
-          }, 2000);
+          handleLogOut()
         } else {
           DisplayMessage(message, "warning", "Something went wrong");
           setloading(false);
         }
       } else {
         setloading(false);
-        setTimeout(() => {
-          navigation.navigate("Login");
-        }, 2000);
+        handleLogOut()
       }
     } catch (error) {
       DisplayMessage(error.message, "danger", "Error Occured");

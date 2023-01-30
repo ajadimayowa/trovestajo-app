@@ -20,10 +20,16 @@ const agentSlice = createSlice({
         },
         getAgentFailure: (state) => {
             state.isLoading = false;
+        },
+        logOutAgent: (state) => {
+            state.isLoading = false;
+            state.agentData = {};
+            state.success = false;
+            state.token = ''
         }
     }
 })
 
-export const { getAgentData, getAgentSuccess, getAgentFailure } = agentSlice.actions
+export const { getAgentData, getAgentSuccess, getAgentFailure,logOutAgent } = agentSlice.actions
 
 export default agentSlice.reducer

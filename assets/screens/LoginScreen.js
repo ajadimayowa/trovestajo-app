@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState, useEffect } from "react";
-import { Alert, Image, ImageBackground, Text, View } from "react-native";
+import { Alert, Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { SafeAreaView, StyleSheet } from "react-native";
 import bgImage from "../components/assets/images/login-screen-bg.png";
@@ -37,7 +37,6 @@ const LoginScreen = (props) => {
   // }, [])
   const checkInput = () => {
     let valid = true
-    console.log('agentData',agentData.assigned_id === '')
     if (agentData.assigned_id === '' || agentData.password === '') {
       valid = false
     }
@@ -47,7 +46,6 @@ const LoginScreen = (props) => {
   const agentLogin = async () => {
     try {
       const valid = checkInput()
-      console.log('valid',valid)
       if (valid === false) {
         DisplayMessage('Some fields are empty', 'warning', 'Empty fields')
       } else {
@@ -69,7 +67,6 @@ const LoginScreen = (props) => {
           dispatch(getAgentSuccess(info))
           DisplayMessage(message, 'success', 'Success')
           navigation.navigate('Main')
-          setagentData({ assigned_id: '', password: '' })
           setloading(false)
         }
       }
@@ -120,7 +117,9 @@ const LoginScreen = (props) => {
             </View>
             {/* support section */}
             <View style={[styles.section, { marginTop: "30%", height: '7%', justifyContent: 'space-between' }]}>
+              <TouchableOpacity onPress={() => navigation.navigate('Reset')}>
               <Text style={[styles.p, { color: COLORS.troBlue }]}>Forgot Password ?</Text>
+             </TouchableOpacity>
               <Text style={[styles.p, { color: COLORS.troGold }]}>Contact Support</Text>
             </View>
           </View>
@@ -150,7 +149,7 @@ const styles = ScaledSheet.create({
   },
   p: {
     color: '#fff',
-    fontSize: '12@msr',
+    fontSize: '14@msr',
     fontFamily: 'regular'
   }
 });

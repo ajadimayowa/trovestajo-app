@@ -1,19 +1,29 @@
 import React, { useState } from "react";
 import { Alert, Modal, Text, Pressable, View, Dimensions, TextInput } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
-import { COLORS, returnYearMonthDate } from "../../../constants";
+import { ACCESS_DENIED, COLORS, returnYearMonthDate, UNAUHTORIZED } from "../../../constants";
 import PrimaryInput from '../../components/inputs/PrimaryInput'
 import PrimaryButton from '../../components/buttons/PrimaryButton'
 import { collectThrift } from "../../../redux/requests/requests";
 import DisplayMessage from "../../shared/ShowMessage";
 import Loader from "../../shared/Loader";
+import { useDispatch } from "react-redux";
+
 
 const { width } = Dimensions.get('window')
 export default function ThriftsPayment(props) {
+  const dispatch = useDispatch();
   const { artisan, token, setloading, navigation } = props
   const [modalVisible, setModalVisible] = useState(false);
   const [amount, setamount] = useState(0)
 
+
+  const logOutUser = () => {
+    dispatch(logOutAgent())
+    setTimeout(() => {
+      navigation.navigate("Login");
+    }, 2000);
+  }
 
   const payThrift = async () => {
     const hour = new Date().getHours()
@@ -47,6 +57,11 @@ export default function ThriftsPayment(props) {
           setloading(false)
           setModalVisible(!modalVisible)
           DisplayMessage(message, 'success')
+        }
+        else if (message === UNAUHTORIZED || message === ACCESS_DENIED) {
+          DisplayMessage(message, "warning", "Something went wrong");
+          setloading(false);
+          logOutUser()
         }
         else {
           setloading(false)

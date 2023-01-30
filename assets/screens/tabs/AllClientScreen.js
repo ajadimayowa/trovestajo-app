@@ -23,6 +23,7 @@ import DisplayMessage from "../../shared/ShowMessage";
 import DefaultHeader from "../../components/main/DefaultHeader";
 import Header from "../../components/main/Header";
 import PrimaryInput from "../../components/inputs/PrimaryInput";
+import { logOutAgent } from "../../../redux/slices/agent.slice";
 
 const { width } = Dimensions.get("window");
 
@@ -45,8 +46,8 @@ const AllClientScreen = ({ navigation }) => {
       headerShown: true,
       header: () => (
         <Header>
-          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter Client Name To Search…."} 
-          onChangeText={(text) => setsearch(text)} />
+          <PrimaryInput iconSize={20} iconName={'search-outline'} placeholder={"Enter Client Name To Search…."}
+            onChangeText={(text) => setsearch(text)} />
         </Header>
       )
     });
@@ -59,6 +60,13 @@ const AllClientScreen = ({ navigation }) => {
     });
     return unsubscribe;
   }, [navigation]);
+
+  const logOutUser = () => {
+    dispatch(logOutAgent())
+    setTimeout(() => {
+      navigation.navigate("Login");
+    }, 2000);
+  }
 
 
   const getArtisans = async () => {
@@ -81,9 +89,7 @@ const AllClientScreen = ({ navigation }) => {
           DisplayMessage(message, "warning", "Something went wrong");
           setloading(false);
           setrefreshing(false);
-          setTimeout(() => {
-            navigation.navigate("Login");
-          }, 2000);
+          logOutUser()
         } else {
           DisplayMessage(message, "warning", "Something went wrong");
           setloading(false);
