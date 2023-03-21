@@ -19,7 +19,7 @@ const TransactionObjectCard = (props) => {
             {item.status === 0 && <Text style={styles.thriftData}>{new Date(item?.updatedAt).toDateString()}</Text>}
             {item.status === 1 && <Text style={styles.thriftData}>{new Date(item?.updatedAt).toDateString()}</Text>}
             <View style={styles.amountStyle}>
-              <Text style={styles.amountStyleText}>{`${convertToThousand(item?.total)}`}</Text>
+              <Text style={styles.amountStyleText}>{`${convertToThousand(item?.total?.$numberDecimal)}`}</Text>
             </View>
           </View>
           <View style={styles.outerStyle}>

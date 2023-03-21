@@ -15,7 +15,7 @@ import { AllCustormer } from "../../store/data";
 import { useSelector, useDispatch } from "react-redux";
 import SharedList from "../../shared/SharedList";
 import { ScaledSheet } from "react-native-size-matters";
-import { calculateRevenueAmount, convertToThousand } from "../../../constants";
+import { calculateRevenueAmountDecimal } from "../../../constants";
 import Loader from "../../shared/Loader";
 import { getAgentArtisan } from "../../../redux/requests/requests";
 import { getAgentArtisanSuccess } from "../../../redux/slices/artisan.slice";
@@ -172,9 +172,7 @@ const AllClientScreen = ({ navigation }) => {
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => (
               <ClientObjectCard
-                totalSaved={`${convertToThousand(
-                  calculateRevenueAmount(item?.thrifts)
-                )}`}
+                totalSaved={`${calculateRevenueAmountDecimal(item?.thrifts)?.toLocaleString()}`}
                 nameOfClient={item?.full_name}
                 key={item._id}
                 artisan={item}

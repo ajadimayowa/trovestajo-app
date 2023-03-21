@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
 export const host = `https://tro-vestcapitalpartners.com`
-// export const host = `https://trovestbackend.up.railway.app`
 export const AWS_URL = 'https://trovestajo.s3.us-west-1.amazonaws.com'
 // export const host = Platform.OS === 'ios' ? `http://192.168.145.30:5100` : `http://10.0.2.2:5100`
 export const root = 'tro-vest-ajo'
@@ -75,6 +74,13 @@ export const calculateRevenueAmount = (collection) => {
     let total = 0;
     collection.map(item => {
         return total += parseInt(item.amount || 0)
+    })
+    return total
+}
+export const calculateRevenueAmountDecimal = (collection) => {
+    let total = 0;
+    collection.map(item => {
+        return total += parseFloat(item?.amount?.$numberDecimal || 0)
     })
     return total
 }
