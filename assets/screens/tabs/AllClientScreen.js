@@ -14,7 +14,7 @@ import LabelCard from "../../components/cards/LabelCard";
 import { AllCustormer } from "../../store/data";
 import { useSelector, useDispatch } from "react-redux";
 import SharedList from "../../shared/SharedList";
-import { ScaledSheet } from "react-native-size-matters";
+import { moderateScale, ScaledSheet } from "react-native-size-matters";
 import { calculateRevenueAmountDecimal } from "../../../constants";
 import Loader from "../../shared/Loader";
 import { getAgentArtisan } from "../../../redux/requests/requests";
@@ -36,6 +36,9 @@ const AllClientScreen = ({ navigation }) => {
   const [loading, setloading] = useState(false);
   const [refreshing, setrefreshing] = useState(false);
   const [search, setsearch] = useState('')
+  const [page, setpage] = useState(1)
+  const [limit, setlimit] = useState(20)
+  const [next, setnext] = useState(null)
 
   const checkButton = () => {
     navigation.navigate("Login");
@@ -61,6 +64,14 @@ const AllClientScreen = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
+
+  useEffect(() => {
+    console.log('page', page)
+    if (next !== null) {
+      getArtisans();
+    }
+  }, [page, limit]);
+
   const logOutUser = () => {
     dispatch(logOutAgent())
     setTimeout(() => {
@@ -72,16 +83,17 @@ const AllClientScreen = ({ navigation }) => {
   const getArtisans = async () => {
     try {
       if (token) {
-        const response = await getAgentArtisan(token);
+        const response = await getAgentArtisan(page, limit, token);
         const { success, message, data } = response.data;
         if (success === true) {
           const payload = {
-            data,
+            data: data.docs,
+            total: data?.totalDocs,
             message: message,
             success: success,
             isLoading: false,
           };
-          setagentArtisans(data);
+          setagentArtisans(data.docs);
           dispatch(getAgentArtisanSuccess(payload));
           setloading(false);
           setrefreshing(false);
@@ -162,7 +174,12 @@ const AllClientScreen = ({ navigation }) => {
           title={"Your Registered Artisans"}
           totalClientRegistered={(agentArtisans && agentArtisans.length > 0) && agentArtisans.length}
         />
-        <View style={styles.container}>
+        {/* style={styles.container} */}
+        <ScrollView
+          style={{
+          marginBottom: moderateScale(20)
+        }}
+        >
           {agentArtisans.length > 0 && < SharedList
             style={{
               width: width * 0.97,
@@ -178,8 +195,13 @@ const AllClientScreen = ({ navigation }) => {
                 artisan={item}
               />
             )}
+            onEndReachedThreshold={0.2}
+            onEndReached={(end) => {
+              setpage(next)
+              console.log('ENd reached', end)
+            }}
           />}
-        </View>
+        </ScrollView>
       </ScrollView>
     </>
   );

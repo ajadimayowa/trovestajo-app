@@ -29,18 +29,18 @@ export const createAgentArtisan = (token, data) => {
     return axios(requestOptions);
 }
 
-export const getAgentArtisan = (payload) => {
+export const getAgentArtisan = (page, limit, payload) => {
     headers.authorization = `Bearer ${payload}`
     const requestOptions = {
         method: "get",
-        url: `${baseUrl}/get-artisans`,
+        url: `${baseUrl}/get-artisans?page=${page}&limit=${limit}`,
         headers: headers,
     }
     return axios(requestOptions);
 }
 
 export const getTotalAgents = (payload) => {
-    const { skip, limit, token } = payload
+    const { page, limit, token } = payload
     headers.authorization = `Bearer ${token}`
     const requestOptions = {
         method: "get",
@@ -62,11 +62,11 @@ export const collectThrift = (data) => {
 }
 
 export const getAgentCollection = (data) => {
-    const { agent_id, token } = data
+    const { agent_id, token,page, limit } = data
     headers.authorization = `Bearer ${token}`
     const requestOptions = {
         method: "get",
-        url: `${baseUrl}/thrifts/${agent_id}`,
+        url: `${baseUrl}/collections/${agent_id}?page=${page}&limit=${limit}`,
         headers: headers,
     }
     return axios(requestOptions);

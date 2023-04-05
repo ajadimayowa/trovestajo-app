@@ -27,7 +27,7 @@ const Dashboard = (props) => {
   const { navigation } = props;
   const dispatch = useDispatch();
   const { agentData, token } = useSelector((state) => state.agent);
-  const { isLoading, artisans, success } = useSelector(
+  const { isLoading, artisans, total, success } = useSelector(
     (state) => state.artisan
   );
   const [agent, setagent] = useState({});
@@ -90,7 +90,7 @@ const Dashboard = (props) => {
       return true;
     }
   };
-  
+
   useEffect(() => {
     const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
     return () => backHandler.remove();
@@ -114,11 +114,12 @@ const Dashboard = (props) => {
         AsyncStorage.setItem('@TRO_VEST_TOKEN', token)
         setagent(agentData);
         // make a normal request and use this to set the artiasna instead of redux saga
-        const response = await getAgentArtisan(token);
+        const response = await getAgentArtisan(1, 10, token);
         const { success, message, data } = response.data;
         if (success === true) {
           const payload = {
-            data,
+            data: data?.docs,
+            total: data?.totalDocs,
             message: message,
             success: success,
             isLoading: false,
@@ -183,7 +184,7 @@ const Dashboard = (props) => {
                   },
                 ]}
               >
-                <CircleCard>{artisans?.length}</CircleCard>
+                <CircleCard>{total || 0}</CircleCard>
                 <Text
                   style={{
                     width: "70%",

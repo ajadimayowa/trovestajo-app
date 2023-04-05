@@ -15,8 +15,8 @@ const style = StyleSheet.create({
     elevation:2,
     alignItems: "center",
     paddingHorizontal: '5%',
-    paddingTop: '15%',
-    paddingBottom: '5%',
+    paddingTop: '10%',
+    paddingBottom: '3%',
     justifyContent: 'space-between'
 
   },

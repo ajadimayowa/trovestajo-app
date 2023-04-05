@@ -159,7 +159,7 @@ const DepositCollectionScreen = ({ navigation }) => {
             DisplayMessage(message, 'warning', 'Unauthorized')
             navigation.navigate('Login')
           }
-          else {
+          else if (success === false) {
             setloading(false)
             DisplayMessage(message, 'warning', 'Something went wrong')
           }

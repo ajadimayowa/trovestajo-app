@@ -17,9 +17,10 @@ const artisanSlice = createSlice({
             state.token = action.payload
         },
         getAgentArtisanSuccess: (state, action) => {
-            const { data, success, isLoading } = action.payload
+            const { data, success, isLoading,total } = action.payload
             state.artisans = data;
-            state.success = success
+            state.total = total;
+            state.success = success;
             state.isLoading = isLoading;
         },
         getArtisanFailure: (state) => {

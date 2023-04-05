@@ -29,17 +29,17 @@ export default function ThriftsPayment(props) {
     const hour = new Date().getHours()
     try {
       if (Number.isInteger(amount) === false) {
-        return Alert.alert('Enter digits above 1,000')
+        return Alert.alert('Enter digits above 500')
       }
       if (parseInt(amount) === 0) {
         return Alert.alert('Amount is empty')
       }
-      if (Number.isInteger(amount) === true && parseInt(amount) < 1000) {
-        return Alert.alert('1000 is the minimum amount allowed')
+      if (Number.isInteger(amount) === true && parseInt(amount) < 500) {
+        return Alert.alert('500 is the minimum amount allowed')
       }
-      if (hour >= 17) {
-        return Alert.alert('Payment can only be made on or before 5pm')
-      }
+      // if (hour >= 17) {
+      //   return Alert.alert('Payment can only be made on or before 5pm')
+      // }
       else {
         setloading(true)
         const formData = {}
@@ -63,7 +63,7 @@ export default function ThriftsPayment(props) {
           setloading(false);
           logOutUser()
         }
-        else {
+        else if (response && success === false) {
           setloading(false)
           setModalVisible(!modalVisible)
           DisplayMessage(message, 'warning')

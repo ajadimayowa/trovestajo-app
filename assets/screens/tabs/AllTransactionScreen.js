@@ -28,6 +28,9 @@ const AllTransactionScreen = (props) => {
   const [collections, setcollections] = useState([])
   const [section, setsection] = useState('collections')
   const [search, setsearch] = useState('')
+  const [page, setpage] = useState(1)
+  const [limit, setlimit] = useState(10)
+  const [next, setnext] = useState(null)
 
 
   const checkButton = () => {
@@ -52,19 +55,30 @@ const AllTransactionScreen = (props) => {
     return unsubscribe
   }, [navigation])
 
+  useEffect(() => {
+    console.log('page',page)
+    if (next !== null) {
+      getAllCollectionHistory();
+    }
+  }, [page, limit]);
+
 
   const getAllCollectionHistory = async () => {
     try {
       if (agentData._id) {
         const requestData = {
           agent_id: agentData._id,
-          token
+          token,
+          page,
+          limit
         }
         setloading(true)
         const response = await getAgentCollection(requestData)
         const { success, message, data } = response.data
+        // console.log('getAgentCollection',data)
         if (success === true) {
-          setcollections(data)
+          setcollections(data.docs)
+          setnext(data?.nextPage)
           setloading(false)
         }
         else if (success === false && (message === ACCESS_DENIED || message === UNAUHTORIZED)) {
@@ -152,6 +166,11 @@ const AllTransactionScreen = (props) => {
             data={collections}
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => <TransactionObjectCard item={item} key={item._id} status={0} navigation={navigation} />}
+            onEndReachedThreshold={0.5}
+            onEndReached={(end) => {
+              setpage(next)
+              console.log('ENd reached',end)
+            }}
           />}
           {section === 'deposits' && <SharedList
             data={collections}

@@ -1,7 +1,7 @@
 import { View, Pressable, Text, Dimensions } from "react-native";
 import { moderateScale, ScaledSheet } from 'react-native-size-matters';
 import { useNavigation } from "@react-navigation/native";
-import { COLORS, Naira } from "../../../constants";
+import { COLORS, Naira, convertToThousand } from "../../../constants";
 
 
 const { width, height } = Dimensions.get('window')
@@ -11,7 +11,7 @@ const ClientObjectCard = (props) => {
   const goToClientDetails = () => {
     navigation.navigate('ClientDetailScreen', {
       artisan: artisan,
-      totalSaved: totalSaved,
+      totalSaved: convertToThousand(artisan?.total_savings || '0'),
     })
   }
 
@@ -25,10 +25,10 @@ const ClientObjectCard = (props) => {
         <View style={[styles.innerView, externalInnerStyle]}>
           <Text style={styles.p}>{nameOfClient}</Text>
           <View style={{
-            backgroundColor: COLORS.troBrown,  width: moderateScale(100), paddingTop: moderateScale(7), paddingBottom: moderateScale(7),borderRadius: 3,
+            backgroundColor: COLORS.troBrown, width: moderateScale(100), paddingTop: moderateScale(7), paddingBottom: moderateScale(7), borderRadius: 3,
             alignItems: 'center', justifyContent: 'center'
           }}>
-            <Text style={{ color: '#fff', fontFamily: 'medium', fontSize: moderateScale(14), textAlign: 'center', paddingLeft: moderateScale(10), paddingRight: moderateScale(10) }} >{`${Naira}${totalSaved}`}</Text> 
+            <Text style={{ color: '#fff', fontFamily: 'medium', fontSize: moderateScale(14), textAlign: 'center', paddingLeft: moderateScale(10), paddingRight: moderateScale(10) }} >{`${convertToThousand(artisan?.total_savings || '0')}`}</Text>
           </View>
         </View>
       </Pressable>

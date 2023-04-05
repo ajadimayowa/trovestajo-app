@@ -8,7 +8,6 @@ const { width, height } = Dimensions.get('window')
 const TransactionObjectCard = (props) => {
 
   const { externalOuterStyle, externalInnerStyle, item, status, navigation } = props;
-  // DepositThriftScreen
   return (
     <>
       {item.status === status && <Pressable
@@ -19,11 +18,11 @@ const TransactionObjectCard = (props) => {
             {item.status === 0 && <Text style={styles.thriftData}>{new Date(item?.updatedAt).toDateString()}</Text>}
             {item.status === 1 && <Text style={styles.thriftData}>{new Date(item?.updatedAt).toDateString()}</Text>}
             <View style={styles.amountStyle}>
-              <Text style={styles.amountStyleText}>{`${convertToThousand(item?.total?.$numberDecimal)}`}</Text>
+              <Text style={styles.amountStyleText}>{`${convertToThousand(item?.total || '0.00')}`}</Text>
             </View>
           </View>
           <View style={styles.outerStyle}>
-            {item.status === 0 && <Text style={styles.collectionText}>{'Yet to deposit thrifts'}</Text>}
+            {/* {item.status === 0 && <Text style={styles.collectionText}>{'Yet to deposit thrifts'}</Text>} */}
             {item.status === 1 && <Text style={styles.collectionText1}>{item?.payment_reference}</Text>}
           </View>
         </View>
