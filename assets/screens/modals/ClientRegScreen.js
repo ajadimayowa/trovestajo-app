@@ -303,6 +303,7 @@ const ClientRegScreen = (props) => {
         setloading(true);
         const response = await createAgentArtisan(token, formData);
         const { success, message } = response.data;
+        console.log('response.data',response.data)
         if (success === true) {
           DisplayMessage(message, "success", "Success");
           setloading(false);

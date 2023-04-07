@@ -51,6 +51,7 @@ export const getTotalAgents = (payload) => {
 }
 
 export const collectThrift = (data) => {
+    console.log('collectThrift',data.data)
     headers.authorization = `Bearer ${data.token}`
     const requestOptions = {
         method: "post",

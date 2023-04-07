@@ -50,6 +50,7 @@ export default function ThriftsPayment(props) {
           data: formData,
           token: token
         }
+        console.log('formData',formData)
         const response = await collectThrift(requestData)
         const { data, success, message } = response.data
         if (response && response.data && success === true) {
